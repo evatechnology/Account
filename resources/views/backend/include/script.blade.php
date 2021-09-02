@@ -28,6 +28,7 @@
 <script src="{{ asset('backend/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script>
 
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.11.0/api/sum().js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.0/js/dataTables.dateTime.min.js"></script>
 

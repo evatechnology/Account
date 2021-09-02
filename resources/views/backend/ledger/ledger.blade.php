@@ -92,16 +92,16 @@
                                 <td>{{ $item->ref }}</td>
                                 <td class="text-center">
                                     @if ($item->type == 'credit')
-                                        <div class="font-weight-bold" style="color: #00AF91">{{ $item->amount }}</div>
+                                        {{ $item->amount }}
                                     @else
-                                        <div class="font-weight-bold">0.00</div>
+                                        0.00
                                     @endif
                                 </td>
                                 <td class="text-center">
                                     @if ($item->type == 'debit')
-                                        <div class="font-weight-bold" style="color: #f51c40">{{ $item->amount }}</div>
+                                        {{ $item->amount }}
                                     @else
-                                        <div class="font-weight-bold">0.00</div>
+                                        0.00
                                     @endif
                                 </td>
 
@@ -117,10 +117,10 @@
                         <tr>
                             <th>No</th>
                             {{-- <th>Bank Name</th> --}}
-                            <th>Account Number</th>
-                            <th>Date</th>
-                            <th>PARTICULARS</th>
-                            <th>Referance/Cheque No</th>
+                            <th></th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
                             <th class="text-center">Credit</th>
                             <th class="text-center">Debit</th>
                             <th class="text-center">Amount</th>
@@ -164,7 +164,7 @@
             maxDate = new DateTime($('#max'), {
                 format: 'MMMM Do YYYY'
             });
-
+            var editor;
            var table= $('#BankTransaction_transection').DataTable({
             columnDefs: [
                             {
@@ -178,6 +178,51 @@
                                 "searchable": false
                             }
                         ],
+                        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+            credit = api
+                .column( 5, { search: "applied" } )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api.column( 5 ).footer() ).html(
+                credit
+            );
+            debit = api
+                .column( 6, { search: "applied" } )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api.column( 6 ).footer() ).html(
+                debit
+            );
+            total = api
+                .column( 7, { search: "applied" } )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+            // Update footer
+            $( api.column( 7 ).footer() ).html(
+                total
+            );
+        },
                 initComplete: function() {
                     //Drop Down Account Number
                     var column = this.api().column(1);
