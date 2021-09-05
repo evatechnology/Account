@@ -75,7 +75,7 @@
                             <th>Referance/Cheque No</th>
                             <th class="text-center">Credit</th>
                             <th class="text-center">Debit</th>
-                            <th class="text-center">Amount</th>
+                            <th class="text-center">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -211,11 +211,14 @@
             $( api.column( 6 ).footer() ).html(
                 debit
             );
+
+
+
             total = api
                 .column( 7, { search: "applied" } )
                 .data()
                 .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
+                    return credit - debit;
                 }, 0 );
 
             // Update footer
@@ -263,6 +266,7 @@
             $('#min, #max').on('change', function () {
                 table.draw();
             });
+            
 
         });
 
