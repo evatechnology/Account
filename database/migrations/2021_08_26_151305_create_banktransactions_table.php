@@ -13,7 +13,7 @@ class CreateBanktransactionsTable extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('banktransactions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('account_number')->nullable();
@@ -21,7 +21,8 @@ class CreateBanktransactionsTable extends Migration
             $table->string('ref')->nullable();
             $table->longText('reason')->nullable();
             $table->string('document')->nullable();
-            $table->double('amount',10,2)->nullable();
+            $table->double('amount',30,2)->nullable();
+            $table->double('temp_balance',30,2)->default(0);
             $table->enum('type',['debit','credit'])->nullable();
             $table->date('date')->nullable();
 

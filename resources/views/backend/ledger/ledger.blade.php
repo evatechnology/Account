@@ -82,6 +82,21 @@
                         @php
                             $i = 0;
                         @endphp
+{{-- <tr>
+    <td></td>
+
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td class="text-center"></td>
+    <td class="text-center"></td>
+    <td class="text-center">
+        @foreach (App\Models\BankTransaction::get() as $item)
+            {{ $item->amount }}
+        @endforeach
+    </td>
+</tr> --}}
                         @foreach (App\Models\BankTransaction::get() as $item)
                             <tr id="editcompanybalance{{ $item->id }}">
                                 <td>{{ ++$i }}</td>
@@ -107,7 +122,7 @@
 
 
                                 <td>
-
+                                    {{ $item->temp_balance }}
                                 </td>
                             </tr>
 
@@ -146,7 +161,7 @@
                 function( settings, data, dataIndex ) {
                     var min = minDate.val();
                     var max = maxDate.val();
-                    var date = new Date( data[5] );
+                    var date = new Date( data[2] );
                     if (
                         ( min === null && max === null ) ||
                         ( min === null && date <= max ) ||
@@ -166,7 +181,7 @@
             });
             var editor;
            var table= $('#BankTransaction_transection').DataTable({
-            columnDefs: [
+            "columnDefs": [
                             {
                                 "targets": [ 1 ],
                                 "visible": false,
@@ -176,9 +191,9 @@
                                 "targets": [ 0 ],
                                 "visible": false,
                                 "searchable": false
-                            }
-                        ],
-                        "footerCallback": function ( row, data, start, end, display ) {
+                            },
+                            ],
+            "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api();
 
             // Remove the formatting to get integer data for summation
@@ -215,7 +230,7 @@
                 .column( 7, { search: "applied" } )
                 .data()
                 .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
+                    return credit - debit;
                 }, 0 );
 
             // Update footer

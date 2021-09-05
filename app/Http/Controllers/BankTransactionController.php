@@ -48,6 +48,7 @@ class BankTransactionController extends Controller
             'amount' => 'required|max:191',
             'type' => 'required|max:191',
             'date' => 'date|max:191',
+            'tempbalance' => 'max:191',
         ]);
         $bank = Bank::find($request->input('account_number'));
         if(!$bank){
@@ -57,34 +58,43 @@ class BankTransactionController extends Controller
         $transactionamount = $request->input('amount');
 
         DB::transaction(function () use ($bank, $transactionamount, $request){
-                $input = $request->all();
-                $input['account_number'] = $bank->id;
-                $input['amount'] = $transactionamount;
+                $bankTransaction=new BankTransaction;
+                $bankTransaction->account_number = $bank->id;
+                $bankTransaction->ref = $request->ref;
+                $bankTransaction->transection_id = $request->transection_id;
+                $bankTransaction->reason = $request->reason;
+                $bankTransaction->amount = $transactionamount;;
+                $bankTransaction->type = $request->type;
+                $bankTransaction->date = $request->date;
                 if($document = $request->hasFile('document')){
                     $document = $request->file('document');
                     $document_name = time().'.'.$document->getClientOriginalExtension();
                     $document->move(public_path().'/backend/image/banktransection/',$document_name);
-                    $input['document'] = $document_name;
+                    $bankTransaction->document = $document_name;
                 }
-                if($input['type']=='credit'){
-                    BankTransaction::create($input);
+                if($bankTransaction->type =='credit'){
                     $bank->balance += $transactionamount;
+                    $bankTransaction->temp_balance =$bank->balance;
+
+                    $bankTransaction->save();
                     $bank->save();
                     return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
                     exit;
 
                     // exit;
                 }
-                elseif($input['type']=='debit'){
+                elseif($bankTransaction->type=='debit'){
                     if($bank->balance >= $transactionamount){
-                        BankTransaction::create($input);
                         $bank->balance -= $transactionamount;
-                        $bank->save();
+                        $bankTransaction->temp_balance =$bank->balance;
+
+                    $bankTransaction->save();
+                    $bank->save();
                         return redirect()->back()->with('success','Expense Added Successfully');
                         exit;
                     }
                     elseif($bank->balance <= $transactionamount){
-                        //DB::rollBack();
+                        DB::rollBack();
                         return redirect()->back()->with('error', 'Please Check Balance!');
                         exit;
                     }

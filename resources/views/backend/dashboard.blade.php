@@ -1,20 +1,106 @@
 @extends('backend.layout.master')
 @section('title','Dashboard')
 @section('content')
+
+
+<div class="row">
+    <div class="col-sm-12">
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="stat-widget-two card-body">
-                        <div class="stat-content">
-                            <div class="stat-text">Company </div>
-                            <div class="stat-digit"> {{ App\Models\Company::get()->count() }}</div>
+            <div class="col-sm-4">
+                <div class="card card1 shadow">
+                    <div class="row card-body ">
+                        <div class="col-sm-6 text-center text-dark">
+                            <i class="fas fa-building fa-3x"></i>
                         </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-success w-{{ App\Models\Company::get()->count() }}" role="progressbar"  aria-valuemax="10"></div>
+                        <div class="col-sm-6">
+                            <div class="text-center">
+                                <h6>Company</h6>
+                                <h3>{{ App\Models\Company::get()->count() }}</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-4">
+                <div class="card card2 shadow">
+                    <div class="row card-body ">
+                        <div class="col-sm-6 text-center text-dark">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-center">
+                                <h6>Employee</h6>
+                                <h3>{{ App\Models\Employee::get()->count() }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card card3 shadow">
+                    <div class="row card-body ">
+                        <div class="col-sm-6 text-center text-dark">
+                            <i class="fas fa-university fa-3x"></i>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-center">
+                                <h6>Bank</h6>
+                                <h3>{{ App\Models\Bank::get()->count() }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card card1 shadow">
+
+                    <div class="row card-body ">
+                        <div class="col-sm-4 text-center text-dark">
+                            <div class="text-center">
+                                <h6>Company Income</h6>
+                                <h3>{{ App\Models\CompanyBalance::where('type','income')->get()->count() }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <h6>Company</h6>
+                                <h3>{{ App\Models\Company::get()->count() }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <h6>Company</h6>
+                                <h3>{{ App\Models\Company::get()->count() }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card card2 shadow">
+                    <div class="row card-body ">
+                        <div class="col-sm-6 text-center text-dark">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-center">
+                                <h6>Employee</h6>
+                                <h3>{{ App\Models\Employee::get()->count() }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="row">
+
             <div class="col-lg-3 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-two card-body">
