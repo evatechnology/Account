@@ -138,9 +138,9 @@
                                 <td>
                                     @if ($item->type == 'credit')
                                         <div class="font-weight-bold" style="color: #00AF91">+
-                                            {{ $item->amount }}</div>
+                                            {{ number_format($item->amount,2) }}</div>
                                     @elseif( $item->type == 'debit')
-                                        <div class="font-weight-bold" style="color: #F05454">- {{ $item->amount }}</div>
+                                        <div class="font-weight-bold" style="color: #F05454">- {{ number_format($item->amount,2) }}</div>
                                     @endif
                                 </td>
                                 <td>
@@ -214,7 +214,7 @@
                             <label>Cheque/Receipt<small class="text-danger">*</small></label>
                             <input type="text" name="ref" class="form-control" />
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Date<small class="text-danger">*</small></label>
                             <input type="date" name="date" class="form-control" />
