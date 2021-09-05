@@ -225,7 +225,7 @@
                 initComplete: function() {
                     //Drop Down Account Number
                     var column = this.api().column(1);
-                    var select = $('<select class="form-control" value=""><option>All Account</option></select>')
+                    var select = $('<select class="form-control" ><option value="">All Account</option></select>')
                         .appendTo($('#account_number').empty())
                         .on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex(
