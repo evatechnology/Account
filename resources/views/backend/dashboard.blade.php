@@ -56,19 +56,19 @@
     <div class="col-sm-12">
         <div class="row">
             <div class="col-sm-6">
-                <div class="card card1 shadow">
+                <div class="card card4 shadow">
 
                     <div class="row card-body ">
                         <div class="col-sm-4 text-center text-dark">
                             <div class="text-center">
-                                <h6>Company Income</h6>
-                                <h3>{{ App\Models\CompanyBalance::where('type','income')->get()->count() }}</h3>
+                                <h6 class="text-light">Earn</h6>
+                                <h5 style="color: #79B4B7">{{ number_format(App\Models\CompanyBalance::where('type','income')->sum('amount'),2) }} Tk</h5>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="text-center">
-                                <h6>Company</h6>
-                                <h3>{{ App\Models\Company::get()->count() }}</h3>
+                                <h6 class="text-light">Expense</h6>
+                                <h5 style="color: #79B4B7">{{ number_format(App\Models\CompanyBalance::where('type','expense')->sum('amount'),2) }} Tk</h5>
                             </div>
                         </div>
                         <div class="col-sm-4">
