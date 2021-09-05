@@ -15,27 +15,6 @@
                             </div>
                           </div>
                     </div>
-                    {{-- <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Type</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="type">
-                                    <option value="">All Type</option>
-                                    <option value="debit">Debit</option>
-                                    <option value="credit">Credit</option>
-                                  </select>
-                            </div>
-                          </div>
-                    </div> --}}
-                    {{-- <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Source</label>
-                            <div class="col-sm-8">
-                                <div id="source"></div>
-                            </div>
-                          </div>
-                    </div> --}}
-
                     <div class="col-sm-4">
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-4 col-form-label text-dark">From</label>
@@ -55,12 +34,14 @@
 
                 </div>
             </div>
+
+            <div id="buttons"></div>
         </div>
     </div>
 
     <div class="card">
         <h4 class="text-center mt-3 mb-3"><u>Bank Statement</u></h4>
-        <p id="b_name"></p>
+        <p id="account_number1"></p>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="BankTransaction_transection" class=" table display " style="min-width: 845px">
@@ -251,33 +232,17 @@
                                 $(this).val()
                             );
                             column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            document.getElementById("account_number1").innerHTML = val;
                         });
                         column.data().unique().sort().each(function(d, j) {
                             select.append('<option value="' + d + '">' + d + '</option>');
-                        });
-                        
 
-                    // //Drop Down Perticuler
-                    // var column1 = this.api().column(3);
-                    // var select1 = $('<select class="form-control"><option value="">All Company</option></select>')
-                    //     .appendTo($('#source').empty())
-                    //     .on('change', function() {
-                    //         var val = $.fn.dataTable.util.escapeRegex(
-                    //             $(this).val()
-                    //         );
-                    //         column1.search(val ? '^' + val + '$' : '', true, false).draw();
-                    //     }) ;
-                    //     column1.data().unique().sort().each(function(d, j) {
-                    //         select1.append('<option value="' + d + '">' + d + '</option>');
-                    //     });
+                        });
                 }
 
 
             });
-            //Drop Down Filter3 Pre-Define Value
-            // $('#type').on('change', function () {
-            //     table.columns(6).search( this.value ).draw();
-            // });
+
             //Date Filter
             $('#min, #max').on('change', function () {
                 table.draw();

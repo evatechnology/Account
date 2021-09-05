@@ -32,7 +32,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.0/js/dataTables.dateTime.min.js"></script>
 
-
 <script src="{{ asset('backend/js/dashboard/dashboard-1.js') }}"></script>
 </body>
 
