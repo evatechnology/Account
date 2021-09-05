@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Bank Transection List')
+@section('title', 'Bank Ledger')
 @section('content')
 
     <div class="card">
@@ -59,10 +59,9 @@
     </div>
 
     <div class="card">
-        <h4 class="text-center mt-3 mb-3"><u>Bank Transaction List</u></h4>
+        <h4 class="text-center mt-3 mb-3"><u>Bank Statement</u></h4>
+        <p id="b_name"></p>
         <div class="card-body">
-            <div class="float-right">
-            </div>
             <div class="table-responsive">
                 <table id="BankTransaction_transection" class=" table display " style="min-width: 845px">
                     <thead>
@@ -181,6 +180,7 @@
             });
             var editor;
            var table= $('#BankTransaction_transection').DataTable({
+            "dom":'t',
             "columnDefs": [
                             {
                                 "targets": [ 1 ],
@@ -244,7 +244,7 @@
                 initComplete: function() {
                     //Drop Down Account Number
                     var column = this.api().column(1);
-                    var select = $('<select class="form-control"><option value="">All Account</option></select>')
+                    var select = $('<select class="form-control" value=""><option>All Account</option></select>')
                         .appendTo($('#account_number').empty())
                         .on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex(
@@ -255,6 +255,7 @@
                         column.data().unique().sort().each(function(d, j) {
                             select.append('<option value="' + d + '">' + d + '</option>');
                         });
+                        
 
                     // //Drop Down Perticuler
                     // var column1 = this.api().column(3);
@@ -281,7 +282,7 @@
             $('#min, #max').on('change', function () {
                 table.draw();
             });
-            
+
 
         });
 
