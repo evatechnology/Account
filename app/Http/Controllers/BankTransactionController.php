@@ -163,6 +163,41 @@ class BankTransactionController extends Controller
 
         }
     }
+    public function destroy1($id, Request $request)
+    {
+        $bankTransaction = BankTransaction::find($id);
+
+        if(!is_null($bankTransaction)){
+            $bank = Bank::find($request->account_number);
+            if(!$bank){
+                return back();
+            }
+            $transactionamount = $bankTransaction->amount;
+            if(!is_null($bankTransaction->document)){
+                $document_path = public_path().'/backend/image/banktransection/'.$bankTransaction->document;
+                unlink($document_path);
+                $bankTransaction->delete();
+                return response()->json(['success'=>'Data Delete successfully.']);
+            }
+            else{
+                DB::transaction(function () use ($bank, $transactionamount,$request, $bankTransaction){
+                    // $bankTransaction->account_number = $bank->id;
+                    if($bankTransaction->type =='credit'){
+                        $bank->balance = $bank->balance - $transactionamount;
+                        // $bankTransaction->temp_balance =$bank->balance;
+                        $bank->save();
+                        $bankTransaction->delete();
+
+                        return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
+                        exit;
+                    }
+                });
+                $bankTransaction->delete();
+                return response()->json(['success'=>'Data Delete successfully.']);
+            }
+
+        }
+    }
 }
 
 
