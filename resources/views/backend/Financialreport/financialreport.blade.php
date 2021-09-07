@@ -1,3 +1,4 @@
+
 @extends('backend.layout.master')
 @section('title', 'Bank Ledger')
 @section('content')
@@ -44,81 +45,65 @@
         <p id="account_number1"></p>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="BankTransaction_transection" class=" table display " style="min-width: 845px">
+                <table class=" table table-borderless " style="min-width: 845px">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            {{-- <th>Bank Name</th> --}}
                             <th>Account Number</th>
                             <th>Date</th>
-                            <th>PARTICULARS</th>
-                            <th>Referance/Cheque No</th>
-                            <th class="text-center">Credit</th>
-                            <th class="text-center">Debit</th>
-                            <th class="text-center">Total</th>
+                            <th>Revenues</th>
+                            <th class="text-center">Amount</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $i = 0;
-                        @endphp
-{{-- <tr>
-    <td></td>
 
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td class="text-center"></td>
-    <td class="text-center"></td>
-    <td class="text-center">
-        @foreach (App\Models\BankTransaction::get() as $item)
-            {{ $item->amount }}
-        @endforeach
-    </td>
-</tr> --}}
-                        @foreach (App\Models\BankTransaction::get() as $item)
-                            <tr id="editcompanybalance{{ $item->id }}">
-                                <td>{{ ++$i }}</td>
-                                {{-- <td>{{ $item->bank->bank_name }}</td> --}}
+                        @foreach (App\Models\BankTransaction::where('type','credit')->get() as $item)
+                            <tr>
                                 <td>{{ $item->bank->account_number }}</td>
                                 <td>{{ $item->date }}</td>
                                 <td>{{ $item->reason }}</td>
-                                <td>{{ $item->ref }}</td>
-                                <td class="text-center">
-                                    @if ($item->type == 'credit')
-                                        {{ $item->amount }}
-                                    @else
-                                        0.00
-                                    @endif
-                                </td>
-                                <td class="text-center">
-                                    @if ($item->type == 'debit')
-                                        {{ $item->amount }}
-                                    @else
-                                        0.00
-                                    @endif
-                                </td>
-
-
-                                <td>
-                                    {{ $item->temp_balance }}
-                                </td>
+                                <td class="text-center">{{ $item->amount }}</td>
                             </tr>
-
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>No</th>
-                            {{-- <th>Bank Name</th> --}}
-                            <th></th>
-                            <th>Total</th>
-                            <th></th>
-                            <th></th>
-                            <th class="text-center">Credit</th>
-                            <th class="text-center">Debit</th>
+                            <th>Account Number</th>
+                            <th>Date</th>
+                            <th class="text-dark"><h4>Total Revenues</h4></th>
+                            <th class="text-dark text-center h4"></th>
+                        </tr>
+                    </tfoot>
+
+
+                </table>
+                <table class=" table table-borderless  " style="min-width: 845px">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Date</th>
+                            <th>Expenses</th>
                             <th class="text-center">Amount</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (App\Models\BankTransaction::where('type','debit')->get() as $item)
+                            <tr>
+                                <td>{{ $item->bank->account_number }}</td>
+                                <td>{{ $item->date }}</td>
+                                <td>{{ $item->reason }}</td>
+                                <td class="text-center">{{ $item->amount }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="text-dark"><h4>Total Expenses</h4></th>
+                            <th class="text-center text-dark h4"></th>
                         </tr>
                     </tfoot>
 
@@ -141,7 +126,7 @@
                 function( settings, data, dataIndex ) {
                     var min = minDate.val();
                     var max = maxDate.val();
-                    var date = new Date( data[2] );
+                    var date = new Date( data[1] );
                     if (
                         ( min === null && max === null ) ||
                         ( min === null && date <= max ) ||
@@ -160,7 +145,7 @@
                 format: 'MMMM Do YYYY'
             });
             var editor;
-           var table= $('#BankTransaction_transection').DataTable({
+           var table= $('table.table-borderless').DataTable({
             "dom":'t',
             "columnDefs": [
                             {
@@ -171,9 +156,10 @@
                             {
                                 "targets": [ 0 ],
                                 "visible": false,
-                                "searchable": false
+                                "searchable": true
                             },
                             ],
+
             "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api();
 
@@ -185,46 +171,21 @@
                         i : 0;
             };
 
-            credit = api
-                .column( 5, { search: "applied" } )
+            amount = api
+                .column( 3, { search: "applied" } )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
 
             // Update footer
-            $( api.column( 5 ).footer() ).html(
-                credit
-            );
-            debit = api
-                .column( 6, { search: "applied" } )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Update footer
-            $( api.column( 6 ).footer() ).html(
-                debit
-            );
-
-
-
-            total = api
-                .column( 7, { search: "applied" } )
-                .data()
-                .reduce( function (a, b) {
-                    return credit - debit;
-                }, 0 );
-
-            // Update footer
-            $( api.column( 7 ).footer() ).html(
-                total
+            $( api.column( 3 ).footer() ).html(
+                amount
             );
         },
                 initComplete: function() {
                     //Drop Down Account Number
-                    var column = this.api().column(1);
+                    var column = this.api().column(0);
                     var select = $('<select class="form-control" ><option value="">All Account</option></select>')
                         .appendTo($('#account_number').empty())
                         .on('change', function() {
@@ -233,7 +194,7 @@
                             );
                             column.search(val ? '^' + val + '$' : '', true, false).draw();
                             document.getElementById("account_number1").innerHTML = val;
-                            console.log(column);
+                            //console.log(column);
                         });
                         column.data().unique().sort().each(function(d, j) {
                             select.append('<option value="' + d + '">' + d + '</option>');

@@ -71,3 +71,7 @@ Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@d
 
 Route::resource('ledger', 'LedgerController');
 Route::get('/admin/ledger','LedgerController@index')->name('ledger');
+
+Route::get('/admin/report','FinancialreportController@index');
+Route::get('/getdata','FinancialreportController@search')->name('search');
+Route::get('/getdata/{id}','FinancialreportController@search1');
