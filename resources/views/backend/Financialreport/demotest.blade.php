@@ -3,7 +3,8 @@
 @section('content')
 
 
-      <div class="form-group">
+<form action="/search">
+    <div class="form-group">
         <label for="exampleFormControlSelect1">Example select</label>
         <select class="form-control" name="account_number" id="account_number">
                 <option selected disabled>Choose One Account</option>
@@ -14,10 +15,11 @@
       </div>
 
 
-      <button type="submit" id="search" class="btn btn-dark" >Dark</button>
+      <button type="submit"  class="btn btn-dark" >Dark</button>
 
+</form>
 
-<script>
+{{-- <script>
     $('#search').on("click", function(){
         var account_number = document.getElementById('account_number').value;
         $.ajax({
@@ -28,5 +30,5 @@
             }
         });
     });
-</script>
+</script> --}}
 @endsection

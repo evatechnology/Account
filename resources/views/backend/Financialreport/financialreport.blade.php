@@ -77,7 +77,7 @@
 
 
                 </table>
-                <table class=" table table-borderless  " style="min-width: 845px">
+                <table  class=" table table-borderless  " style="min-width: 845px">
                     <thead>
                         <tr>
                             <th>Account Number</th>
@@ -212,6 +212,5 @@
 
 
         });
-
     </script>
 @endsection

@@ -163,7 +163,7 @@ class BankTransactionController extends Controller
 
         }
     }
-    public function destroy1($id, Request $request)
+    public function destroy1($id,Request $request)
     {
         $bankTransaction = BankTransaction::find($id);
 
