@@ -152,7 +152,7 @@
                             <label>Account Number<small class="text-danger">*</small></label>
                             <input type="text" name="account_number" class="form-control" placeholder="Account Number"/>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display:none">
                             <label>Balance<small class="text-danger">(Optional)</small></label>
                             <input type="text" name="balance" value="0" class="form-control" placeholder="Balance"/>
                         </div>
