@@ -9,39 +9,7 @@
                   <div class="user-photo m-b-30">
                     <img class="img-fluid" src="{{ asset('/backend/image/company/'.$company->logo) }}" alt="" />
                   </div>
-                  {{-- <div class="user-work">
-                    <h4>work</h4>
-                    <div class="work-content">
-                      <h3>It Solution </h3>
-                      <p>123, South Mugda</p>
-                      <p>New York, 1214</p>
-                    </div>
-                    <div class="work-content">
-                      <h3>Unix</h3>
-                      <p>123, South Mugda</p>
-                      <p>New York, 1214</p>
-                    </div>
-                  </div> --}}
-                  {{-- <div class="user-skill">
-                    <h4>Skill</h4>
-                    <ul>
-                      <li>
-                        <a href="#">Branding</a>
-                      </li>
-                      <li>
-                        <a href="#">UI/UX</a>
-                      </li>
-                      <li>
-                        <a href="#">Web Design</a>
-                      </li>
-                      <li>
-                        <a href="#">Wordpress</a>
-                      </li>
-                      <li>
-                        <a href="#">Magento</a>
-                      </li>
-                    </ul>
-                  </div> --}}
+
                 </div>
                 <div class="col-sm-8">
                   <div class="user-profile-name"><h5>{{ $company->name }}</p></div>
@@ -69,18 +37,6 @@
                             <span class="contact-title">Website:</span>
                             <span class="contact-website">http://{{ $company->website }}</span>
                           </div>
-                          {{-- <div class="website-content">
-                            <span class="contact-title">Total Employee: {{ App\Models\Employee::select('company_id')->groupBy('company_id')->get()->count() }}</span>
-                            <span class="contact-website"></span>
-                          </div>
-                          <div class="website-content">
-                            <span class="contact-title">Total Earn:</span>
-                            <span class="contact-website"></span>
-                          </div>
-                          <div class="website-content">
-                            <span class="contact-title">Total Cost:</span>
-                            <span class="contact-website"></span>
-                          </div> --}}
                         </div>
                       </div>
                     </div>

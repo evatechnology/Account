@@ -23,6 +23,9 @@
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script> --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <!-- Sweet Alert 2 -->
     <script src="{{ asset('backend/vendor/sweetalert2/dist/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('backend/vendor/toastr/js/toastr.min.js') }}"></script>
