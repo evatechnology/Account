@@ -25,10 +25,10 @@ class FinancialreportController extends Controller
         return view('backend.Financialreport.demotest',compact('data'));
 
     }
-    public function search1($id)
+    public function search1(Request $request)
     {
-        // $id = $request->id;
-        $data = BankTransaction::find($id);
+        $id = $request->id;
+
         return view('backend.Financialreport.detailsreport',compact('data'));
 
     }
