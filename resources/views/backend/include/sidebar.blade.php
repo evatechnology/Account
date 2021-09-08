@@ -11,6 +11,7 @@
                     <li><a href="{{ route('bank') }}"><i class="fas fa-university"></i>Bank</a></li>
                     <li><a href="{{ route('bank.transaction') }}"><i class="fas fa-university"></i>Bank Trasection</a></li>
                     <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
+                    <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li>
                 </ul>
             </li>
             <li><a href="#" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Widget</span></a></li>
