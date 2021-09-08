@@ -15,17 +15,26 @@
       </div>
 
       <div class="form-group">
-        <label for="exampleFormControlInput1">From Date</label>
-        <input type="date" class="form-control" name="from"id="exampleFormControlInput1" placeholder="name@example.com">
+        <label for="datepicker">From Date</label>
+        <input type="text" class="form-control datepicker" name="from" id="from">
       </div>
       <div class="form-group">
-        <label for="exampleFormControlInput1">To Email address</label>
-        <input type="date" class="form-control" name="to" id="exampleFormControlInput1" placeholder="name@example.com">
+        <label for="datepicker">To Date</label>
+        <input type="text" class="form-control datepicker" name="to" id="to">
       </div>
 
 
       <button type="submit"  class="btn btn-dark" >Dark</button>
 
 </form>
-
+<script>
+$(document).ready(function () {
+    minDate = new DateTime($('#from'), {
+                format: 'YYYY-MM-DD'
+            });
+            maxDate = new DateTime($('#to'), {
+                format: 'YYYY-MM-DD'
+            });
+});
+</script>
 @endsection

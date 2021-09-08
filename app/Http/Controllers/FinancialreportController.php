@@ -60,13 +60,13 @@ class FinancialreportController extends Controller
                                 ->groupBy('date')
                                 ->where('date',$request->input('from'))
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
-                                // ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->get();
         $data6 = BankTransaction::select('date')
                                 ->groupBy('date')
                                 ->where('date',$request->input('to'))
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
-                                // ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->get();
 
         return view('backend.Financialreport.detailsreport',compact('data','data1','data2', 'data3','data4','data5','data6'));
