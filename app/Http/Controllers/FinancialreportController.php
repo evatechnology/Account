@@ -57,8 +57,8 @@ class FinancialreportController extends Controller
                                 ->get()
                                 ->sum('amount');
         $data5 = BankTransaction::select('date')
-                                ->groupBy('date')
                                 ->where('date',$request->input('from'))
+                                ->groupBy('date')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->get();

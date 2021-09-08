@@ -13,7 +13,10 @@
                     @foreach ($data5 as $data5 )
                         {{ $data5->date }}
                     @endforeach
-                    
+                    -
+                    @foreach ($data6 as $data6 )
+                        {{ $data6->date }}
+                    @endforeach
         </h3>
             <table class="table" id="sum_table">
                 <thead>
