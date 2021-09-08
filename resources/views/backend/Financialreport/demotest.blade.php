@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Bank Ledger')
+@section('title', 'Bank Report')
 @section('content')
 
 
