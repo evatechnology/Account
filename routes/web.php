@@ -66,7 +66,7 @@ Route::resource('bank/transaction', 'BankTransactionController');
 Route::get('/admin/bank/transaction','BankTransactionController@index')->name('bank.transaction');
 Route::get('/admin/bank/dropdown/{id}','BankTransactionController@bankaccount');
 Route::post('/admin/bank/transaction','BankTransactionController@store')->name('transction.add');
-Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@destroy1');
+Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@destroy');
 
 
 Route::resource('ledger', 'LedgerController');
@@ -74,4 +74,4 @@ Route::get('/admin/ledger','LedgerController@index')->name('ledger');
 
 Route::get('/admin/report','FinancialreportController@index');
 Route::get('/getdata','FinancialreportController@search')->name('search');
-Route::get('/getdata/{id}','FinancialreportController@search1');
+Route::get('/search','FinancialreportController@search1');

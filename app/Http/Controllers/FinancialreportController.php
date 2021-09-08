@@ -27,8 +27,8 @@ class FinancialreportController extends Controller
     }
     public function search1(Request $request)
     {
-        $id = $request->id;
-
+    
+        $data = BankTransaction::where('account_number','like', '%'. $request->input('account_number').'%')->get();
         return view('backend.Financialreport.detailsreport',compact('data'));
 
     }
