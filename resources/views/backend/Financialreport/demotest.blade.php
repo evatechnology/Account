@@ -14,21 +14,18 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label for="exampleFormControlInput1">From Date</label>
+        <input type="date" class="form-control" name="from"id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">To Email address</label>
+        <input type="date" class="form-control" name="to" id="exampleFormControlInput1" placeholder="name@example.com">
+      </div>
+
 
       <button type="submit"  class="btn btn-dark" >Dark</button>
 
 </form>
 
-{{-- <script>
-    $('#search').on("click", function(){
-        var account_number = document.getElementById('account_number').value;
-        $.ajax({
-            type:'get',
-            url: '/getdata/'+account_number,
-            success: function(response) {
-                console.log("Success");
-            }
-        });
-    });
-</script> --}}
 @endsection

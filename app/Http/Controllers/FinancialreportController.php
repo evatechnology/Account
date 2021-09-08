@@ -6,6 +6,8 @@ use App\Models\BankTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\type;
+
 class FinancialreportController extends Controller
 {
     /**
@@ -27,9 +29,47 @@ class FinancialreportController extends Controller
     }
     public function search1(Request $request)
     {
-    
-        $data = BankTransaction::where('account_number','like', '%'. $request->input('account_number').'%')->get();
-        return view('backend.Financialreport.detailsreport',compact('data'));
+
+        $data1 = BankTransaction::select('account_number')
+                                  ->groupBy('account_number')
+                                  ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                  ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                  ->get();
+
+        $data = BankTransaction::where('type','credit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+        $data3 = BankTransaction::where('type','credit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get()
+                                ->sum('amount');
+
+        $data2 = BankTransaction::where('type','debit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+
+        $data4 = BankTransaction::where('type','debit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get()
+                                ->sum('amount');
+        $data5 = BankTransaction::select('date')
+                                ->groupBy('date')
+                                ->where('date',$request->input('from'))
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                // ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+        $data6 = BankTransaction::select('date')
+                                ->groupBy('date')
+                                ->where('date',$request->input('to'))
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                // ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+
+        return view('backend.Financialreport.detailsreport',compact('data','data1','data2', 'data3','data4','data5','data6'));
 
     }
 
