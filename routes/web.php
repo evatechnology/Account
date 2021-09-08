@@ -73,5 +73,5 @@ Route::resource('ledger', 'LedgerController');
 Route::get('/admin/ledger','LedgerController@index')->name('ledger');
 
 Route::get('/admin/report','FinancialreportController@index');
-Route::get('/getdata','FinancialreportController@search')->name('search');
-Route::get('/search','FinancialreportController@search1');
+Route::get('/bank/report/search','FinancialreportController@search')->name('search');
+Route::get('/bank/report/details','FinancialreportController@search1');

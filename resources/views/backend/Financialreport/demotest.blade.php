@@ -9,7 +9,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="/search">
+                    <form action="/bank/report/details">
                         <div class="form-group">
                             <label for="exampleFormControlSelect1" class="text-dark">Account Number</label>
                             <select class="form-control border border-primary" name="account_number" id="account_number">
