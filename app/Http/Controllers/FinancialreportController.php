@@ -37,7 +37,7 @@ class FinancialreportController extends Controller
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->get();
-                                
+
         $data3 = BankTransaction::where('type','credit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
@@ -55,23 +55,10 @@ class FinancialreportController extends Controller
                                 ->get()
                                 ->sum('amount');
 
-        $data5 = BankTransaction::select('date')
-                                ->where('date',$request->input('from'))
-                                ->groupBy('date')
-                                ->where('account_number','like', '%'. $request->input('account_number').'%')
-                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
-                                ->get();
         $data7= $request->input('from');
-
-        $data6 = BankTransaction::select('date')
-                                ->groupBy('date')
-                                ->where('date',$request->input('to'))
-                                ->where('account_number','like', '%'. $request->input('account_number').'%')
-                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
-                                ->get();
         $data8= $request->input('to');
 
-        return view('backend.Financialreport.detailsreport',compact('data','data1','data2', 'data3','data4','data5','data6','data7','data8'));
+        return view('backend.Financialreport.detailsreport',compact('data','data1','data2', 'data3','data4','data7','data8'));
 
     }
 

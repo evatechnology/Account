@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankTransaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LedgerController extends Controller
@@ -15,15 +17,59 @@ class LedgerController extends Controller
     {
         return view('backend.ledger.ledger');
     }
+    public function index1()
+    {
+        return view('backend.ledger.ledger1');
+    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function genarateledger(Request $request)
     {
-        //
+        $data = BankTransaction::select('account_number')
+                                ->groupBy('account_number')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+
+        $data1 = $request->input('from');
+        $data2 = $request->input('to');
+
+        $data3 = BankTransaction::where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get();
+        $data4 = BankTransaction::where('type','credit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get()
+                                ->sum('amount');
+
+        $data5 = BankTransaction::where('type','debit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->get()
+                                ->sum('amount');
+
+        $previousdate = Carbon::createFromDate($request->input('from'))->subDays();
+        $data6 = BankTransaction::where('type','credit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',['2000-01-01',$previousdate])
+                                ->get()
+                                ->sum('amount');
+
+        $data7 = BankTransaction::where('type','debit')
+                                ->where('account_number','like', '%'. $request->input('account_number').'%')
+                                ->whereBetween('date',['2000-01-01',$previousdate])
+                                ->get()
+                                ->sum('amount');
+
+        $data8 = $data6 - $data7;
+
+
+        return view('backend.ledger.ledger-details',compact('data','data1','data2','data3','data4','data5','data8'));
     }
 
     /**
