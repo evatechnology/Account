@@ -6,7 +6,7 @@
             <li><a href="{{ route('company') }}" aria-expanded="false"><i class="fab fa-artstation"></i><span class="nav-text">Company</span></a></li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fas fa-users"></i><span class="nav-text">Employees</span></a>
                 <ul aria-expanded="false">
-                    <li><a href="#"><i class="fas fa-users"></i>Position</a></li>
+                    <li><a href="{{ route('position') }}"><i class="fas fa-users"></i>Position</a></li>
                     <li><a href="{{ route('employees') }}"><i class="fas fa-users"></i>Employees</a></li>
                 </ul>
             </li>

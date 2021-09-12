@@ -113,20 +113,24 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label>Company List</label>
-                            <select class="form-control" id="sel1" name="company_id">
+                            <select class="form-control" id="company_id" name="company_id">
                                 <option selected disabled>Please Select Company</option>
-                                @foreach (App\Models\Company::get() as $item )
+                                @foreach ($company as $item )
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
-
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label>Position<small class="text-danger">*</small></label>
-                            <input type="text" name="position" class="form-control" placeholder="Assistant Manager"/>
+                            <label for="position">Position:</label>
+                            <select name="position_id" id="position_id" class="form-control">
+                                <option selected disabled>Please Select Company First</option>
+                            </select>
                         </div>
+
                         <div class="form-group">
                             <label>Salary<small class="text-danger">*</small></label>
                             <input type="text" name="salary" class="form-control" placeholder="250000.00"/>
@@ -151,7 +155,42 @@
         </div>
     </div>
     {{-- Data Add Modal End --}}
+    <script>
+        // when country dropdown changes
+        $('#company_id').change(function() {
 
+            var companyID = $(this).val();
+
+            if (companyID) {
+                //console.log(companyID);
+                $.ajax({
+                    type: "GET",
+                    url: "/admin/employees/position/" + companyID,
+                    success: function(res) {
+                        //console.log(res);
+                        if (res) {
+
+                            $("#position_id").empty();
+                            $("#position_id").append('<option>Select Position</option>');
+                            $.each(res, function(key, value) {
+                                $("#position_id").append('<option value="' + key + '">' + value.name +
+                                    '</option>');
+                                    //console.log(key);
+                            });
+
+                        } else {
+
+                            $("#position_id").empty();
+                        }
+                    }
+                });
+            } else {
+
+                $("#position_id").empty();
+            }
+        });
+
+    </script>
 
     <script>
         var table = $('#example').DataTable();

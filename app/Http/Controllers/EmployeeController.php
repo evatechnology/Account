@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Employee;
+use App\Models\Payroll;
+use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -22,8 +26,16 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::get();
-        return view('backend.employees.employees',compact('employees'));
+        $company = Company::get();
+        return view('backend.employees.employees',compact('employees','company'));
     }
+
+    public function getPosition(Request $request)
+    {
+        $position = Position::where('company_id', $request->id)->get();
+        return response()->json($position);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,15 +56,16 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
+            // 'employee_id' =>'required|max:191',
             'name' =>'required|max:191',
             'email' =>'required|email|max:191',
             'phone' =>'required|min:11|max:191',
             'address' =>'required|max:191',
             'gender' =>'required|max:191',
-            'position' =>'required|max:191',
             'salary' =>'required|max:191',
             'image' =>'required|mimes:jpg,png',
             'company_id' =>'required',
+            'position_id' =>'required',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -61,23 +74,55 @@ class EmployeeController extends Controller
             ]);
         }
         else{
-            $employees = new Employee;
-            $employees->name = $request->name;
-            $employees->email = $request->email;
-            $employees->phone = $request->phone;
-            $employees->address = $request->address;
-            $employees->gender = $request->gender;
-            $employees->position = $request->position;
-            $employees->salary = $request->salary;
-            $employees->company_id = $request->company_id;
-            if($request->hasFile('image')){
-                $image = $request->file('image');
-                $image_name = time().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path().'/backend/image/employee/',$image_name);
-                $employees->image = $image_name;
-            }
-            $employees->save();
-            return response()->json(['success'=>'Data Add successfully.']);
+
+                $employees = new Employee;
+                $employees->employee_id = date('y-m-d').rand(0,999);
+                $employees->name = $request->name;
+                $employees->email = $request->email;
+                $employees->phone = $request->phone;
+                $employees->address = $request->address;
+                $employees->gender = $request->gender;
+                $employees->company_id = $request->company_id;
+                $employees->position_id = $request->position_id;
+                $employees->salary = $request->salary;
+
+                if($request->hasFile('image')){
+                    $image = $request->file('image');
+                    $image_name = time().'.'.$image->getClientOriginalExtension();
+                    $image->move(public_path().'/backend/image/employee/',$image_name);
+                    $employees->image = $image_name;
+                }
+                $employees->save();
+                return response()->json(['success'=>'Data Add successfully.']);
+            // DB::transaction(function () use($request) {
+            //     $employees = new Employee;
+            //     $employees->employee_id = date('y-m-d').rand(0,999);
+            //     $employees->name = $request->name;
+            //     $employees->email = $request->email;
+            //     $employees->phone = $request->phone;
+            //     $employees->address = $request->address;
+            //     $employees->gender = $request->gender;
+            //     $employees->company_id = $request->company_id;
+            //     $employees->position_id = $request->position_id;
+            //     $employees->salary = $request->salary;
+
+            //     if($request->hasFile('image')){
+            //         $image = $request->file('image');
+            //         $image_name = time().'.'.$image->getClientOriginalExtension();
+            //         $image->move(public_path().'/backend/image/employee/',$image_name);
+            //         $employees->image = $image_name;
+            //     }
+
+            //     $payroll = New Payroll;
+            //     $payroll->employee_id = $employees->employee_id;
+            //     $payroll->bonous = $employees->salary;
+            //     $payroll->reason = 'Starting Salary';
+
+
+            //     $employees->save();
+            //     $payroll->save();
+            //     return response()->json(['success'=>'Data Add successfully.']);
+            // });
         }
     }
 

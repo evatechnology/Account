@@ -86,7 +86,7 @@ class BankController extends Controller
     public function edit($id)
     {
         $bank = Bank::find($id);
-        return view('backend.bank.bankedit',compact('bank'));
+        return response()->json($bank);
     }
 
     /**
@@ -96,14 +96,15 @@ class BankController extends Controller
      * @param  \App\Models\Bank  $bank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
-        $bank = Bank::find($id);
+        $bank = Bank::find($request->id);
         $bank->bank_name = $request->bank_name;
         $bank->account_number = $request->account_number;
-        $bank->balance = $request->balance;
+        // $bank->balance = $request->balance;
         $bank->update();
-        return redirect()->route('bank');
+        return response()->json($bank);
+        // return redirect()->route('bank');
     }
 
     /**

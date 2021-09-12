@@ -158,6 +158,7 @@
 
     <script>
         var table = $('#example').DataTable();
+        
         $('#BankForm').on('submit', function(e) {
             e.preventDefault();
             $.ajaxSetup({

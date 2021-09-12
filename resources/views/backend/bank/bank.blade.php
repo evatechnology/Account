@@ -16,34 +16,34 @@
     </div>
     <div class="row">
 
-@foreach ($bank as $item )
-<div class="col-sm-4">
-    <div class="card shadow-lg" id="bank-card">
-        <div class="card-body">
-            <h4 class="text-light text-center">{{ $item->bank_name }}</h4>
-            <hr class="text-light">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h6 class="text-light text-center">Account Number</h6>
-                    <h5 class="text-light text-center">{{ $item->account_number }} </h5>
+    @foreach ($bank as $item )
+    <div class="col-sm-4">
+        <div class="card shadow-lg" id="bank-card">
+            <div class="card-body">
+                <h4 class="text-light text-center">{{ $item->bank_name }}</h4>
+                <hr class="text-light">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h6 class="text-light text-center">Account Number</h6>
+                        <h5 class="text-light text-center">{{ $item->account_number }} </h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <h6 class="text-light text-center">Current Balance</h6>
+                        <h4 class="text-light text-center">{{ $item->balance }}<small>&nbsp;tk</small></h4>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <h6 class="text-light text-center">Current Balance</h6>
-                    <h4 class="text-light text-center">{{ $item->balance }}<small>&nbsp;tk</small></h4>
-                </div>
-            </div>
-            <hr class="text-light">
-            <div class="row">
-                <div class="col-sm-8"><small class="text-light">Last update {{ $item->updated_at->diffForHumans() }}</small></div>
-                <div class="col-sm-4">
-                    <a type="button" class="btn btn-outline-warning btn-sm" href="{{ route('bank.edit', $item->id) }}"><i class="fas fa-pencil-alt"></i></a>
-                    <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                <hr class="text-light">
+                <div class="row">
+                    <div class="col-sm-8"><small class="text-light">Last update {{ $item->updated_at->diffForHumans() }}</small></div>
+                    <div class="col-sm-4">
+                        <a type="button" class="btn btn-outline-warning btn-sm" href="javascript:void(0);" onclick="editBank({{ $item->id }})"><i class="fas fa-pencil-alt"></i></a>
+                        <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endforeach
+    @endforeach
 
 
 
@@ -86,7 +86,7 @@
                                         <i class="fas fa-ellipsis-h fa-lg"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                        <a class="dropdown-item" href="{{ route('bank.edit', $item->id) }}"><i class="fas fa-pencil-alt text-warning"></i> Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="editBank({{ $item->id }})"><i class="fas fa-pencil-alt text-warning"></i> Edit</a>
                                         <a class="dropdown-item deletebtn" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt text-danger"></i> Delete</a>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="modal-body">
                     <ul id="BankForm_errorlist"></ul>
-                    <form class="forms-sample" id="BankForm" method="POST" enctype="multipart/form-data">
+                    <form class="forms-sample" id="BankForm" >
                         @csrf
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
 
@@ -169,7 +169,47 @@
 
 
 
-
+    {{-- Data Edit Model Start --}}
+    <div class="modal fade" id="BankEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="text-center">
+                        <h3 class="modal-title" id="exampleModalLabel">Edit Bank Details</h3>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul id="BankForm_errorlist"></ul>
+                    <form class="forms-sample" id="BankEditForm">
+                        @csrf
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-group">
+                            <label>Bank Name<span class="text-danger">*</span></label>
+                            <input type="text" name="bank_name" id="bank_name" class="form-control" placeholder="Bank Name"
+                                  />
+                        </div>
+                        <div class="form-group">
+                            <label>Account Number<small class="text-danger">*</small></label>
+                            <input type="text" name="account_number" id="account_number" class="form-control" placeholder="Account Number"/>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label>Balance<small class="text-danger">*</small></label>
+                            <input type="text" name="balance" id="balance" class="form-control" placeholder="Account Number"/>
+                        </div> --}}
+                        <div class="float-right">
+                            <button type="submit" class="btn  btn-sm btn-gradient-primary mr-2">Submit</button>
+                            <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Data Edit Modal End --}}
 
 
 
@@ -242,4 +282,46 @@
                 }
         });
     </script>
+
+<script>
+    function editBank(id){
+        $.get("/admin/bank/edit/"+id, function(bank){
+            $('#id').val(bank.id);
+            $('#bank_name').val(bank.bank_name);
+            $('#account_number').val(bank.account_number);
+            // $('#balance').val(bank.balance);
+            $('#BankEditModal').modal("toggle");
+        });
+    }
+
+    $('#BankEditForm').submit(function (e) {
+        e.preventDefault();
+
+        let id = $('#id').val();
+        let bank_name = $('#bank_name').val();
+        let account_number = $('#account_number').val();
+        let _token = $('input[name=_token]').val();
+
+        $.ajax({
+            type: "PUT",
+            url: "/admin/bank/update",
+            data: {
+                id:id,
+                bank_name:bank_name,
+                account_number:account_number,
+                _token:_token,
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#bank'+response.id + 'td:nth-child(1)').text(response.bank_name);
+                $('#bank'+response.id + 'td:nth-child(2)').text(response.account_number);
+                $('#BankEditModal').modal("toggle");
+                location.reload();
+                $('#BankEditForm')[0].reset();
+
+            }
+        });
+
+    });
+</script>
 @endsection

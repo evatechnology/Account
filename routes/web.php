@@ -32,10 +32,18 @@ Route::get('admin/company/details/{id}','CompanyController@show')->name('company
 Route::get('admin/company/edit/{id}','CompanyController@edit')->name('company.edit');
 Route::put('company-update/{id}','CompanyController@update')->name('company.update');
 
+//------------------------------------Position---------------------------///////
+Route::resource('position', 'PositionController');
+Route::get('/admin/position','PositionController@index')->name('position');
+Route::post('/admin/position/add','PositionController@store');
+Route::delete('/admin/position/delete/{id}','PositionController@destroy');
+Route::get('/admin/position/edit/{id}', 'PositionController@edit');
+Route::put('/admin/position/update', 'PositionController@update');
 ///////////____________________EMPLOYEE______________________//////////////
 
 Route::resource('employees', 'EmployeeController');
 Route::get('/admin/employees','EmployeeController@index')->name('employees');
+Route::get('/admin/employees/position/{id}','EmployeeController@getPosition');
 Route::post('/admin/employees/add','EmployeeController@store')->name('employee-add');
 Route::delete('/admin/employees/delete/{id}','EmployeeController@destroy')->name('employee-destroy');
 Route::get('admin/employees/edit/{id}','EmployeeController@edit')->name('employee.edit');
@@ -60,7 +68,7 @@ Route::get('/admin/bank', 'BankController@index')->name('bank');
 Route::post('/admin/bank/add', 'BankController@store')->name('bank-add');
 Route::delete('/admin/bank/delete/{id}','BankController@destroy');
 Route::get('/admin/bank/edit/{id}', 'BankController@edit')->name('bank.edit');
-Route::put('/admin/bank/edit/{id}', 'BankController@update')->name('bank.update');
+Route::put('/admin/bank/update', 'BankController@update')->name('bank.update');
 
 Route::resource('bank/transaction', 'BankTransactionController');
 Route::get('/admin/bank/transaction','BankTransactionController@index')->name('bank.transaction');

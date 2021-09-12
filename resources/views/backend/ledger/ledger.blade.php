@@ -62,21 +62,7 @@
                         @php
                             $i = 0;
                         @endphp
-{{-- <tr>
-    <td></td>
 
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td class="text-center"></td>
-    <td class="text-center"></td>
-    <td class="text-center">
-        @foreach (App\Models\BankTransaction::get() as $item)
-            {{ $item->amount }}
-        @endforeach
-    </td>
-</tr> --}}
                         @foreach (App\Models\BankTransaction::get() as $item)
                             <tr id="editcompanybalance{{ $item->id }}">
                                 <td>{{ ++$i }}</td>

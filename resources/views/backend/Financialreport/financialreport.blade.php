@@ -188,14 +188,14 @@
                     var column = this.api().column(0);
                     var select = $('<select class="form-control" ><option value="">All Account</option></select>')
                         .appendTo($('#account_number').empty())
-                        .on('change', function() {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            document.getElementById("account_number1").innerHTML = val;
-                            //console.log(column);
-                        });
+                        // .on('change', function() {
+                        //     var val = $.fn.dataTable.util.escapeRegex(
+                        //         $(this).val()
+                        //     );
+                        //     column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        //     document.getElementById("account_number1").innerHTML = val;
+                        //     //console.log(column);
+                        // });
                         column.data().unique().sort().each(function(d, j) {
                             select.append('<option value="' + d + '">' + d + '</option>');
 
@@ -209,7 +209,14 @@
             $('#min, #max').on('change', function () {
                 table.draw();
             });
-
+            $('.form-control').on('change', function() {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            table.tables([0,1]).search(val, true, false).draw();
+                            document.getElementById("account_number1").innerHTML = val;
+                            //console.log(column);
+            });
 
         });
     </script>

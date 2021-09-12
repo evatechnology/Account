@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PositionController extends Controller
 {
@@ -14,7 +15,8 @@ class PositionController extends Controller
      */
     public function index()
     {
-        //
+        $position = Position::get();
+        return view('backend.employees.position.position', compact('position'));
     }
 
     /**
@@ -35,7 +37,25 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|max:191',
+            'salary' => 'required|max:191',
+            'company_id' => 'required|max:191',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status'=>400,
+                'errors'=>$validator->messages(),
+            ]);
+        }
+        else{
+            $position = new Position;
+            $position->name = $request->name;
+            $position->salary = $request->salary;
+            $position->company_id = $request->company_id;
+            $position->save();
+            return response()->json(['success'=>'Data Add successfully.']);
+        }
     }
 
     /**
@@ -55,9 +75,10 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function edit(Position $position)
+    public function edit($id)
     {
-        //
+        $position = Position::find($id);
+        return response()->json($position);
     }
 
     /**
@@ -67,9 +88,14 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(Request $request)
     {
-        //
+        $position = Position::find($request->id);
+        $position->name = $request->name;
+        $position->salary = $request->salary;
+        $position->company_id = $request->company_id;
+        $position->save();
+        return response()->json(['success'=>'Data Add successfully.']);
     }
 
     /**
@@ -78,8 +104,10 @@ class PositionController extends Controller
      * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Position $position)
+    public function destroy($id)
     {
-        //
+        $position = Position::find($id);
+        $position->delete();
+        return response()->json(['success'=>'Data Delete successfully.']);
     }
 }
