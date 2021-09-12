@@ -21,12 +21,12 @@ class CreateEmployeesTable extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
-            $table->unsignedInteger('company_id');
             $table->unsignedInteger('position_id');
+            $table->unsignedInteger('company_id');
             $table->string('salary')->nullable();
             $table->string('image')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }
