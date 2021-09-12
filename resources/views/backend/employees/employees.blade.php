@@ -19,6 +19,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Company Name</th>
+                        <th>Position</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->companyname->name }}</td>
+                            <td>{{ $item->position->name }}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -56,6 +58,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Company Name</th>
+                        <th>Position Name</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -173,9 +176,9 @@
                             $("#position_id").empty();
                             $("#position_id").append('<option>Select Position</option>');
                             $.each(res, function(key, value) {
-                                $("#position_id").append('<option value="' + key + '">' + value.name +
+                                $("#position_id").append('<option value="' + value.id + '">' + value.name +
                                     '</option>');
-                                    //console.log(key);
+                                    //console.log(value);
                             });
 
                         } else {
