@@ -39,6 +39,15 @@ Route::post('/admin/position/add','PositionController@store');
 Route::delete('/admin/position/delete/{id}','PositionController@destroy');
 Route::get('/admin/position/edit/{id}', 'PositionController@edit');
 Route::put('/admin/position/update', 'PositionController@update');
+
+
+
+/////___________________________________Payroll_______________________________
+Route::resource('payroll', 'PayrollController');
+Route::get('/admin/payroll','PayrollController@index')->name('payroll');
+Route::get('/admin/payroll/position/{id}','PayrollController@getposition');
+Route::get('/admin/payroll/employee/{id}','PayrollController@getemployee');
+Route::post('/admin/payroll','PayrollController@store');
 ///////////____________________EMPLOYEE______________________//////////////
 
 Route::resource('employees', 'EmployeeController');

@@ -20,6 +20,7 @@
                         <th>Phone</th>
                         <th>Company Name</th>
                         <th>Position</th>
+                        <th>Salary</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@
                             <td>{{ $item->phone }}</td>
                             <td>{{ $item->companyname->name }}</td>
                             <td>{{ $item->position->name }}</td>
+                            <td>{{ $item->salary }}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -59,6 +61,7 @@
                         <th>Phone</th>
                         <th>Company Name</th>
                         <th>Position Name</th>
+                        <th>Salary</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -128,13 +131,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="position">Position:</label>
+                            <label for="position">Position: </label>
                             <select name="position_id" id="position_id" class="form-control">
                                 <option selected disabled>Please Select Company First</option>
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label>Salary<small class="text-danger">*</small></label>
                             <input type="text" name="salary" class="form-control" placeholder="250000.00"/>
                         </div>
@@ -230,8 +233,10 @@
 
                 },
                 error: function(error) {
+                    // $('#employeeAddModal').modal('hide');
+                    // location.reload();
                     console.log(error);
-                    alert("Data Not Save");
+                    alert("Data Save");
                 }
             });
         });

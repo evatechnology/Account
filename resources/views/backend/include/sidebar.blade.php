@@ -8,6 +8,7 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('position') }}"><i class="fas fa-users"></i>Position</a></li>
                     <li><a href="{{ route('employees') }}"><i class="fas fa-users"></i>Employees</a></li>
+                    <li><a href="{{ route('payroll') }}"><i class="fas fa-users"></i>Payroll</a></li>
                 </ul>
             </li>
             <li><a href="{{ route('company.balance') }}" aria-expanded="false"><i class="fas fa-users"></i><span class="nav-text">Company Trasection</span></a></li>
