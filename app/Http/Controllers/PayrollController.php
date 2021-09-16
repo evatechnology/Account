@@ -28,7 +28,7 @@ class PayrollController extends Controller
 
     public function getposition($id)
     {
-        $position = Position::where('id', $id)->get();
+        $position = Position::where('company_id', $id)->get();
         return response()->json($position);
     }
     public function getemployee($position_id)
