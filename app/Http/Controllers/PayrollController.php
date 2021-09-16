@@ -28,7 +28,7 @@ class PayrollController extends Controller
 
     public function getposition($id)
     {
-        $position = Position::where('id', $id)->get();
+        $position = Position::where('company_id', $id)->get();
         return response()->json($position);
     }
     public function getemployee($position_id)
@@ -146,27 +146,25 @@ class PayrollController extends Controller
                 $employee->save();
                 return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
                 exit;
-
-                // exit;
             }
-            // elseif($bankTransaction->type=='Travel Allowance'){
-            //     if($bank->balance >= $transactionamount){
-            //         $bank->balance -= $transactionamount;
-            //         $bankTransaction->temp_balance =$bank->balance;
+            if($payroll->reason =='Mobile Allowance'){
+                $employee->salary += $transactionamount;
+                //$bankTransaction->temp_balance =$bank->balance;
 
-            //     $bankTransaction->save();
-            //     $bank->save();
-            //         return redirect()->back()->with('success','Expense Added Successfully');
-            //         exit;
-            //     }
-            //     elseif($bank->balance <= $transactionamount){
-            //         DB::rollBack();
-            //         return redirect()->back()->with('error', 'Please Check Balance!');
-            //         exit;
-            //     }
-            // }
+                $payroll->save();
+                $employee->save();
+                return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
+                exit;
+            }
+            if($payroll->reason =='Salary Gross'){
+                $employee->salary += $transactionamount;
+                //$bankTransaction->temp_balance =$bank->balance;
 
-
+                $payroll->save();
+                $employee->save();
+                return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
+                exit;
+            }
     });
     return redirect()->back();
     }
