@@ -94,3 +94,9 @@ Route::get('/admin/ledger/details','LedgerController@genarateledger')->name('led
 Route::get('/admin/report','FinancialreportController@index');
 Route::get('/bank/report/search','FinancialreportController@search')->name('search');
 Route::get('/bank/report/details','FinancialreportController@search1');
+
+
+
+Route::resource('rules','RulesController');
+Route::get('/admin/rules','RulesController@index')->name('rules');
+Route::post('/admin/rules/add', 'RulesController@store')->name('rules&policy');

@@ -20,7 +20,7 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        $payroll = Payroll::get();
+        $payroll = Payroll::orderBy('id','desc')->get();
         // $employees = Employee::get();
         $company = Company::get();
         return view('backend.payroll.payroll',compact('payroll','company'));

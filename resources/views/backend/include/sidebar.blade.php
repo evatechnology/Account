@@ -11,16 +11,42 @@
                     <li><a href="{{ route('payroll') }}"><i class="fas fa-users"></i>Payroll</a></li>
                 </ul>
             </li>
-            <li><a href="{{ route('company.balance') }}" aria-expanded="false"><i class="fas fa-users"></i><span class="nav-text">Company Trasection</span></a></li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Bank</span></a>
+            <li><a href="{{ route('bank') }}" aria-expanded="false"><i class="fas fa-university"></i><span class="nav-text">Bank</span></a></li>
+            {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Bank</span></a>
                 <ul aria-expanded="false">
                     <li><a href="{{ route('bank') }}"><i class="fas fa-university"></i>Bank</a></li>
                     <li><a href="{{ route('bank.transaction') }}"><i class="fas fa-university"></i>Bank Trasection</a></li>
                     <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
                     <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li>
                 </ul>
+            </li> --}}
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Transection</span></a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('company.balance') }}"><i class="fas fa-file-invoice-dollar"></i>Company Transection</a></li>
+                    <li><a href="{{ route('bank.transaction') }}"><i class="fas fa-file-invoice-dollar"></i>Bank Trasection</a></li>
+                    {{-- <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
+                    <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li> --}}
+                </ul>
             </li>
-            <li><a href="#" aria-expanded="false"><i class="icon icon-globe-2"></i><span class="nav-text">Widget</span></a></li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fas fa-book"></i><span class="nav-text">Ledger</span></a>
+                <ul aria-expanded="false">
+                    {{-- <li><a href="{{ route('company.balance') }}"><i class="fas fa-university"></i>Company Transection</a></li> --}}
+                    <li><a href="{{ route('ledger') }}"><i class="fas fa-book-open"></i>Bank Ledger</a></li>
+                    {{-- <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
+                    <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li> --}}
+                </ul>
+            </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fab fa-buffer"></i><span class="nav-text">Financial Report</span></a>
+                <ul aria-expanded="false">
+                    {{-- <li><a href="{{ route('company.balance') }}"><i class="fas fa-university"></i>Company Transection</a></li> --}}
+                    <li><a href="{{ route('search') }}"><i class="far fa-file-alt"></i>Bank Report</a></li>
+                    {{-- <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
+                    <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li> --}}
+                </ul>
+            </li>
+
+            <li><a href="{{ route('rules') }}" aria-expanded="false"><i class="fas fa-university"></i><span class="nav-text">Rules & Policy</span></a></li>
+
         </ul>
     </div>
 
