@@ -115,7 +115,7 @@
                             <label>Company Name</label>
                             <select class="form-control" id="reason" name="reason">
                                 <option selected disabled>Please Select Reason</option>
-                                <option  value="Travel_Allowance">Travel Allowance</option>
+                                <option  value="Travel Allowance">Travel Allowance</option>
                                 <option  value="Mobile Allowance">Mobile Allowance</option>
                                 <option  value="Salary Gross">Salary Gross</option>
                             </select>
@@ -125,7 +125,7 @@
                             <label>Amount</label>
                             <input type="text" name="bonous" class="form-control" placeholder="250000.00"/>
                         </div>
-                        
+
 
 
 
