@@ -35,7 +35,7 @@
                             <div class="btn-group">
                                 <a href="#" role="button" class="btn btn-sm btn-outline-success mr-2"><i class="fas fa-eye"></i></a>
                                 <a href="#" role="button" class="btn btn-sm btn-outline-info mr-2"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="#" role="button" class="btn btn-sm btn-outline-danger mr-2"><i class="fas fa-trash"></i></a>
+                                <a href="javascript:void(0);" data-id="{{ $item->id }}" role="button" class="btn btn-sm btn-outline-danger mr-2 deletebtn"><i class="fas fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -152,6 +152,32 @@
                     alert("Data Not Save");
                 }
             });
+        });
+
+
+
+
+
+        $('body').on('click', '.deletebtn', function() {
+            var id = $(this).data("id");
+            var token = $("meta[name='csrf-token']").attr("content");
+            if (confirm("Are You sure want to delete !")) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "/admin/rules/delete/" + id,
+                    data: {
+                        "id": id,
+                        "_token": token,
+                        },
+                    success: function(data) {
+                        location.reload();
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
+                }
         });
 </script>
 @endsection

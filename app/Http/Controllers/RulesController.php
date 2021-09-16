@@ -42,7 +42,7 @@ class RulesController extends Controller
             // 'title' =>'string|max:191',
             'description' =>'string',
         ]);
-        
+
         if($validator->fails()){
             return response()->json([
                 'status'=>400,
@@ -101,8 +101,10 @@ class RulesController extends Controller
      * @param  \App\Models\Rules  $rules
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rules $rules)
+    public function destroy($id)
     {
-        //
+        $rules = Rules::find($id);
+        $rules->delete();
+        return response()->json(['success'=>'Data Delete successfully.']);
     }
 }

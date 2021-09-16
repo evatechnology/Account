@@ -100,3 +100,4 @@ Route::get('/bank/report/details','FinancialreportController@search1');
 Route::resource('rules','RulesController');
 Route::get('/admin/rules','RulesController@index')->name('rules');
 Route::post('/admin/rules/add', 'RulesController@store')->name('rules&policy');
+Route::delete('/admin/rules/delete/{id}','RulesController@destroy');
