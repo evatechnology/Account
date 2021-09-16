@@ -31,7 +31,13 @@
                         <td>{{ $item->type }}</td>
                         <td>{{ $item->title }}</td>
                         <td>{{ $item->description }}</td>
-                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" role="button" class="btn btn-sm btn-outline-success mr-2"><i class="fas fa-eye"></i></a>
+                                <a href="#" role="button" class="btn btn-sm btn-outline-info mr-2"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" role="button" class="btn btn-sm btn-outline-danger mr-2"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
 

@@ -42,6 +42,7 @@ class RulesController extends Controller
             // 'title' =>'string|max:191',
             'description' =>'string',
         ]);
+        
         if($validator->fails()){
             return response()->json([
                 'status'=>400,
