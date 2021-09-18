@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-body">
                     <ul id="RulesForm_errorlist"></ul>
-                    <form class="forms-sample" method="POST" id="RulesForm" >
+                    <form class="forms-sample" method="POST" id="RulesForm" enctype="multipart/form-data">
                         @csrf
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
 
@@ -90,7 +90,8 @@
                         </div>
                         <div class="form-group" >
                             <label>Description</label>
-                            <textarea id="editor" type="text" name="description" rows="5" class="form-control"></textarea>
+                            {{-- <div class="summernote" name="description"></div> --}}
+                            <textarea id="editor" type="text" name="description" rows="5" class="form-control summernote"></textarea>
                         </div>
 
                         <div class="float-right">

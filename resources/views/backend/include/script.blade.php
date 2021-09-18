@@ -22,6 +22,11 @@
 <!-- Owl Carousel -->
 <script src="{{ asset('backend/vendor/owl-carousel/js/owl.carousel.min.js') }}"></script>
 
+<!-- Summernote -->
+<script src="{{ asset('backend/vendor/summernote/js/summernote.min.js') }}"></script>
+<!-- Summernote init -->
+<script src="{{ asset('backend/js/plugins-init/summernote-init.js') }}"></script>
+
 <!-- Counter Up -->
 {{-- <script src="{{ asset('backend/vendor/jqvmap/js/jquery.vmap.min.js') }}"></script>
 <script src="{{ asset('backend/vendor/jqvmap/js/jquery.vmap.usa.js') }}"></script> --}}
@@ -31,6 +36,8 @@
 <script src="https://cdn.datatables.net/plug-ins/1.11.0/api/sum().js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.0/js/dataTables.dateTime.min.js"></script>
+
+
 
 <script src="{{ asset('backend/js/dashboard/dashboard-1.js') }}"></script>
 </body>
