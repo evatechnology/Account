@@ -3,9 +3,12 @@ jQuery(document).ready(function() {
         height: 190,
         minHeight: null,
         maxHeight: null,
-        focus: !1
+        focus: true,
+        codemirror: { // codemirror options
+            theme: 'monokai'
+          }
     }), $(".inline-editor").summernote({
-        airMode: !0
+        airMode: true,
     })
 }), window.edit = function() {
     $(".click2edit").summernote()

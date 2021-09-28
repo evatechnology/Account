@@ -8,7 +8,7 @@
                 <div class="accordion__header collapsed accordion__header--primary" data-toggle="collapse"
                     data-target="#header-shadow_collapseOne">
                     <span class="accordion__header--icon"></span>
-                    <span class="accordion__header--text">Accordion Header One</span>
+                    <span class="accordion__header--text">Company Current Balance</span>
                     <span class="accordion__header--indicator"></span>
                 </div>
                 <div id="header-shadow_collapseOne" class="collapse accordion__body" data-parent="#accordion-ten">
@@ -74,7 +74,7 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-4 col-form-label text-dark">From</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="min" name="min" placeholder="mm/dd/yyyy">
+                                <input type="text" class="form-control" id="min" name="min" placeholder="yyyy-mm-dd">
                             </div>
                           </div>
                     </div>
@@ -82,18 +82,20 @@
                         <div class="form-group row">
                             <label for="staticEmail" class="col-sm-4 col-form-label text-dark">To</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="max" name="max" placeholder="mm/dd/yyyy">
+                                <input type="text" class="form-control" id="max" name="max" placeholder="yyyy-mm-dd">
                             </div>
                           </div>
                     </div>
 
                 </div>
+
+                <div id="buttons"></div>
             </div>
         </div>
     </div>
 
     <div class="card">
-        <h4 class="text-center mt-3 mb-3"><u>Company Balance Sheet</u></h4>
+        <h4 class="text-center mt-3 mb-3"><u>Company Transection History</u></h4>
         <div class="card-body">
             <div class="float-right">
                 <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
@@ -106,12 +108,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Type</th>
-                            <th>Company Name</th>
-                            <th>Source</th>
                             <th>Date</th>
+                            <th>Company Name</th>
+                            <th>Account Head</th>
+                            <th>Voucher Type</th>
                             <th>Amount</th>
-                            <th>Action</th>
+                            {{-- <th style="display:none">Action</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -121,6 +123,11 @@
                         @foreach ($companyBalance as $item)
                             <tr id="editcompanybalance{{ $item->id }}">
                                 <td>{{ ++$i }}</td>
+                                {{-- <td>{{ date('d-M-y', strtotime($item->date)) }}</td> --}}
+                                <td>{{ $item->date}}</td>
+
+                                <td>{{ $item->company->name }}</td>
+                                <td>{{ $item->source }}</td>
                                 <td>
                                     @if ($item->type == 'income')
                                         <div class="font-weight-bold" style="color: #00AF91">Income</div>
@@ -128,19 +135,17 @@
                                         <div class="font-weight-bold" style="color: #F05454">Expense</div>
                                     @endif
                                 </td>
-                                <td>{{ $item->company->name }}</td>
-                                <td>{{ $item->source }}</td>
-                                <td>{{ $item->date }}</td>
                                 <td>
-                                    @if ($item->type == 'income')
-                                        <div class="font-weight-bold" style="color: #00AF91"><i class="fas fa-plus"></i>
-                                            {{ $item->amount }}</div>
-                                    @elseif( $item->type == 'expense')
-                                        <div class="font-weight-bold" style="color: #F05454"><i class="fas fa-minus"></i>
-                                            {{ $item->amount }}</div>
-                                    @endif
+                                    <div class="float-right">
+                                        @if ($item->type == 'income')
+                                            <div class="font-weight-bold" style="color: #00AF91">+ {{ $item->amount }}</div>
+                                        @elseif( $item->type == 'expense')
+                                            <div class="font-weight-bold" style="color: #F05454">- {{ $item->amount }}</div>
+                                        @endif
+                                    </div>
+
                                 </td>
-                                <td>
+                                {{-- <td style="display:none">
                                     <div class="dropdown">
                                         <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#"
                                             role="button" data-toggle="dropdown">
@@ -151,11 +156,11 @@
                                                 href="{{ route('company.blance.edit', $item->id) }}"><i
                                                     class="fas fa-pencil-alt text-warning"></i> Edit</a>
                                             <a class="dropdown-item deletebtn" href="javascript:void(0);"
-                                                data-id="{{ $item->id }}"><i class="fas fa-trash-alt text-danger"></i>
+                                                data-id="{{ $item->id }}"><span class="fas fa-trash-alt text-danger"></i>
                                                 Delete</a>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
 
                         @endforeach
@@ -163,12 +168,12 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Type</th>
-                            <th>Company Name</th>
-                            <th>Source</th>
                             <th>Date</th>
+                            <th>Company Name</th>
+                            <th>Account Head</th>
+                            <th>Voucher Type</th>
                             <th>Amount</th>
-                            <th>Action</th>
+                            {{-- <th style="display:none">Action</th> --}}
                         </tr>
                     </tfoot>
 
@@ -297,7 +302,7 @@
                 function( settings, data, dataIndex ) {
                     var min = minDate.val();
                     var max = maxDate.val();
-                    var date = new Date( data[4] );
+                    var date = new Date( data[1] );
                     if (
                         ( min === null && max === null ) ||
                         ( min === null && date <= max ) ||
@@ -310,10 +315,10 @@
                 }
             );
             minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-MM-DD'
             });
             maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-MM-DD'
             });
 
            var table= $('#company_transection').DataTable({
@@ -334,7 +339,7 @@
 
                     //Drop Down Filter2
                     var column1 = this.api().column(3);
-                    var select1 = $('<select class="form-control"><option value="">All Company</option></select>')
+                    var select1 = $('<select class="form-control"><option value="">All Account Head</option></select>')
                         .appendTo($('#source').empty())
                         .on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex(
@@ -356,6 +361,15 @@
             $('#min, #max').on('change', function () {
                 table.draw();
             });
+
+//             var buttons = new $.fn.dataTable.Buttons(table, {
+//      buttons: [
+//        'copyHtml5',
+//        'excelHtml5',
+//        'csvHtml5',
+//        'pdfHtml5'
+//     ]
+// }).container().appendTo($('#buttons'));
         });
 
     </script>

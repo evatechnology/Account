@@ -21,7 +21,7 @@ class FinancialreportController extends Controller
     {
 
         $data = BankTransaction::get();
-        return view('backend.Financialreport.demotest',compact('data'));
+        return view('backend.Financialreport.financialreport1',compact('data'));
 
     }
     public function search1(Request $request)

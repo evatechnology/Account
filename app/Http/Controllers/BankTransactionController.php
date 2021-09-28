@@ -26,6 +26,11 @@ class BankTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function bankaccount($id)
+    {
+        $account_number = Bank::find($id);
+        return response()->json($account_number);
+    }
     public function create()
     {
         //

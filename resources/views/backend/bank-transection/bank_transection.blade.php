@@ -108,10 +108,10 @@
                             <th>No</th>
                             <th>Bank Name</th>
                             <th>Account Number</th>
-                            <th>PARTICULARS</th>
+                            <th>Account Head</th>
                             <th>Referance/Cheque No</th>
                             <th>Date</th>
-                            <th>Type</th>
+                            <th>Voucher Type</th>
                             <th>Amount</th>
                             <th>Action</th>
                         </tr>
@@ -157,10 +157,10 @@
                             <th>No</th>
                             <th>Bank Name</th>
                             <th>Account Number</th>
-                            <th>PARTICULARS</th>
+                            <th>Account Head</th>
                             <th>Referance/Cheque No</th>
                             <th>Date</th>
-                            <th>Type</th>
+                            <th>Voucher Type</th>
                             <th>Amount</th>
                             <th>Action</th>
                         </tr>
@@ -198,12 +198,12 @@
                             <select class="form-control" id="account_number" name="account_number">
                                 <option selected disabled>Choose One</option>
                                 @foreach (App\Models\Bank::get() as $item)
-                                    <option value="{{ $item->id }}">{{ $item->account_number }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Type<small class="text-danger">*</small></label>
+                            <label for="exampleFormControlSelect1">Voucher Type<small class="text-danger">*</small></label>
                             <select class="form-control" id="type" name="type">
                                 <option selected disabled>Choose One</option>
                                 <option value="debit">Debit</option>
@@ -224,7 +224,7 @@
                             <input type="text" name="amount" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Reason<small class="text-danger">*</small></label>
+                            <label>Account Head<small class="text-danger">*</small></label>
                             <input type="text" name="reason" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -310,10 +310,10 @@
                 }
             );
             minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-MM-DD'
             });
             maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-MM-DD'
             });
 
            var table= $('#BankTransaction_transection').DataTable({
@@ -362,31 +362,31 @@
     </script>
 
 <script>
-    $(document).ready(function() {
-        $('#bank_id').on('change', function() {
-            var bankID = $(this).val();
-            if(bankID) {
-                $.ajax({
-                    url: '/admin/bank/dropdown/'+bankID,
-                    type: "GET",
-                    data : {"_token":"{{ csrf_token() }}"},
-                    success:function(data) {
-                        //console.log(data);
-                      if(data){
-                        $('#account_number').empty();
-                        $('#account_number').append('<option value="" selected disabled>-- Select Account Number --</option>');
-                        $.each(data, function(key, value){
-                        $('select[name="account_number"]').append('<option value="'+ key.account_number +'">' + value.account_number+ '</option>');
-                    });
-                  }else{
-                    $('#account_number').empty();
-                  }
-                  }
-                });
-            }else{
-              $('#account_number').empty();
-            }
-        });
-    });
+    // $(document).ready(function() {
+    //     $('#bank_id').on('change', function() {
+    //         var bankID = $(this).val();
+    //         if(bankID) {
+    //             $.ajax({
+    //                 url: '/admin/bank/dropdown/'+bankID,
+    //                 type: "GET",
+    //                 data : {"_token":"{{ csrf_token() }}"},
+    //                 success:function(data) {
+    //                     //console.log(data);
+    //                   if(data){
+    //                     $('#account_number').empty();
+    //                     $('#account_number').append('<option value="" selected disabled>-- Select Account Number --</option>');
+    //                     $.each(data, function(key, value){
+    //                     $('select[name="account_number"]').append('<option value="'+ key.account_number +'">' + value.account_number+ '</option>');
+    //                 });
+    //               }else{
+    //                 $('#account_number').empty();
+    //               }
+    //               }
+    //             });
+    //         }else{
+    //           $('#account_number').empty();
+    //         }
+    //     });
+    // });
 </script>
 @endsection

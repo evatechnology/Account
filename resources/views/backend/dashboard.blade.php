@@ -172,10 +172,10 @@
                                     <hr class="text-light">
                                     <div class="row">
                                         <div class="col-sm-8"><small class="text-light">Last update {{ $item->updated_at->diffForHumans() }}</small></div>
-                                        <div class="col-sm-4">
+                                        {{-- <div class="col-sm-4">
                                             <a type="button" class="btn btn-outline-warning btn-sm" href="{{ route('bank.edit', $item->id) }}"><i class="fas fa-pencil-alt"></i></a>
                                             <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

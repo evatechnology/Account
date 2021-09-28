@@ -48,6 +48,8 @@ Route::get('/admin/payroll','PayrollController@index')->name('payroll');
 Route::get('/admin/payroll/position/{id}','PayrollController@getposition');
 Route::get('/admin/payroll/employee/{id}','PayrollController@getemployee');
 Route::post('/admin/payroll','PayrollController@store');
+
+
 ///////////____________________EMPLOYEE______________________//////////////
 
 Route::resource('employees', 'EmployeeController');
@@ -87,8 +89,8 @@ Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@d
 
 
 Route::resource('ledger', 'LedgerController');
-Route::get('/admin/ledger','LedgerController@index')->name('ledger');
-Route::get('/admin/ledger1','LedgerController@index1')->name('ledger1');
+Route::get('/admin/ledger1','LedgerController@index')->name('ledger');
+Route::get('/admin/ledger','LedgerController@index1')->name('ledger1');
 Route::get('/admin/ledger/details','LedgerController@genarateledger')->name('ledger1');
 
 Route::get('/admin/report','FinancialreportController@index');

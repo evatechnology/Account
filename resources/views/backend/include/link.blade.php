@@ -33,6 +33,7 @@
 
     <!-- Datatable -->
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.js"></script>
+    
 
     {{-- <script src="{{ asset('backend/js/plugins-init/datatables.init.js') }}"></script> --}}
 

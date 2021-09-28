@@ -30,7 +30,7 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $item->type }}</td>
                         <td>{{ $item->title }}</td>
-                        <td>{{ $item->description }}</td>
+                        <td>{!! $item->description !!}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="#" role="button" class="btn btn-sm btn-outline-success mr-2"><i class="fas fa-eye"></i></a>
@@ -91,7 +91,7 @@
                         <div class="form-group" >
                             <label>Description</label>
                             {{-- <div class="summernote" name="description"></div> --}}
-                            <textarea id="editor" type="text" name="description" rows="5" class="form-control summernote"></textarea>
+                            <textarea  type="text" name="description" rows="5" class="form-control summernote"></textarea>
                         </div>
 
                         <div class="float-right">
@@ -113,6 +113,8 @@
     menubar: false
   });
 </script> --}}
+
+
 <script>
     var table = $('.rule').DataTable();
 
@@ -180,5 +182,7 @@
                 });
                 }
         });
+
+
 </script>
 @endsection

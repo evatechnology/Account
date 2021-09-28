@@ -15,7 +15,7 @@
                             <select class="form-control border border-primary" name="account_number" id="account_number">
                                     <option selected disabled>Choose Account number</option>
                                 @foreach (App\Models\BankTransaction::select('account_number')->groupBy('account_number')->get() as $item)
-                                    <option value="{{ $item->account_number }}">{{ $item->bank->account_number }}</option>
+                                    <option value="{{ $item->account_number }}">{{ $item->bank->bank_name }} ====> {{ $item->bank->account_number }}</option>
                                 @endforeach
                             </select>
                           </div>
