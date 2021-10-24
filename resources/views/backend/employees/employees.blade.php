@@ -207,6 +207,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            
             var myformData = new FormData($('#employeeForm')[0]);
             $.ajax({
                 type: "post",

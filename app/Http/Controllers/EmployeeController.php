@@ -96,7 +96,7 @@ class EmployeeController extends Controller
                 }
                 $employees->save();
 
-                $payroll = new Payroll();
+                $payroll = new Payroll;
                 $payroll->employee_id = $employees->id;
                 $payroll->bonous = $employees->salary;
                 $payroll->company_id = $employees->company_id;
