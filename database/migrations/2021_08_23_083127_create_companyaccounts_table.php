@@ -15,7 +15,7 @@ class CreateCompanyaccountsTable extends Migration
     {
         Schema::create('companyaccounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type',['income','expense'])->nullable();
+            $table->enum('type',['Income','Expense','Pending'])->nullable();
             $table->unsignedInteger('company_id');
             $table->string('source')->nullable();
             $table->double('amount',10,2)->nullable();

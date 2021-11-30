@@ -206,8 +206,9 @@
                             <label for="exampleFormControlSelect1">Voucher Type<small class="text-danger">*</small></label>
                             <select class="form-control" id="type" name="type">
                                 <option selected disabled>Choose One</option>
-                                <option value="debit">Debit</option>
-                                <option value="credit">Credit</option>
+                                <option value="Debit">Debit</option>
+                                <option value="Credit">Credit</option>
+                                <option value="Pending">Pending</option>
                             </select>
                         </div>
                         <div class="form-group">
