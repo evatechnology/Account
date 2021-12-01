@@ -120,11 +120,11 @@ class CompanyBalanceController extends Controller
                         $companyBalance->source = $request->source[$i];
                         $companyBalance->type = $request->type[$i];
                         $companyBalance->date = $request->date[$i];
-                        if($document = $request->hasFile('document[$i]')){
-                            $document = $request->file('document[$i]');
-                            $document_name = time().$i.'.'.$document->getClientOriginalExtension();
-                            $document->move(public_path().'/backend/image/companybalance/',$document_name);
-                            $companyBalance->document[$i] = $document_name;
+                        if($document[$i] = $request->hasFile('document')){
+                            $document[$i] = $request->file('document');
+                            $document_name = time().$i.'.'.$document[$i]->getClientOriginalExtension();
+                            $document[$i]->move(public_path().'/backend/image/companybalance/',$document_name[$i]);
+                            $companyBalance->document = $document_name[$i];
                         }
                         if($request->type[$i]=='Income'){
                             $company->current_blance += $request->amount[$i];
