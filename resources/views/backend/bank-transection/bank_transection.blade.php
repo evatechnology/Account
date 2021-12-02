@@ -178,7 +178,7 @@
     {{-- Data add Model Start --}}
     <div class="modal fade" id="BankTransactionAddModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="text-center">
@@ -192,46 +192,58 @@
                     <ul id="BankTransactionForm_errorlist"></ul>
                     <form class="forms-sample" id="BankTransactionForm" method="POST" enctype="multipart/form-data">
                         @csrf
-                        {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1">Bank Name</label>
-                            <select class="form-control" id="account_number" name="account_number">
-                                <option selected disabled>Choose One</option>
-                                @foreach (App\Models\Bank::get() as $item)
-                                    <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1">Voucher Type<small class="text-danger">*</small></label>
-                            <select class="form-control" id="type" name="type">
-                                <option selected disabled>Choose One</option>
-                                <option value="debit">Debit</option>
-                                <option value="credit">Credit</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Cheque/Receipt<small class="text-danger">*</small></label>
-                            <input type="text" name="ref" class="form-control" />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Date<small class="text-danger">*</small></label>
-                            <input type="date" name="date" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Amount<small class="text-danger">*</small></label>
-                            <input type="text" name="amount" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Account Head<small class="text-danger">*</small></label>
-                            <input type="text" name="reason" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Document<small class="text-danger">(Optional)</small></label>
-                            <br>
-                            <input type="file" name="document" />
-                        </div>
+                        <table class="table table-borderless " id="table_field">
+                            <thead>
+                                <tr>
+                                    <th>Bank Name</th>
+                                    <th>Voucher Type</th>
+                                    <th>Cheque/Receipt Number</th>
+                                    <th>Account Head</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Document (Optional)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="form-control" id="account_number" name="account_number[]">
+                                            <option selected disabled>Choose One</option>
+                                            @foreach (App\Models\Bank::get() as $item)
+                                                <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" id="type" name="type[]">
+                                            <option selected disabled>Choose One</option>
+                                            <option value="Debit">Debit</option>
+                                            <option value="Credit">Credit</option>
+                                            <option value="Pending">Pending</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="ref[]" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="reason[]" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input type="date" name="date[]" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="amount[]" id="amount" class="form-control" required>
+                                    </td>
+                                    <td>
+                                        <input type="file" name="document[]" id="document">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm" style="background-color: #3a86ff;color:#FFF" id="add1"><i class="fas fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <div class="float-right">
                             <button type="submit" class="btn  btn-sm btn-primary mr-2">Submit</button>
                             <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancel</button>
@@ -243,10 +255,57 @@
     </div>
     {{-- Data Add Modal End --}}
 
+<script>
+    $(document).ready(function() {
+        var html1 = '<tr>'+
+                    '    <td>'+
+                    '        <select class="form-control" id="account_number" name="account_number[]">'+
+                    '            <option selected disabled>Choose One</option>'+
+                    '            @foreach (App\Models\Bank::get() as $item)'+
+                    '                <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>'+
+                    '            @endforeach'+
+                    '        </select>'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <select class="form-control" id="type" name="type[]">'+
+                    '            <option selected disabled>Choose One</option>'+
+                    '            <option value="Debit">Debit</option>'+
+                    '            <option value="Credit">Credit</option>'+
+                    '            <option value="Pending">Pending</option>'+
+                    '        </select>'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <input type="text" name="ref[]" class="form-control" />'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <input type="text" name="reason[]" class="form-control" />'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <input type="date" name="date[]" class="form-control" />'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <input type="text" name="amount[]" id="amount" class="form-control" required>'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <input type="file" name="document[]" id="document">'+
+                    '    </td>'+
+                    '    <td>'+
+                    '        <button name="remove" class="btn btn-danger btn-sm" id="remove"><i class="fas fa-eraser"></i> </button>'+
+                    '    </td>'+
+                    '</tr>';
+
+        var x = 1;
+        $("#add1").click(function() {
+            $("#table_field").append(html1);
+        });
+        $("#table_field").on('click', '#remove', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>
+
+
     <script>
-
-
-
         $('body').on('click', '.deletebtn', function() {
             var id = $(this).data("id");
             var token = $("meta[name='csrf-token']").attr("content");

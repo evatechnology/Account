@@ -23,7 +23,7 @@ class CreateBanktransactionsTable extends Migration
             $table->string('document')->nullable();
             $table->double('amount',30,2)->nullable();
             $table->double('temp_balance',30,2)->default(0);
-            $table->enum('type',['debit','credit'])->nullable();
+            $table->enum('type',['Debit','Credit','Pending'])->nullable();
             $table->date('date')->nullable();
 
             $table->foreign('account_number')->references('id')->on('bankdetails');

@@ -4,12 +4,6 @@
 <script src="{{ asset('backend/js/quixnav-init.js') }}"></script>
 <script src="{{ asset('backend/js/custom.min.js') }}"></script>
 
-
-<!-- Vectormap -->
-<script src="{{ asset('backend/vendor/raphael/raphael.min.js') }}"></script>
-{{-- <script src="{{ asset('backend/vendor/morris/morris.min.js') }}"></script> --}}
-
-
 <script src="{{ asset('backend/vendor/circle-progress/circle-progress.min.js') }}"></script>
 {{-- <script src="{{ asset('backend/vendor/chart.js/Chart.bundle.min.js') }}"></script> --}}
 

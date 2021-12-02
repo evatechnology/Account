@@ -42,74 +42,106 @@ class BankTransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'account_number' => 'required|max:191',
-            // 'transection_id' => 'required|max:191',
-            'ref' => 'required|max:191',
-            'transection_id' => 'string|max:191',
-            'reason' => 'required|max:191',
-            'amount' => 'required|max:191',
-            'type' => 'required|max:191',
-            'date' => 'date|max:191',
-            'tempbalance' => 'max:191',
-        ]);
-        $bank = Bank::find($request->input('account_number'));
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'account_number' => 'required|max:191',
+    //         // 'transection_id' => 'required|max:191',
+    //         'ref' => 'required|max:191',
+    //         'transection_id' => 'string|max:191',
+    //         'reason' => 'required|max:191',
+    //         'amount' => 'required|max:191',
+    //         'type' => 'required|max:191',
+    //         'date' => 'date|max:191',
+    //         'tempbalance' => 'max:191',
+    //     ]);
+    //     $bank = Bank::find($request->input('account_number'));
+    //     if(!$bank){
+    //         return back();
+    //     }
+    //     $transactionamount = 0;
+    //     $transactionamount = $request->input('amount');
+
+    //     DB::transaction(function () use ($bank, $transactionamount, $request){
+    //             $bankTransaction=new BankTransaction;
+    //             $bankTransaction->account_number = $bank->id;
+    //             $bankTransaction->ref = $request->ref;
+    //             $bankTransaction->transection_id = $request->transection_id;
+    //             $bankTransaction->reason = $request->reason;
+    //             $bankTransaction->amount = $transactionamount;;
+    //             $bankTransaction->type = $request->type;
+    //             $bankTransaction->date = $request->date;
+    //             if($document = $request->hasFile('document')){
+    //                 $document = $request->file('document');
+    //                 $document_name = time().'.'.$document->getClientOriginalExtension();
+    //                 $document->move(public_path().'/backend/image/banktransection/',$document_name);
+    //                 $bankTransaction->document = $document_name;
+    //             }
+    //             if($bankTransaction->type =='Credit'){
+    //                 $bank->balance += $transactionamount;
+    //                 $bankTransaction->temp_balance =$bank->balance;
+
+    //                 $bankTransaction->save();
+    //                 $bank->save();
+    //                 return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
+    //                 exit;
+    //             }
+    //             elseif($bankTransaction->type=='Debit'){
+    //                 if($bank->balance >= $transactionamount){
+    //                     $bank->balance -= $transactionamount;
+    //                     $bankTransaction->temp_balance =$bank->balance;
+
+    //                 $bankTransaction->save();
+    //                 $bank->save();
+    //                     return redirect()->back()->with('success','Expense Added Successfully');
+    //                     exit;
+    //                 }
+    //                 elseif($bank->balance <= $transactionamount){
+    //                     DB::rollBack();
+    //                     return redirect()->back()->with('error', 'Please Check Balance!');
+    //                     exit;
+    //                 }
+    //             }
+
+
+    //     });
+    //     return redirect()->back();
+    // }
+public function store(Request $request){
+    $request->validate([
+                'account_number' => 'required|max:191',
+                'ref' => 'required|max:191',
+                'transection_id' => 'string|max:191',
+                'reason' => 'required|max:191',
+                'amount' => 'required|max:191',
+                'type' => 'required|max:191',
+                'date' => 'max:191',
+                'tempbalance' => 'max:191',
+            ]);
+
+    for($i=0;$i<count($request->type);$i++){
+        $bank = Bank::find($request->account_number[$i]);
         if(!$bank){
             return back();
         }
-        $transactionamount = 0;
-        $transactionamount = $request->input('amount');
+        $bankTransaction=new BankTransaction;
+        $bankTransaction->account_number = $bank->id;
+        $bankTransaction->ref = $request->ref[$i];
+        // $bankTransaction->transection_id = $request->transection_id[$i];
+        $bankTransaction->reason = $request->reason[$i];
+        $bankTransaction->amount = $request->amount[$i];
+        $bankTransaction->type = $request->type[$i];
+        $bankTransaction->date = $request->date[$i];
+        
+        if($document = $request->hasFile('document')){
+            $document = $request->file('document');
+            $document_name = time().'.'.$document->getClientOriginalExtension();
+            $document->move(public_path().'/backend/image/banktransection/',$document_name);
+            $bankTransaction->document = $document_name;
+        }
 
-        DB::transaction(function () use ($bank, $transactionamount, $request){
-                $bankTransaction=new BankTransaction;
-                $bankTransaction->account_number = $bank->id;
-                $bankTransaction->ref = $request->ref;
-                $bankTransaction->transection_id = $request->transection_id;
-                $bankTransaction->reason = $request->reason;
-                $bankTransaction->amount = $transactionamount;;
-                $bankTransaction->type = $request->type;
-                $bankTransaction->date = $request->date;
-                if($document = $request->hasFile('document')){
-                    $document = $request->file('document');
-                    $document_name = time().'.'.$document->getClientOriginalExtension();
-                    $document->move(public_path().'/backend/image/banktransection/',$document_name);
-                    $bankTransaction->document = $document_name;
-                }
-                if($bankTransaction->type =='credit'){
-                    $bank->balance += $transactionamount;
-                    $bankTransaction->temp_balance =$bank->balance;
-
-                    $bankTransaction->save();
-                    $bank->save();
-                    return redirect()->back()->with('success', 'Amount Successfull Add In Your Account');
-                    exit;
-
-                    // exit;
-                }
-                elseif($bankTransaction->type=='debit'){
-                    if($bank->balance >= $transactionamount){
-                        $bank->balance -= $transactionamount;
-                        $bankTransaction->temp_balance =$bank->balance;
-
-                    $bankTransaction->save();
-                    $bank->save();
-                        return redirect()->back()->with('success','Expense Added Successfully');
-                        exit;
-                    }
-                    elseif($bank->balance <= $transactionamount){
-                        DB::rollBack();
-                        return redirect()->back()->with('error', 'Please Check Balance!');
-                        exit;
-                    }
-                }
-
-
-        });
-        return redirect()->back();
     }
-
+}
     /**
      * Display the specified resource.
      *

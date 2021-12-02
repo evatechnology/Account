@@ -63,9 +63,9 @@ Route::get('admin/employees/details/{name}','EmployeeController@show')->name('em
 
 
 
-Route::resource('companybalance', 'CompanyBalanceController');
+// Route::resource('companybalance', 'CompanyBalanceController');
 Route::get('/admin/companybalance','CompanyBalanceController@index')->name('company.balance');
-Route::post('/admin/companybalance','CompanyBalanceController@store');
+Route::post('/admin/companybalance/add','CompanyBalanceController@store');
 Route::delete('/admin/companybalance/delete/{id}','CompanyBalanceController@destroy');
 Route::get('/admin/companybalance/edit/{id}', 'CompanyBalanceController@edit')->name('company.blance.edit');
 
