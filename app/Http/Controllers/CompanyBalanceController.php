@@ -97,35 +97,54 @@ class CompanyBalanceController extends Controller
 
 
     public function store(Request $request){
-        $request->validate([
+        $this->validate($request, [
                     'type' => 'required|max:191',
                     'company_id' => 'required|max:191',
                     'source' => 'required|max:191',
                     'amount' => 'required|max:191',
                     'date' => 'max:191',
                 ]);
+                // $documents=[];
+                // if($request->hasFile('document1')){
+                //     foreach($request->file('document1') as $file){
+                //         $document_name = time().rand(1,100).'.'.$file->extension();
+                //         $file->move(public_path().'/backend/image/companybalance/',$document_name);
+                //         $documents[] = $document_name;
+                //     }
 
+                // }
                 for($i=0;$i<count($request->type);$i++){
                     $company = Company::find($request->company_id[$i]);
                         if(!$company ){
                             return back();
                         }
-                        // $transactionAmount=0;
-                        // $transactionAmount = $request->amount[$i];
-
-                        // $input = $request->all();
                         $companyBalance = new CompanyBalance;
                         $companyBalance->company_id = $company->id;
                         $companyBalance->amount = $request->amount[$i];
                         $companyBalance->source = $request->source[$i];
                         $companyBalance->type = $request->type[$i];
                         $companyBalance->date = $request->date[$i];
-                        if($document[$i] = $request->hasFile('document')){
-                            $document[$i] = $request->file('document');
-                            $document_name = time().$i.'.'.$document[$i]->getClientOriginalExtension();
-                            $document[$i]->move(public_path().'/backend/image/companybalance/',$document_name[$i]);
-                            $companyBalance->document = $document_name[$i];
-                        }
+                        // $documents=[];
+                        // if($document = $request->hasFile('document1')){
+                        //     $document = $request->file('document1');
+                        //     $document_name = time().'.'.$document->getClientOriginalExtension();
+                        //     $document->move(public_path().'/backend/image/companybalance/',$document_name);
+                        //     $documents[] = $document_name;
+                        //     $companyBalance->document = json_encode($documents[$i]);
+                        // }
+
+                        // $documents=[];
+                        // if($request->hasFile('document1')){
+                        //         $documents = $request->file('document1') ;
+                        //         $document_name = time().rand(1,100).'.'.$documents->extension();
+                        //         $documents->move(public_path().'/backend/image/companybalance/',$document_name);
+                        //         $documents = $document_name;
+                        //         $companyBalance->document = $document_name;
+
+
+                        // }
+
+                        // $companyBalance->document = json_encode($documents[$i]);
                         if($request->type[$i]=='Income'){
                             $company->current_blance += $request->amount[$i];
                             $company->save();

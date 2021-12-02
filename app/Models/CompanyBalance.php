@@ -14,13 +14,18 @@ class CompanyBalance extends Model
     'source',
     'amount',
     'document',
-    'company_balance',
+    'temp_balance',
     'date'
 ];
+    public function setFilenamesAttribute($value)
+    {
+        $this->attributes['document'] = json_encode($value);
+    }
 
     public function company()
     {
         return $this->belongsTo(Company::class,'company_id');
     }
+
 
 }

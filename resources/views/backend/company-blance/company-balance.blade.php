@@ -67,7 +67,7 @@
                                                     <input type="text" name="amount[]" id="amount" class="form-control" required>
                                                 </td>
                                                 <td>
-                                                    <input type="file" name="document[]" id="document">
+                                                    <input type="file" name="document1[]" id="document">
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-sm" style="background-color: #3a86ff;color:#FFF" id="add1"><i class="fas fa-plus"></i></button>
@@ -265,7 +265,7 @@
                 '    </td>\n'+
                 '    <td><input type="text" name="amount[]" id="amount" class="form-control" required/>'+
                 '    </td>\n'+
-                '    <td><input type="file" name="document[]"id="document" />\n'+
+                '    <td><input type="file" name="document1[]" id="document" />\n'+
                 '    </td>\n'+
                 '    <td><button name="remove" class="btn btn-danger btn-sm" id="remove"><i class="fas fa-eraser"></i> </button>'+
                 '    </td>\n'+
@@ -301,7 +301,7 @@
                     success: function(response) {
                         console.log(response);
                         $("#companybalanceForm").find('input').val('');
-                        $('#companybalanceAddModal').modal('hide');
+                        // $('#companybalanceAddModal').modal('hide');
                         Swal.fire({
                     position: 'top-end',
                     icon: 'success',

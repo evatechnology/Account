@@ -21,7 +21,7 @@ class CreateCompanyaccountsTable extends Migration
             $table->double('amount',10,2)->nullable();
             $table->date('date')->nullable();
             $table->string('document')->nullable();
-            $table->string('company_balance')->nullable();
+            $table->double('temp_balance',30,2)->default(0);
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
