@@ -36,14 +36,14 @@
                                                 <th>Account Head</th>
                                                 <th>Date</th>
                                                 <th>Amount</th>
-                                                <th>Document (Optional)</th>
+                                                {{-- <th>Document (Optional)</th> --}}
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select class="form-control" id="type" name="type[]" required>
+                                                    <select class="form-control type" id="type" name="type[]" required>
                                                         <option selected disabled>Choose One</option>
                                                         <option value="Income">Income</option>
                                                         <option value="Expense">Expense</option>
@@ -64,16 +64,29 @@
                                                     <input type="date" name="date[]" id="date" class="form-control" required>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="amount[]" id="amount" class="form-control" required>
+                                                    <input type="text" name="amount[]" id="amount" class="form-control amount" required>
                                                 </td>
-                                                <td>
-                                                    <input type="file" name="document1[]" id="document">
-                                                </td>
+                                                {{-- <td>
+                                                    <input type="file" name="document1[]" required id="document">
+                                                </td> --}}
                                                 <td>
                                                     <button type="button" class="btn btn-sm" style="background-color: #3a86ff;color:#FFF" id="add1"><i class="fas fa-plus"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><h4>Total: </h4></td>
+                                                <td>
+                                                    <h4>
+                                                        <input type='text' class="totalSum form-control border-0" readonly id='totalSum'>
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                     <div class="float-right">
                                         <button type="submit" class="btn  btn-sm btn-primary mr-2">Submit</button>
@@ -245,7 +258,7 @@
         $(document).ready(function() {
         var html1 = '<tr>\n'+
                 '    <td>\n'+
-                '        <select class="form-control" id="type" name="type[]"required>\n'+
+                '        <select class="form-control type" id="type" name="type[]"required>\n'+
                 '            <option selected disabled>Choose One</option>\n'+
                 '            <option value="Income">Income</option>\n'+
                 '            <option value="Expense">Expense</option>\n'+
@@ -263,10 +276,10 @@
                 '    </td>\n'+
                 '    <td><input type="date" name="date[]" id="date" class="form-control" required/>'+
                 '    </td>\n'+
-                '    <td><input type="text" name="amount[]" id="amount" class="form-control" required/>'+
+                '    <td><input type="text" name="amount[]" id="amount" class="form-control amount" required/>'+
                 '    </td>\n'+
-                '    <td><input type="file" name="document1[]" id="document" />\n'+
-                '    </td>\n'+
+                // '    <td><input type="file" name="document1[]"  id="document" required/>\n'+
+                // '    </td>\n'+
                 '    <td><button name="remove" class="btn btn-danger btn-sm" id="remove"><i class="fas fa-eraser"></i> </button>'+
                 '    </td>\n'+
                 '</tr>';
@@ -275,8 +288,28 @@
         $("#add1").click(function() {
             $("#table_field").append(html1);
         });
-        $("#table_field").on('click', '#remove', function() {
+
+        $("#table_field").on('click', '#remove', function(e) {
             $(this).closest('tr').remove();
+        });
+
+        $('#table_field').change(function(e){
+            var sum = 0;
+
+
+            $(this).on('.amount','.type').each(function(index,el,el2){
+                var val = $(el).val();
+                var val2 = $(el2).val();
+                console.log(val2);
+                if(val && val != ""){
+                    sum += parseFloat(val);
+                }
+                // else if(val && val != "" && type=="Expense"){
+                //     sum -= parseFloat(val);
+                // }
+
+            });
+            $('#totalSum').val(sum);
         });
     });
 
@@ -443,5 +476,21 @@
 
     </script>
 
+{{-- <script>
+    var $form = $('#companybalanceForm'),
+    $summands = $form.find('.amount'),
+    $sumDisplay = $('#money-out');
 
+$form.delegate('.amount', 'change', function ()
+{
+    var sum = 0;
+    $summands.each(function ()
+    {
+        var value = Number($(this).val());
+        if (!isNaN(value)) sum += value;
+    });
+
+    $sumDisplay.text(sum);
+});
+</script> --}}
 @endsection
