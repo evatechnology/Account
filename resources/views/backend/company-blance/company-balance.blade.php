@@ -313,13 +313,40 @@
     //     }
 
     // });
-
-    $(document).on("change", ".amount", function() {
-        var sum = 0;
-        $(".amount").each(function(){
-            sum += +$(this).val();
+     
+        $(document).on('change', '.type', function (event) {
+            event.preventDefault();
+            window.value1 = $(this).val();
+            
         });
-        $('#diff').html('Differance:' + sum);
+
+    $(document).on("change", ".amount", function(event1) {
+        event1.preventDefault();
+        var sum = 0;
+        // var value1=event.value;
+        // var value = $(this).find('#type').val();
+        let amounttype = window.value1;
+             console.log(window.value1);
+
+        $(".amount").each(function(){
+            if(amounttype === 'Income'){
+                var amount2 = Math.abs(parseInt($(this).val()));
+                console.log(amount2);
+                sum = (sum + amount2);
+                return true;
+            }
+            if(amounttype === 'Expense'){
+                var amount3 = -Math.abs(parseInt($(this).val()));
+                console.log(amount3);
+                sum = (sum + amount3);
+                return true;
+                }
+                
+                // $('.diff').html('Differance:' + sum);
+            });
+            $('.diff').html('Differance:' + sum);
+        
+        
     });
 
     $('#companybalanceForm').on('submit', function(e) {
