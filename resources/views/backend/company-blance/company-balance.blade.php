@@ -64,7 +64,7 @@
                                                     <input type="date" name="date[]" id="date" class="form-control" required>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="amount[]" id="amount" class="form-control amount" required>
+                                                    <input type="text" name="amount[]" id="amount" value="0" class="form-control amount" required>
                                                 </td>
                                                 {{-- <td>
                                                     <input type="file" name="document1[]" required id="document">
@@ -81,9 +81,10 @@
                                                 <td></td>
                                                 <td><h4>Total: </h4></td>
                                                 <td>
-                                                    <h4>
+                                                    <div id="diff" class="diff">Differance:</div>
+                                                    {{-- <h4>
                                                         <input type='text' class="totalSum form-control border-0" readonly id='totalSum'>
-                                                    </h4>
+                                                    </h4> --}}
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -276,7 +277,7 @@
                 '    </td>\n'+
                 '    <td><input type="date" name="date[]" id="date" class="form-control" required/>'+
                 '    </td>\n'+
-                '    <td><input type="text" name="amount[]" id="amount" class="form-control amount" required/>'+
+                '    <td><input type="text" name="amount[]" value="0" id="amount" class="form-control amount" required/>'+
                 '    </td>\n'+
                 // '    <td><input type="file" name="document1[]"  id="document" required/>\n'+
                 // '    </td>\n'+
@@ -292,28 +293,34 @@
         $("#table_field").on('click', '#remove', function(e) {
             $(this).closest('tr').remove();
         });
-
-        $('#table_field').change(function(e){
-            var sum = 0;
-
-
-            $(this).on('.amount','.type').each(function(index,el,el2){
-                var val = $(el).val();
-                var val2 = $(el2).val();
-                console.log(val2);
-                if(val && val != ""){
-                    sum += parseFloat(val);
-                }
-                // else if(val && val != "" && type=="Expense"){
-                //     sum -= parseFloat(val);
-                // }
-
-            });
-            $('#totalSum').val(sum);
-        });
     });
+    // $(document).on('change', '.type', function () {
+    //     var total = 0;
+    //     var value = $(this).val();
+    //     // var input = $(this).parents('td').next('td').find('.type');
+    //     if (value === 'Expense') {
+    //         $(".amount").each(function(){
+    //                 total -= parseInt($(this).val());
+    //                 $('#diff').html('Differance:' + total);
+    //         });
 
+    //     } else if (value === 'Income') {
+    //         $(".amount").each(function(){
+    //                 total += parseInt($(this).val());
+    //                 $('#diff').html('Differance:' + total);
+    //         });
 
+    //     }
+
+    // });
+
+    $(document).on("change", ".amount", function() {
+        var sum = 0;
+        $(".amount").each(function(){
+            sum += +$(this).val();
+        });
+        $('#diff').html('Differance:' + sum);
+    });
 
     $('#companybalanceForm').on('submit', function(e) {
                 e.preventDefault();
@@ -351,46 +358,47 @@
                     }
                 });
     });
+
+
 </script>
 
-    <script>
-        $('body').on('click', '.deletebtn', function() {
-            var id = $(this).data("id");
-            var token = $("meta[name='csrf-token']").attr("content");
-
-            if (confirm("Are You sure want to delete !")) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/admin/companybalance/delete/" + id,
-                    data: {
-                        "id": id,
-                        "_token": token,
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Delete Successful',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        location.reload();
-                        console.log(data);
-                    },
-                    error: function(data) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'Error',
-                            title: 'Data Not Deleted',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        console.log('Error:', data);
-                    }
-                });
-            }
-        });
-    </script>
+<script>
+    $('body').on('click', '.deletebtn', function() {
+        var id = $(this).data("id");
+        var token = $("meta[name='csrf-token']").attr("content");
+        if (confirm("Are You sure want to delete !")) {
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/companybalance/delete/" + id,
+                data: {
+                    "id": id,
+                    "_token": token,
+                },
+                success: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Delete Successful',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    location.reload();
+                    console.log(data);
+                },
+                error: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'Error',
+                        title: 'Data Not Deleted',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    console.log('Error:', data);
+                }
+            });
+        }
+    });
+</script>
 
 
 
@@ -464,33 +472,7 @@
                 table.draw();
             });
 
-//             var buttons = new $.fn.dataTable.Buttons(table, {
-//      buttons: [
-//        'copyHtml5',
-//        'excelHtml5',
-//        'csvHtml5',
-//        'pdfHtml5'
-//     ]
-// }).container().appendTo($('#buttons'));
         });
 
     </script>
-
-{{-- <script>
-    var $form = $('#companybalanceForm'),
-    $summands = $form.find('.amount'),
-    $sumDisplay = $('#money-out');
-
-$form.delegate('.amount', 'change', function ()
-{
-    var sum = 0;
-    $summands.each(function ()
-    {
-        var value = Number($(this).val());
-        if (!isNaN(value)) sum += value;
-    });
-
-    $sumDisplay.text(sum);
-});
-</script> --}}
 @endsection

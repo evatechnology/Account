@@ -105,15 +105,15 @@ class CompanyBalanceController extends Controller
                     'date' => 'max:191',
                 ]);
 
-                $documents=[];
-                if($request->hasFile('document1')){
-                    foreach($request->file('document1') as $file){
-                        $document_name = time().rand(1,100).'.'.$file->extension();
-                        $file->move(public_path().'/backend/image/companybalance/',$document_name);
-                        $documents[] = $document_name;
-                    }
+                // $documents=[];
+                // if($request->hasFile('document1')){
+                //     foreach($request->file('document1') as $file){
+                //         $document_name = time().rand(1,100).'.'.$file->extension();
+                //         $file->move(public_path().'/backend/image/companybalance/',$document_name);
+                //         $documents[] = $document_name;
+                //     }
 
-                }
+                // }
 
                 for($i=0;$i<count($request->type);$i++){
                     $company = Company::find($request->company_id[$i]);
@@ -146,7 +146,7 @@ class CompanyBalanceController extends Controller
 
                         // }
 
-                        $companyBalance->document = json_encode($documents[$i]);
+                        // $companyBalance->document = json_encode($documents[$i]);
                         if($request->type[$i]=='Income'){
                             $company->current_blance += $request->amount[$i];
                             $company->save();
