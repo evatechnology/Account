@@ -79,9 +79,9 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><h4>Total: </h4></td>
+                                                <td></td>
                                                 <td>
-                                                    <div id="diff" class="diff">Differance:</div>
+                                                    <span id="diff" class="diff h4">Total: </p>
                                                     {{-- <h4>
                                                         <input type='text' class="totalSum form-control border-0" readonly id='totalSum'>
                                                     </h4> --}}
@@ -313,41 +313,15 @@
     //     }
 
     // });
-     
-        $(document).on('change', '.type', function (event) {
-            event.preventDefault();
-            window.value1 = $(this).val();
-            
-        });
+
 
     $(document).on("change", ".amount", function(event1) {
-        event1.preventDefault();
         var sum = 0;
-        // var value1=event.value;
-        // var value = $(this).find('#type').val();
-        let amounttype = window.value1;
-             console.log(window.value1);
-
         $(".amount").each(function(){
-            if(amounttype === 'Income'){
-                window.amount2 = Math.abs(parseInt($(this).val()));
-                // console.log(amount2);
-                // sum = (sum + amount2);
-            }
-            else if(amounttype === 'Expense'){
-                window.amount2 = -Math.abs(parseInt($(this).val()));
-                // console.log(amount3);
-                // sum = (sum + amount3);
-                }
-                sum = (sum + window.amount2)
-                // $('.diff').html('Differance:' + sum);
-            });
-            console.log(window.amount2);
-            
-            $('.diff').html('Differance:' + sum);
-        
-        
-    });
+            amount2 = parseFloat($(this).val());
+            sum = (sum +  window.amount2);
+            $('.diff').html('<span class="h4">Total : </h4>' + sum);
+        });});
 
     $('#companybalanceForm').on('submit', function(e) {
                 e.preventDefault();

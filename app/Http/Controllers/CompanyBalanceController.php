@@ -122,14 +122,14 @@ class CompanyBalanceController extends Controller
                         }
                         $companyBalance = new CompanyBalance;
                         $companyBalance->company_id = $company->id;
-                        $companyBalance->amount = $request->amount[$i];
+                        $companyBalance->amount = abs($request->amount[$i]);
                         $companyBalance->source = $request->source[$i];
                         $companyBalance->type = $request->type[$i];
                         $companyBalance->date = $request->date[$i];
                         // $documents=[];
                         // if($document = $request->hasFile('document1')){
                         //     $document = $request->file('document1');
-                        //     $document_name = time().'.'.$document->getClientOriginalExtension();
+                        //     $document_npame = time().'.'.$document->getClientOriginalExtension();
                         //     $document->move(public_path().'/backend/image/companybalance/',$document_name);
                         //     $documents[] = $document_name;
                         //     $companyBalance->document = json_encode($documents[$i]);
