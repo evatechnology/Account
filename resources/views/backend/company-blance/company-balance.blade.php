@@ -330,20 +330,20 @@
 
         $(".amount").each(function(){
             if(amounttype === 'Income'){
-                var amount2 = Math.abs(parseInt($(this).val()));
-                console.log(amount2);
-                sum = (sum + amount2);
-                return true;
+                window.amount2 = Math.abs(parseInt($(this).val()));
+                // console.log(amount2);
+                // sum = (sum + amount2);
             }
-            if(amounttype === 'Expense'){
-                var amount3 = -Math.abs(parseInt($(this).val()));
-                console.log(amount3);
-                sum = (sum + amount3);
-                return true;
+            else if(amounttype === 'Expense'){
+                window.amount2 = -Math.abs(parseInt($(this).val()));
+                // console.log(amount3);
+                // sum = (sum + amount3);
                 }
-                
+                sum = (sum + window.amount2)
                 // $('.diff').html('Differance:' + sum);
             });
+            console.log(window.amount2);
+            
             $('.diff').html('Differance:' + sum);
         
         
