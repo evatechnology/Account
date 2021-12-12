@@ -148,7 +148,9 @@ class CompanyBalanceController extends Controller
 
                         // $companyBalance->document = json_encode($documents[$i]);
                         if($request->type[$i]=='Income'){
+                            // $company->temp_balance =$request->balance;
                             $company->current_blance += $request->amount[$i];
+                            $companyBalance->temp_balance = $company->current_blance;
                             $company->save();
                             $companyBalance->save();
                             // return redirect()->back()->with('success', 'Created successfully!');
@@ -156,6 +158,7 @@ class CompanyBalanceController extends Controller
                         }
                         if($request->type[$i]=='Expense'){
                             $company->current_blance -= $request->amount[$i];
+                            $companyBalance->temp_balance = $company->current_blance;
                             $company->save();
                             $companyBalance->save();
                             // return redirect()->back()->with('success', 'Created successfully!');

@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title','Bank Statement')
+@section('title','Company Ledger Book')
 @section('content')
 
 <section>
@@ -10,11 +10,11 @@
                 <div class="card-body">
                     <form action="/admin/company/ledger/details">
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1" class="text-dark">Account Number</label>
-                            <select class="form-control border border-primary" name="account_number" id="account_number">
+                            <label for="exampleFormControlSelect1" class="text-dark">Company Name</label>
+                            <select class="form-control border border-primary" name="company_id" id="company_id">
                                     <option selected disabled>Choose Account number</option>
-                                @foreach (App\Models\BankTransaction::select('account_number')->groupBy('account_number')->get() as $item)
-                                    <option value="{{ $item->account_number }}">{{ $item->bank->bank_name }} ====> {{ $item->bank->account_number }}</option>
+                                @foreach (App\Models\CompanyBalance::select('company_id')->groupBy('company_id')->get() as $item)
+                                    <option value="{{ $item->company_id }}">{{ $item->company->name }}</option>
                                 @endforeach
                             </select>
                           </div>

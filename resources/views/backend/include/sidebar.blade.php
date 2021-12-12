@@ -34,8 +34,8 @@
                 <ul aria-expanded="false">
                     {{-- <li><a href="{{ route('company.balance') }}"><i class="fas fa-university"></i>Company Transection</a></li> --}}
                     <li><a href="{{ route('ledger') }}"><i class="fas fa-book-open"></i>Bank Ledger</a></li>
-                    {{-- <li><a href="{{ route('ledger') }}"><i class="fas fa-university"></i>Bank Ledger</a></li>
-                    <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li> --}}
+                    <li><a href="{{ route('company.ledger') }}"><i class="fas fa-university"></i>Company Ledger</a></li>
+                    {{-- <li><a href="{{ route('search') }}"><i class="fas fa-university"></i>Financial Report</a></li> --}}
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fab fa-buffer"></i><span class="nav-text">Financial Report</span></a>

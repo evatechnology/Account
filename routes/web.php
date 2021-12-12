@@ -89,9 +89,11 @@ Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@d
 
 
 Route::resource('ledger', 'LedgerController');
-Route::get('/admin/ledger','LedgerController@index1')->name('ledger');
+Route::get('/admin/bank/ledger','LedgerController@index1')->name('ledger');
 // Route::get('/admin/ledger1','LedgerController@index1')->name('ledger1');
-Route::get('/admin/ledger/details','LedgerController@genarateledger')->name('ledger1');
+Route::get('/admin/bank/ledger/details','LedgerController@genarateledger')->name('ledger1');
+Route::get('/admin/company/ledger','LedgerController@companyledger')->name('company.ledger');
+Route::get('/admin/company/ledger/details','LedgerController@genarate_company_ledger')->name('company.ledger.details');
 
 Route::get('/admin/report','FinancialreportController@index');
 Route::get('/bank/report/search','FinancialreportController@search')->name('search');
