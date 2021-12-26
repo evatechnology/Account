@@ -25,13 +25,13 @@
 <br>
 <br>
             <div>
-                <table class="table">
+                <table class="table table-bordered">
                     <thead class="thead-dark">
                         <th>No</th>
                         <th>Date</th>
                         <th>Perticular</th>
-                        <th>Credit</th>
-                        <th>Debit</th>
+                        <th>Received Amount</th>
+                        <th>Expense</th>
                         <th>Balance</th>
                     </thead>
                         @php
@@ -43,13 +43,13 @@
                             <td>1</td>
                             <td>{{ $data1 }}</td>
                             <td>Opening Balance</td>
-                            <td class="text-center">{{ $data8 }}</td>
-                            <td class="text-center">-</td>
-                            <td class="text-center">
+                            <td class="text-right font-weight-bold"><p>{{ number_format($data8,2) }}</p></td>
+                            <td class="text-right font-weight-bold">0.00</td>
+                            <td class="text-right font-weight-bold">
                                 @php
                                     $balance = $balance + $data8
                                 @endphp
-                                 {{ $balance }}
+                                 {{ number_format($balance,2) }}
                             </td>
                         </tr>
                         {{-- @php
@@ -58,42 +58,45 @@
 
                         @foreach ($data3 as $data3 )
                         <tr>
-
-
                             <td>{{ ++$i }}</td>
                             <td>{{ $data3->date }}</td>
                             <td>{{ $data3->source}}</td>
-                            <td class="text-center">
+                            <td class="text-right font-weight-bold">
                                 @if ($data3->type == 'Income')
-                                    {{ number_format($data3-> amount,2)}}
+                                    <p class="text-success">
+                                        {{ number_format($data3-> amount,2)}}
+                                    </p>
                                 @else
-                                    00.00
+                                    0.00
                                 @endif
+
                             </td>
-                            <td class="text-center">
+                            <td class="text-right font-weight-bold">
                                 @if ($data3->type == 'Expense')
+                                <p class=" text-danger">
                                     {{ number_format($data3-> amount,2)}}
+                                </p>
                                 @else
-                                    00.00
+                                    0.00
                                 @endif
                             </td>
-                            <td class="text-center">
+                            <td class="text-right font-weight-bold">
                                 @if ($data3->type == 'Income')
-                                    <samp class="text-success">
+                                    <p class="text-success">
                                         {{-- {{  $balance  + $data3->amount}} --}}
                                         @php
                                             $balance = $balance  + $data3->amount
                                         @endphp
-                                     {{ $balance }}
-                                    </samp>
+                                     {{ number_format($balance,2) }}
+                                    </p>
                                 @elseif ($data3->type == 'Expense')
-                                    <samp class="text-danger">
+                                    <p class="text-danger">
                                         {{-- {{ $balance  - $data3->amount }} --}}
                                         @php
-                                        $balance = $balance  - $data3->amount
-                                    @endphp
-                                 {{ $balance }}
-                                    </samp>
+                                            $balance = $balance  - $data3->amount
+                                        @endphp
+                                        {{ number_format($balance,2) }}
+                                    </p>
                                 @endif
 
                             </td>
@@ -101,15 +104,18 @@
 
                         </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="4" class="text-right h4">{{ number_format(($data4 + $data8),2)}}</td>
+                            <td class="text-right h4">{{ number_format($data5 ,2) }}</td>
+                            <td class="text-right h4"></td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td class="text-center">{{ $data4 + $data8}}</td>
-                            <td class="text-center">{{ $data5 }}</td>
-                            <td></td>
+                            {{-- <td colspan="3" class="h4">Gross Total/Loss</td> --}}
+                            {{-- <td class="text-right h4">{{ number_format(($data4 + $data8),2)}}</td>
+                            <td class="text-right h4">{{ number_format($data5 ,2) }}</td> --}}
+                            <td class="text-right h4" colspan="6"> Gross Total/Loss :&emsp;&emsp;&emsp;{{ number_format((($data4 + $data8) - $data5),2)}}</td>
                         </tr>
                     </tfoot>
                 </table>
