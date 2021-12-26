@@ -35,7 +35,8 @@
                         <th>Balance</th>
                     </thead>
                         @php
-                            $i=1
+                            $i=1;
+                            $balance = 0;
                         @endphp
                     <tbody>
                         <tr>
@@ -44,10 +45,20 @@
                             <td>Opening Balance</td>
                             <td class="text-center">{{ $data8 }}</td>
                             <td class="text-center">-</td>
-                            <td class="text-center">{{ $data8 }}</td>
+                            <td class="text-center">
+                                @php
+                                    $balance = $balance + $data8
+                                @endphp
+                                 {{ $balance }}
+                            </td>
                         </tr>
+                        {{-- @php
+                            $balance = $balance + $data8
+                        @endphp --}}
+
                         @foreach ($data3 as $data3 )
                         <tr>
+
 
                             <td>{{ ++$i }}</td>
                             <td>{{ $data3->date }}</td>
@@ -67,10 +78,22 @@
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if ($data3->type == 'credit')
-                                    <samp class="text-success">{{ $data3->temp_balance }}</samp>
-                                @elseif ($data3->type == 'debit')
-                                    <samp class="text-danger">{{ $data3->temp_balance }}</samp>
+                                @if ($data3->type == 'Income')
+                                    <samp class="text-success">
+                                        {{-- {{  $balance  + $data3->amount}} --}}
+                                        @php
+                                            $balance = $balance  + $data3->amount
+                                        @endphp
+                                     {{ $balance }}
+                                    </samp>
+                                @elseif ($data3->type == 'Expense')
+                                    <samp class="text-danger">
+                                        {{-- {{ $balance  - $data3->amount }} --}}
+                                        @php
+                                        $balance = $balance  - $data3->amount
+                                    @endphp
+                                 {{ $balance }}
+                                    </samp>
                                 @endif
 
                             </td>
