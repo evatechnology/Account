@@ -27,7 +27,7 @@ class CreateEmployeesTable extends Migration
             $table->string('salary')->nullable();
             $table->string('image')->nullable();
 
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_id')->references('id')->on('clientcompany');
             $table->foreign('position_id')->references('id')->on('positions');
             $table->timestamps();
         });

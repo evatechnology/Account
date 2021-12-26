@@ -14,8 +14,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="text-center">
-                                <h6>Company</h6>
-                                <h3>{{ App\Models\Company::get()->count() }}</h3>
+                                <h6>Clients</h6>
+                                <h3>{{ App\Models\ClientCompany::get()->count() }}</h3>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
             <div id="header-shadow_collapseOne" class="collapse accordion__body show" data-parent="#accordion-ten">
                 <div class="accordion__body--text">
                     <div class="row">
-                        @foreach (App\Models\Company::get() as $company)
+                        @foreach (App\Models\ClientCompany::get() as $company)
                             <div class="col-sm-4">
                                 <div class="card text-white shadow" id="company-balance-card">
                                     <div class="card-body mb-0">

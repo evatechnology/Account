@@ -24,13 +24,13 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //////_________________________company_______________________________
-Route::resource('company', 'CompanyController');
-Route::get('/admin/company','CompanyController@index')->name('company');
-Route::post('/admin/company/add','CompanyController@store')->name('company-add');
-Route::delete('/admin/company/delete/{id}','CompanyController@destroy')->name('company-destroy');
-Route::get('admin/company/details/{id}','CompanyController@show')->name('company.details');
-Route::get('admin/company/edit/{id}','CompanyController@edit')->name('company.edit');
-Route::put('company-update/{id}','CompanyController@update')->name('company.update');
+Route::resource('company', 'ClientCompanyController');
+Route::get('/admin/company','ClientCompanyController@index')->name('company');
+Route::post('/admin/company/add','ClientCompanyController@store')->name('company-add');
+Route::delete('/admin/company/delete/{id}','ClientCompanyController@destroy')->name('company-destroy');
+Route::get('admin/company/details/{id}','ClientCompanyController@show')->name('company.details');
+Route::get('admin/company/edit/{id}','ClientCompanyController@edit')->name('company.edit');
+Route::put('company-update/{id}','ClientCompanyController@update')->name('company.update');
 
 //------------------------------------Position---------------------------///////
 Route::resource('position', 'PositionController');

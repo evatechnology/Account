@@ -19,7 +19,7 @@ class CreatePositionsTable extends Migration
             $table->string('name')->nullable();
             $table->double('salary',20,2)->nullable();
 
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_id')->references('id')->on('clientcompany');
             $table->timestamps();
         });
     }

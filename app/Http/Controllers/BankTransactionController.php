@@ -15,6 +15,10 @@ class BankTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $bankTransaction = BankTransaction::orderBy('id', 'desc')->get();
@@ -132,7 +136,7 @@ public function store(Request $request){
         $bankTransaction->amount = $request->amount[$i];
         $bankTransaction->type = $request->type[$i];
         $bankTransaction->date = $request->date[$i];
-        
+
         if($document = $request->hasFile('document')){
             $document = $request->file('document');
             $document_name = time().'.'.$document->getClientOriginalExtension();

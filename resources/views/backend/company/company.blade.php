@@ -16,9 +16,17 @@
                     <tr>
                         <th>No</th>
                         <th>Company Name</th>
+                        <th>Phone Number</th>
                         <th>Email</th>
                         <th>Web Link</th>
-                        <th>Logo</th>
+                        <th>Work Order Amount</th>
+                        <th>Received Amount</th>
+                        <th>Pending Amount</th>
+                        <th>Spend Amount</th>
+                        <th>Profit/Loss</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -30,11 +38,20 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $item->name }}</td>
+                            <td>{{ $item->phone_no }}</td>
                             <td>{{ $item->email }}</td>
                             <td><a href="http://{{ $item->website }}" target="_blank" rel="noopener noreferrer">{{ $item->website }}</a></td>
-                            <td>
+                            <td>{{ number_format($item->work_order,2)}}</td>
+                            <td>{{ number_format($item->received_payment,2)}}</td>
+                            <td>{{ number_format(($item->work_order)-($item->received_payment),2)}}</td>
+                            <td>{{ number_format($item->spending,2)}}</td>
+                            <td>{{ number_format(($item->received_payment)-($item->spending),2)}}</td>
+                            <td>{{ $item->start_date}}</td>
+                            <td>{{ $item->end_date}}</td>
+                            <td>{{ $item->status}}</td>
+                            {{-- <td>
                                 <img class="img-fluid" src="{{ asset('/backend/image/company/'.$item->logo ) }}" style="width: 100px; height:100px">
-                            </td>
+                            </td> --}}
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -55,9 +72,17 @@
                     <tr>
                         <th>No</th>
                         <th>Company Name</th>
-                        <th>Sort Name</th>
-                        <th>Code</th>
-                        <th>Logo</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Web Link</th>
+                        <th>Work Order Amount</th>
+                        <th>Received Amount</th>
+                        <th>Pending Amount</th>
+                        <th>Spend Amount</th>
+                        <th>Profit/Loss</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>status</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -72,13 +97,13 @@
 
 
     {{-- Data add Model Start --}}
-    <div class="modal fade" id="companyAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade bd-example-modal-lg" id="companyAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="text-center">
-                        <h3 class="modal-title" id="exampleModalLabel">Add Company Details</h3>
+                        <h3 class="modal-title" id="exampleModalLabel">Add Client Company Details</h3>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -89,31 +114,56 @@
                     <form class="forms-sample" id="companyForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
-
-                        <div class="form-group">
-                            <label for="image">Logo</label>
-                            <input type="file" name="logo" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Company Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" placeholder="Company Name"
-                                  />
-                        </div>
-                        <div class="form-group">
-                            <label>Email<small class="text-danger">*</small></label>
-                            <input type="text" name="email" class="form-control" placeholder="Email"
-                                  />
-                        </div>
-                        <div class="form-group">
-                            <label>Web Link<span class="text-danger">*</span></label>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">http://</div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Company Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="name" class="form-control" placeholder="Company Name"/>
                                 </div>
-                                <input type="text" name="website" class="form-control" placeholder="Web Link"
-                                     />
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email<small class="text-danger">*</small></label>
+                                    <input type="text" name="email" class="form-control" placeholder="Email"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone Number<small class="text-danger">*</small></label>
+                                    <input type="phone" name="phone_no" class="form-control" placeholder="+880171********"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Web Link<span class="text-danger">*</span></label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">http://</div>
+                                        </div>
+                                        <input type="text" name="website" class="form-control" placeholder="Web Link"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Work Order Amount<small class="text-danger">*</small></label>
+                                    <input type="text" name="work_order" class="form-control" placeholder="1500000.00"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Work Start Date<small class="text-danger">*</small></label>
+                                    <input type="date" name="start_date" class="form-control"/>
+                                </div>
                             </div>
                         </div>
+                        {{-- <div class="form-group">
+                            <label for="image">Logo</label>
+                            <input type="file" name="logo" class="form-control">
+                        </div> --}}
+
+
+
 
                         {{-- <div class="form-check form-check-flat form-check-primary">
                   <label class="form-check-label">

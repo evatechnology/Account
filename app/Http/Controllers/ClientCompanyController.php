@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\ClientCompany;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class CompanyController extends Controller
+class ClientCompanyController extends Controller
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::get()->sortByDesc('id');
+        $companies = ClientCompany::get()->sortByDesc('id');
         return view('backend.company.company',compact('companies'));
     }
 
@@ -46,7 +46,7 @@ class CompanyController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:191',
             'email' => 'required|email|max:191',
-            'logo' => 'mimes:jpg,png|dimensions:min_width=100,min_height=010',
+            // 'logo' => 'mimes:jpg,png|dimensions:min_width=100,min_height=010',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -55,16 +55,23 @@ class CompanyController extends Controller
             ]);
         }
         else{
-            $company = new Company;
+            $company = new ClientCompany;
             $company->name = $request->name;
             $company->email = $request->email;
+            $company->phone_no = $request->phone_no;
             $company->website = $request->website;
-            if($request->hasFile('logo')){
-                $image = $request->file('logo');
-                $image_name = time().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path().'/backend/image/company/',$image_name);
-                $company->logo = $image_name;
-            }
+            $company->work_order = $request->work_order;
+            $company->start_date = $request->start_date;
+            $company->received_payment = 0;
+            $company->spending = 0;
+            $company->status = "progress";
+            // $company->received_payment = 0;
+            // if($request->hasFile('logo')){
+            //     $image = $request->file('logo');
+            //     $image_name = time().'.'.$image->getClientOriginalExtension();
+            //     $image->move(public_path().'/backend/image/company/',$image_name);
+            //     $company->logo = $image_name;
+            // }
             $company->save();
             return response()->json(['success'=>'Data Add successfully.']);
         }
@@ -73,12 +80,12 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\ClientCompany  $company
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $company = Company::find($id);
+        $company = ClientCompany::find($id);
         //$employees = Employee::groupBy('company_id')->selectRaw('count(*) as total, company_id')->get();
         return view('backend.company.company-details',compact('company'));
     }
@@ -86,12 +93,12 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\ClientCompany  $company
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $company=Company::find($id);
+        $company=ClientCompany::find($id);
         return view('backend.company.company-edit',compact('company'));
     }
 
@@ -107,9 +114,9 @@ class CompanyController extends Controller
         $request->validate([
             'name' => 'required|max:191',
             'email' => 'required|max:191',
-            'logo' => 'mimes:jpg,png|dimensions:min_width=100,min_height=010',
+            // 'logo' => 'mimes:jpg,png|dimensions:min_width=100,min_height=010',
         ]);
-            $company = Company::find($id);
+            $company = ClientCompany::find($id);
             $company->name = $request->input('name');
             $company->email = $request->input('email');
             $company->website = $request->input('website');
@@ -126,19 +133,19 @@ class CompanyController extends Controller
 
         }
          $company->update();
-         $company = Company::all();
+         $company = ClientCompany::all();
             return redirect()->route('company');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Company  $company
+     * @param  \App\Models\ClientCompany  $company
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $company = Company::find($id);
+        $company = ClientCompany::find($id);
         if(!is_null($company)){
 
                 $image_path = public_path().'/backend/image/company/'.$company->logo;
