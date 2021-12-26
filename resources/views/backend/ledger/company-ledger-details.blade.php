@@ -107,7 +107,7 @@
                             <td></td>
                             <td></td>
                             <td>Total</td>
-                            <td class="text-center">{{ $data4 }}</td>
+                            <td class="text-center">{{ $data4 + $data8}}</td>
                             <td class="text-center">{{ $data5 }}</td>
                             <td></td>
                         </tr>
