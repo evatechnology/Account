@@ -30,9 +30,9 @@
                         <th>No</th>
                         <th>Date</th>
                         <th>Perticular</th>
-                        <th>Received Amount</th>
-                        <th>Expense</th>
-                        <th>Balance</th>
+                        <th>Received Amount <small>(tk)</small></th>
+                        <th>Expense <small>(tk)</small></th>
+                        <th>Balance <small>(tk)</small></th>
                     </thead>
                         @php
                             $i=1;
@@ -115,7 +115,7 @@
                             {{-- <td colspan="3" class="h4">Gross Total/Loss</td> --}}
                             {{-- <td class="text-right h4">{{ number_format(($data4 + $data8),2)}}</td>
                             <td class="text-right h4">{{ number_format($data5 ,2) }}</td> --}}
-                            <td class="text-right h4" colspan="6"> Gross Total/Loss :&emsp;&emsp;&emsp;{{ number_format((($data4 + $data8) - $data5),2)}}</td>
+                            <td class="text-right h4" colspan="6"> Gross Total/Loss :&emsp;&emsp;&emsp;{{ number_format((($data4 + $data8) - $data5),2)}} Tk</td>
                         </tr>
                     </tfoot>
                 </table>
