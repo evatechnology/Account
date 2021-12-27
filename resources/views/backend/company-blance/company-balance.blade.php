@@ -52,13 +52,14 @@
                                                 <td>
                                                     <select class="form-control" id="company_id" name="company_id[]" required>
                                                         <option selected disabled>Choose One</option>
-                                                        @foreach (App\Models\Company::get() as $item)
+                                                        @foreach (App\Models\ClientCompany::get() as $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="source[]" id="source" class="form-control" required>
+                                                    <input type="hidden" name="maincompany_id[]" id="maincompany_id" value="1" class="form-control">
+                                                    <input type="text" name="account_head[]" id="source" class="form-control" required>
                                                 </td>
                                                 <td>
                                                     <input type="date" name="date[]" id="date" class="form-control" required>
@@ -125,6 +126,7 @@
                                                         </div>
                                                       </div>
                                                 </div>
+                                                
                                                 <div class="col-sm-4">
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Account Head</label>
@@ -268,12 +270,13 @@
                 '    <td>\n'+
                 '        <select class="form-control" id="company_id" name="company_id[]"required>\n'+
                 '            <option selected disabled>Choose One</option>\n'+
-                '            @foreach (App\Models\Company::get() as $item)\n'+
+                '            @foreach (App\Models\ClientCompany::get() as $item)\n'+
                 '                <option value="{{ $item->id }}">{{ $item->name }}</option>\n'+
                 '            @endforeach\n'+
                 '        </select>\n'+
                 '    </td>\n'+
-                '    <td><input type="text" name="source[]" id="source" class="form-control" required/>'+
+                '    <td><input type="hidden" name="maincompany_id[]" id="maincompany_id" value="1" class="form-control">'+
+                '    <input type="text" name="account_head[]" id="source" class="form-control" required/>'+
                 '    </td>\n'+
                 '    <td><input type="date" name="date[]" id="date" class="form-control" required/>'+
                 '    </td>\n'+

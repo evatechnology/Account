@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\ClientCompany;
+
 use App\Models\CompanyBalance;
+use App\Models\MainCompany;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Session;
+
 
 class CompanyBalanceController extends Controller
 {
@@ -24,7 +23,7 @@ class CompanyBalanceController extends Controller
     public function index()
     {
         $companyBalance = CompanyBalance::orderBy('id', 'desc')->get();
-        $company = Company::get();
+        $company = ClientCompany::get();
         return view('backend.company-blance.company-balance',compact('companyBalance','company'));
     }
 
@@ -104,7 +103,7 @@ class CompanyBalanceController extends Controller
         $this->validate($request, [
                     'type' => 'required|max:191',
                     'company_id' => 'required|max:191',
-                    'source' => 'required|max:191',
+                    'account_head' => 'required|max:191',
                     'amount' => 'required|max:191',
                     'date' => 'max:191',
                 ]);
@@ -118,16 +117,18 @@ class CompanyBalanceController extends Controller
                 //     }
 
                 // }
-
+                // $maincompany = MainCompany::select('id')->get();
                 for($i=0;$i<count($request->type);$i++){
-                    $company = Company::find($request->company_id[$i]);
+                    $company = ClientCompany::find($request->company_id[$i]);
                         if(!$company ){
                             return back();
                         }
+                        $maincompany = MainCompany::find($request->maincompany_id[$i]);
                         $companyBalance = new CompanyBalance;
                         $companyBalance->company_id = $company->id;
+                        $companyBalance->maincompany_id = $maincompany->id;
                         $companyBalance->amount = abs($request->amount[$i]);
-                        $companyBalance->source = $request->source[$i];
+                        $companyBalance->account_head = $request->source[$i];
                         $companyBalance->type = $request->type[$i];
                         $companyBalance->date = $request->date[$i];
                         // $documents=[];
@@ -153,18 +154,23 @@ class CompanyBalanceController extends Controller
                         // $companyBalance->document = json_encode($documents[$i]);
                         if($request->type[$i]=='Income'){
                             // $company->temp_balance =$request->balance;
-                            $company->current_blance += $request->amount[$i];
-                            $companyBalance->temp_balance = $company->current_blance;
-                            $company->save();
+                            $company->received_payment += abs($request->amount[$i]);
+                            // $companyBalance->temp_balance = $company->current_blance;
+                            $maincompany->balance += abs($request->amount[$i]);
+                            $company->update();
                             $companyBalance->save();
+                             $maincompany->save();
+
                             // return redirect()->back()->with('success', 'Created successfully!');
 
                         }
                         if($request->type[$i]=='Expense'){
-                            $company->current_blance -= $request->amount[$i];
-                            $companyBalance->temp_balance = $company->current_blance;
+                            $company->spending += abs($request->amount[$i]);
+                            // $companyBalance->temp_balance = $company->current_blance;
+                            $maincompany->balance -= abs($request->amount[$i]);
                             $company->save();
                             $companyBalance->save();
+                            $maincompany->save();
                             // return redirect()->back()->with('success', 'Created successfully!');
 
                         }

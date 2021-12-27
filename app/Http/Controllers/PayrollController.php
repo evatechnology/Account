@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\ClientCompany;
 use App\Models\Employee;
 use App\Models\Payroll;
 use App\Models\Position;
@@ -26,7 +26,7 @@ class PayrollController extends Controller
     {
         $payroll = Payroll::orderBy('id','desc')->get();
         // $employees = Employee::get();
-        $company = Company::get();
+        $company = ClientCompany::get();
         return view('backend.payroll.payroll',compact('payroll','company'));
     }
 

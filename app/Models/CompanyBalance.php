@@ -10,21 +10,26 @@ class CompanyBalance extends Model
     use HasFactory;
     protected $table = 'companyaccounts';
     protected $fillable = ['type',
+    'maincompany_id',
     'company_id',
-    'source',
+    'account_head',
     'amount',
     'document',
-    'temp_balance',
+    // 'temp_balance',
     'date'
 ];
-    public function setFilenamesAttribute($value)
-    {
-        $this->attributes['document'] = json_encode($value);
-    }
+    // public function setFilenamesAttribute($value)
+    // {
+    //     $this->attributes['document'] = json_encode($value);
+    // }
 
+    public function maincompany()
+    {
+        return $this->belongsTo(MainCompany::class,'maincompany_id');
+    }
     public function company()
     {
-        return $this->belongsTo(Company::class,'company_id');
+        return $this->belongsTo(ClientCompany::class,'company_id');
     }
 
 

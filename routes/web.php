@@ -23,7 +23,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//////_________________________Main company_______________________________
+Route::get('/admin/maincompany','MainCompanyController@index')->name('maincompany');
+Route::post('/admin/maincompany/add','MainCompanyController@store')->name('maincompany-add');
 //////_________________________company_______________________________
+
 Route::resource('company', 'ClientCompanyController');
 Route::get('/admin/company','ClientCompanyController@index')->name('company');
 Route::post('/admin/company/add','ClientCompanyController@store')->name('company-add');

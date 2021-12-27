@@ -2,16 +2,16 @@
 @section('title','Company')
 @section('content')
 <div class="card">
-    <h4 class="text-center mt-3 mb-3"><u>Company List</u></h4>
+    <h4 class="text-center mt-3 mb-3"><u>Client List</u></h4>
     <div class="card-body">
         <div class="float-right">
             <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
                 data-target="#companyAddModal">
-                <i class="mdi mdi-plus-circle"></i> Company Add
+                <i class="mdi mdi-plus-circle"></i> New Client
             </a>
         </div>
-        <div class="table-responsive">
-            <table id="example" class=" table display" style="min-width: 845px">
+        <div>
+            <table id="example" class="table table-responsive table-borderd border-0 table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -180,10 +180,15 @@
     </div>
     {{-- Data Add Modal End --}}
 
-
+<script>
+    $(".modal").draggable({
+  handle: ".modal-header"
+});
+</script>
 
     <script>
-        var table = $('#example').DataTable();
+        var table = $('#example').DataTable({
+        });
         $('#companyForm').on('submit', function(e) {
             e.preventDefault();
             $.ajaxSetup({
