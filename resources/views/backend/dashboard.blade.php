@@ -114,7 +114,7 @@
             <div class="accordion__header collapsed accordion__header--primary" data-toggle="collapse"
                 data-target="#header-shadow_collapseOne">
                 <span class="accordion__header--icon"></span>
-                <span class="accordion__header--text">Company Balance</span>
+                <span class="accordion__header--text">Recived Payment</span>
                 <span class="accordion__header--indicator"></span>
             </div>
             <div id="header-shadow_collapseOne" class="collapse accordion__body show" data-parent="#accordion-ten">
@@ -127,7 +127,7 @@
                                         <h4 class="card-title text-white text-center">{{ $company->name }}</h5>
                                             <br>
                                             <h2 class="card-text text-center" style="color:#0CECDD">
-                                                {{ number_format($company->current_blance),2 }}Tk</p>
+                                                {{ number_format($company->received_payment),2 }}Tk</p>
                                     </div>
                                     <div class="card-footer bg-transparent border-0 text-white">
                                         <small>Last updateed {{ $company->updated_at->diffForHumans() }}</small>
