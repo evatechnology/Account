@@ -30,6 +30,7 @@ Route::post('/admin/maincompany/add','MainCompanyController@store')->name('mainc
 
 Route::resource('company', 'ClientCompanyController');
 Route::get('/admin/company','ClientCompanyController@index')->name('company');
+Route::get('/admin/receivable','ClientCompanyController@account_receivable')->name('account_receivable');
 Route::post('/admin/company/add','ClientCompanyController@store')->name('company-add');
 Route::delete('/admin/company/delete/{id}','ClientCompanyController@destroy')->name('company-destroy');
 Route::get('admin/company/details/{id}','ClientCompanyController@show')->name('company.details');

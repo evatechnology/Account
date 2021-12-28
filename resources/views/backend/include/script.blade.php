@@ -21,6 +21,7 @@
 <!-- Summernote init -->
 <script src="{{ asset('backend/js/plugins-init/summernote-init.js') }}"></script>
 
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- Counter Up -->
 {{-- <script src="{{ asset('backend/vendor/jqvmap/js/jquery.vmap.min.js') }}"></script>
 <script src="{{ asset('backend/vendor/jqvmap/js/jquery.vmap.usa.js') }}"></script> --}}

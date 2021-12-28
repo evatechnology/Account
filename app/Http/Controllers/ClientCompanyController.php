@@ -25,6 +25,12 @@ class ClientCompanyController extends Controller
         return view('backend.company.company',compact('companies'));
     }
 
+    public function account_receivable()
+    {
+        $companies = ClientCompany::get()->sortByDesc('id');
+        return view('backend.receivable.receivable',compact('companies'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -119,19 +125,24 @@ class ClientCompanyController extends Controller
             $company = ClientCompany::find($id);
             $company->name = $request->input('name');
             $company->email = $request->input('email');
+            $company->phone_no = $request->input('phone_no');
             $company->website = $request->input('website');
-            if($request->hasFile('logo')){
-                $destination = public_path().'/backend/image/company/'.$company->logo;
-                if(File::exists($destination)){
-                    File::delete($destination);
-                }
-                $image = $request->file('logo');
-                $image_name = time().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path().'/backend/image/company/',$image_name);
-                $company->logo = $image_name;
+            $company->work_order = $request->input('work_order');
+            $company->start_date = $request->input('start_date');
+            $company->end_date = $request->input('end_date');
+            $company->status = $request->input('status');
+        //     if($request->hasFile('logo')){
+        //         $destination = public_path().'/backend/image/company/'.$company->logo;
+        //         if(File::exists($destination)){
+        //             File::delete($destination);
+        //         }
+        //         $image = $request->file('logo');
+        //         $image_name = time().'.'.$image->getClientOriginalExtension();
+        //         $image->move(public_path().'/backend/image/company/',$image_name);
+        //         $company->logo = $image_name;
 
 
-        }
+        // }
          $company->update();
          $company = ClientCompany::all();
             return redirect()->route('company');

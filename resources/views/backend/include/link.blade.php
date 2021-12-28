@@ -23,6 +23,7 @@
     <link href="{{ asset('backend/vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('backend/vendor/toastr/css/toastr.min.css') }}">
     <link href="{{ asset('backend/vendor/summernote/summernote.css') }}" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
     <script src="{{ asset('backend/custom/jquery/jquery-3.5.1.js') }}"></script>
@@ -45,7 +46,7 @@
 
     {{-- <script src="{{ asset('backend/js/plugins-init/datatables.init.js') }}"></script> --}}
 
-
+    
 </head>
 
 <body>
