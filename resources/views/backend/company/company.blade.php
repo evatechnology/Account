@@ -36,6 +36,8 @@
                         @php
                             $receivable = 0;
                             $receivable = ($item->work_order)-($item->received_payment);
+                            $profit = 0;
+                            $profit = ($item->received_payment)-($item->spending);
                         @endphp
                         <tr>
                             <td>{{ ++$i }}</td>
@@ -61,7 +63,13 @@
                                 @endif
                             </td>
                             <td class="text-right">{{ number_format($item->spending,2)}}</td>
-                            <td class="text-right">{{ number_format(($item->received_payment)-($item->spending),2)}}</td>
+                            <td class="text-right">
+                                @if ($profit > 0)
+                                    <span class="h6" style="color: #2FDD92">{{ number_format($profit,2)}}</span>
+                                @else
+                                    <span class="h6" style="color: #F90716">{{ number_format($profit,2)}}</span>
+                                @endif
+                            </td>
                             <td>{{ $item->start_date}}</td>
                             <td>{{ $item->end_date}}</td>
                             <td>
