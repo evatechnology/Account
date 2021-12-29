@@ -15,11 +15,11 @@ class CreatePositionsTable extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('company_id');
-            $table->string('name')->nullable();
-            $table->double('salary',20,2)->nullable();
+            // $table->unsignedInteger('company_id');
+            $table->string('position_name')->nullable();
+            $table->double('salary_range',20,2)->nullable();
 
-            $table->foreign('company_id')->references('id')->on('clientcompany');
+            // $table->foreign('company_id')->references('id')->on('clientcompany');
             $table->timestamps();
         });
     }

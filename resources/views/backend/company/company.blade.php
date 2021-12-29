@@ -64,7 +64,7 @@
                             </td>
                             <td class="text-right">{{ number_format($item->spending,2)}}</td>
                             <td class="text-right">
-                                @if ($profit > 0)
+                                @if ($profit >= 0)
                                     <span class="h6" style="color: #2FDD92">{{ number_format($profit,2)}}</span>
                                 @else
                                     <span class="h6" style="color: #F90716">{{ number_format($profit,2)}}</span>

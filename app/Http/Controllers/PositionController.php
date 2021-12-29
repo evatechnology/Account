@@ -42,9 +42,8 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name' => 'required|max:191',
-            'salary' => 'required|max:191',
-            'company_id' => 'required|max:191',
+            'position_name' => 'required|max:191',
+            'salary_range' => 'required|max:191',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -54,9 +53,8 @@ class PositionController extends Controller
         }
         else{
             $position = new Position;
-            $position->name = $request->name;
-            $position->salary = $request->salary;
-            $position->company_id = $request->company_id;
+            $position->position_name = $request->position_name;
+            $position->salary_range = $request->salary_range;
             $position->save();
             return response()->json(['success'=>'Data Add successfully.']);
         }
@@ -95,10 +93,10 @@ class PositionController extends Controller
     public function update(Request $request)
     {
         $position = Position::find($request->id);
-        $position->name = $request->name;
-        $position->salary = $request->salary;
-        $position->company_id = $request->company_id;
-        $position->save();
+        $position->position_name = $request->position_name1;
+        $position->salary_range = $request->salary_range1;
+        // $position->company_id = $request->company_id;
+        $position->update();
         return response()->json(['success'=>'Data Add successfully.']);
     }
 

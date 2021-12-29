@@ -60,7 +60,7 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $data3->date }}</td>
-                            <td>{{ $data3->source}}</td>
+                            <td>{{ $data3->account_head}}</td>
                             <td class="text-right font-weight-bold">
                                 @if ($data3->type == 'Income')
                                     <p class="text-success">

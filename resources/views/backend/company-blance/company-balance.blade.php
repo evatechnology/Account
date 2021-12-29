@@ -126,7 +126,7 @@
                                                         </div>
                                                       </div>
                                                 </div>
-                                                
+
                                                 <div class="col-sm-4">
                                                     <div class="form-group row">
                                                         <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Account Head</label>
@@ -187,7 +187,7 @@
                                                             <td>{{ $item->date}}</td>
 
                                                             <td>{{ $item->company->name }}</td>
-                                                            <td>{{ $item->source }}</td>
+                                                            <td>{{ $item->account_head }}</td>
                                                             <td>
                                                                 @if ($item->type == 'Income')
                                                                     <div class="font-weight-bold" style="color: #00AF91">Income</div>
@@ -239,7 +239,7 @@
                                                 <h4 class="card-title text-white text-center">{{ $company->name }}</h5>
                                                     <br>
                                                     <h2 class="card-text text-center" style="color:#0CECDD">
-                                                        {{ $company->current_blance }}</p>
+                                                        {{ number_format($company->received_payment),2 }}Tk</h2>
                                             </div>
                                             <div class="card-footer bg-transparent border-0 text-white">
                                                 <small>Last updateed {{ $company->updated_at->diffForHumans() }}</small>

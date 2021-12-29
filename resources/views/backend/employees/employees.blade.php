@@ -4,10 +4,10 @@
 <div class="card">
     <h4 class="text-center mt-3 mb-3"><u>Employee List</u></h4>
     <div class="card-body">
-        <div class="float-right">
+        <div class="text-center">
             <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
                 data-target="#employeeAddModal">
-                <i class="mdi mdi-plus-circle"></i>
+                <i class="mdi mdi-plus-circle"></i> New Employee
             </a>
         </div>
         <div class="table-responsive">
@@ -18,9 +18,9 @@
                         <th>Employee Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Company Name</th>
                         <th>Position</th>
                         <th>Salary</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -31,12 +31,12 @@
                     @foreach ($employees as $item )
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->full_name }}</td>
                             <td>{{ $item->email }}</td>
-                            <td>{{ $item->phone }}</td>
-                            <td>{{ $item->companyname->name }}</td>
-                            <td>{{ $item->position->name }}</td>
+                            <td>{{ $item->phone_1 }}</td>
+                            <td>{{ $item->position->position_name }}</td>
                             <td>{{ $item->salary }}</td>
+                            <td>{{ $item->status }}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -59,9 +59,9 @@
                         <th>Employee Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Company Name</th>
                         <th>Position Name</th>
                         <th>Salary</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
@@ -77,7 +77,7 @@
     {{-- Data add Model Start --}}
     <div class="modal fade" id="employeeAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="text-center">
@@ -94,56 +94,120 @@
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
 
 
-                        <div class="form-group">
-                            <label>Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" placeholder="John doe"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Email<small class="text-danger">*</small></label>
-                            <input type="text" name="email" class="form-control"placeholder=" hello@someting.com"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number<small class="text-danger">*</small></label>
-                            <input type="text" name="phone" class="form-control" placeholder="Phone Number"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Address<small class="text-danger">*</small></label>
-                            <input type="text" name="address" class="form-control" placeholder="123, South Mugda New York, 1214"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <select class="form-control" id="sel1" name="gender">
-                                <option selected disabled>Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Full Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="full_name" class="form-control" placeholder="John doe"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
 
-                        <div class="form-group">
-                            <label>Company List</label>
-                            <select class="form-control" id="company_id" name="company_id">
-                                <option selected disabled>Please Select Company</option>
-                                @foreach ($company as $item )
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone Number 1<small class="text-danger">*</small></label>
+                                    <input type="text" name="phone_1" class="form-control" placeholder="Phone Number"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone Number 2<small class="text-danger">(optional)</small></label>
+                                    <input type="text" name="phone_2" class="form-control" placeholder="Phone Number"/>
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="position">Position: </label>
-                            <select name="position_id" id="position_id" class="form-control">
-                                <option selected disabled>Please Select Company First</option>
-                            </select>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email<small class="text-danger">*</small></label>
+                                    <input type="text" name="email" class="form-control"placeholder=" hello@someting.com"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>NID<small class="text-danger">*</small></label>
+                                    <input type="text" name="nid" class="form-control" />
+                                </div>
+                            </div>
 
-                        <div class="form-group" >
-                            <label>Salary<small class="text-danger">*</small></label>
-                            <input type="text" name="salary" class="form-control" placeholder="250000.00"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Image</label>
-                            <input type="file" name="image" class="form-control">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Present Address<small class="text-danger">*</small></label>
+                                    <textarea name="address_present" class="form-control" ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Permanent Address<small class="text-danger">*</small></label>
+                                    <textarea name="address_permanent" class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Education<small class="text-danger">*</small></label>
+                                    <input type="text" name="education" class="form-control summernote"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control" id="sel1" name="gender">
+                                        <option selected disabled>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="position">Position: </label>
+                                    <select name="position_id" id="position_id" class="form-control">
+                                        <option selected disabled>Please Select One</option>
+                                        @foreach (App\Models\Position::get() as $item)
+                                            <option value="{{ $item->id }}">{{ $item->position_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label>Salary<small class="text-danger">*</small></label>
+                                    <input type="text" name="salary" class="form-control" placeholder="250000.00"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label>Date Of Birth<small class="text-danger">*</small></label>
+                                    <input type="date" name="dob" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label>Join Date<small class="text-danger">*</small></label>
+                                    <input type="date" name="join_date" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="image">Image</label>
+                                    <input type="file" name="image" class="form-control ">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nid">NID Copy</label>
+                                    <input type="file" name="nid_copy" class="form-control ">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cv">CV</label>
+                                    <input type="file" name="cv" class="form-control ">
+                                </div>
+                            </div>
                         </div>
 
 
@@ -162,39 +226,53 @@
     </div>
     {{-- Data Add Modal End --}}
     <script>
-        // when country dropdown changes
-        $('#company_id').change(function() {
-
-            var companyID = $(this).val();
-
-            if (companyID) {
-                //console.log(companyID);
-                $.ajax({
-                    type: "GET",
-                    url: "/admin/employees/position/" + companyID,
-                    success: function(res) {
-                        //console.log(res);
-                        if (res) {
-
-                            $("#position_id").empty();
-                            $("#position_id").append('<option>Select Position</option>');
-                            $.each(res, function(key, value) {
-                                $("#position_id").append('<option value="' + value.id + '">' + value.name +
-                                    '</option>');
-                                    //console.log(value);
-                            });
-
-                        } else {
-
-                            $("#position_id").empty();
-                        }
-                    }
-                });
-            } else {
-
-                $("#position_id").empty();
-            }
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
         });
+        // when country dropdown changes
+        // $('#company_id').change(function() {
+
+        //     var companyID = $(this).val();
+
+        //     if (companyID) {
+        //         //console.log(companyID);
+        //         $.ajax({
+        //             type: "GET",
+        //             url: "/admin/employees/position/" + companyID,
+        //             success: function(res) {
+        //                 //console.log(res);
+        //                 if (res) {
+
+        //                     $("#position_id").empty();
+        //                     $("#position_id").append('<option>Select Position</option>');
+        //                     $.each(res, function(key, value) {
+        //                         $("#position_id").append('<option value="' + value.id + '">' + value.name +
+        //                             '</option>');
+        //                             //console.log(value);
+        //                     });
+
+        //                 } else {
+
+        //                     $("#position_id").empty();
+        //                 }
+        //             }
+        //         });
+        //     } else {
+
+        //         $("#position_id").empty();
+        //     }
+        // });
 
     </script>
 
@@ -207,7 +285,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            
+
             var myformData = new FormData($('#employeeForm')[0]);
             $.ajax({
                 type: "post",

@@ -86,6 +86,7 @@ class LedgerController extends Controller
                                 ->groupBy('company_id')
                                 ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get();
 
         $data1 = $request->input('from');
@@ -93,16 +94,19 @@ class LedgerController extends Controller
 
         $data3 = CompanyBalance::where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get();
         $data4 = CompanyBalance::where('type','Income')
                                 ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
         $data5 = CompanyBalance::where('type','Expense')
                                 ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
@@ -116,6 +120,7 @@ class LedgerController extends Controller
         $data7 = CompanyBalance::where('type','Expense')
                                 ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 

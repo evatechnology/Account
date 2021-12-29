@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClientCompany;
+use App\Models\CompanyBalance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -92,8 +93,9 @@ class ClientCompanyController extends Controller
     public function show($id)
     {
         $company = ClientCompany::find($id);
+        $t_history = CompanyBalance::find($id)->where('company_id',$id)->orderBy('date')->get();
         //$employees = Employee::groupBy('company_id')->selectRaw('count(*) as total, company_id')->get();
-        return view('backend.company.company-details',compact('company'));
+        return view('backend.company.company-details',compact('company','t_history'));
     }
 
     /**

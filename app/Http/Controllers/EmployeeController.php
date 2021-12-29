@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\ClientCompany;
 use App\Models\Employee;
 use App\Models\Payroll;
 use App\Models\Position;
@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::get();
-        $company = Company::get();
+        $company = ClientCompany::get();
         return view('backend.employees.employees',compact('employees','company'));
     }
 
@@ -60,13 +60,12 @@ class EmployeeController extends Controller
 
         $validator = Validator::make($request->all(),[
             // 'employee_id' =>'required|max:191',
-            'name' =>'required|max:191',
+            'full_name' =>'required|max:191',
             'email' =>'required|email|max:191',
-            'phone' =>'required|min:11|max:191',
-            'address' =>'required|max:191',
+            'phone_1' =>'required|min:11|max:191',
+
             'gender' =>'required|max:191',
             'image' =>'required|mimes:jpg,png',
-            'company_id' =>'required',
             'position_id' =>'required',
         ]);
         if($validator->fails()){
@@ -79,27 +78,44 @@ class EmployeeController extends Controller
 
                 $employees = new Employee;
                 // $employees->employee_id = date('ymd').rand(0,999);
-                $employees->name = $request->name;
+                $employees->full_name = $request->full_name;
+                $employees->phone_1 = $request->phone_1;
+                $employees->phone_2 = $request->phone_2;
                 $employees->email = $request->email;
-                $employees->phone = $request->phone;
-                $employees->address = $request->address;
+                $employees->nid = $request->nid;
+                $employees->address_present = $request->address_present;
+                $employees->address_permanent = $request->address_permanent;
+                $employees->education = $request->education;
                 $employees->gender = $request->gender;
-                $employees->company_id = $request->company_id;
                 $employees->position_id = $request->position_id;
                 $employees->salary = $request->salary;
+                $employees->dob = $request->dob;
+                $employees->status = 1;
+                $employees->join_date = $request->join_date;
 
                 if($request->hasFile('image')){
                     $image = $request->file('image');
                     $image_name = time().'.'.$image->getClientOriginalExtension();
-                    $image->move(public_path().'/backend/image/employee/',$image_name);
+                    $image->move(public_path().'/backend/image/employee/image/',$image_name);
                     $employees->image = $image_name;
+                }
+                if($request->hasFile('nid_copy')){
+                    $image = $request->file('nid_copy');
+                    $image_name = time().'.'.$image->getClientOriginalExtension();
+                    $image->move(public_path().'/backend/image/employee/nid_copy/',$image_name);
+                    $employees->nid_copy = $image_name;
+                }
+                if($request->hasFile('cv')){
+                    $image = $request->file('cv');
+                    $image_name = time().'.'.$image->getClientOriginalExtension();
+                    $image->move(public_path().'/backend/image/employee/cv/',$image_name);
+                    $employees->cv = $image_name;
                 }
                 $employees->save();
 
                 $payroll = new Payroll;
                 $payroll->employee_id = $employees->id;
                 $payroll->bonous = $employees->salary;
-                $payroll->company_id = $employees->company_id;
                 $payroll->position_id = $employees->position_id;
                 $payroll->reason = "Basic Salary";
                 $payroll->date = Carbon::now();
@@ -119,7 +135,8 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employees = Employee::find($id);
-       return view('backend.employees.employee-details', compact('employees'));
+        $payroll = Payroll::find($id)->where('employee_id',$id)->get();
+       return view('backend.employees.employee-details', compact('employees','payroll'));
     }
 
     /**
@@ -131,6 +148,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employees = Employee::find($id);
+
         return view('backend.employees.employee-edit',compact('employees'));
     }
 

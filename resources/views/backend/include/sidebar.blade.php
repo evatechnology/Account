@@ -16,6 +16,7 @@
                         <li><a href="{{ route('payroll') }}"><i class="fas fa-file-invoice-dollar"></i>Payroll</a></li>
                     </ul>
                 </li>
+                <li><a href="#" aria-expanded="false"><i class="fas fa-file-excel"></i><span class="nav-text">Salary Sheet</span></a></li>
                 <li><a href="{{ route('bank') }}" aria-expanded="false"><i class="fas fa-university"></i><span class="nav-text">Bank</span></a></li>
                 {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Bank</span></a>
                     <ul aria-expanded="false">

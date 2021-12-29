@@ -9,9 +9,5 @@ class Position extends Model
 {
     use HasFactory;
     protected $table = 'positions';
-    protected $fillable = ['company_id','salary','name'];
-    public function companyname()
-    {
-        return $this->belongsTo(Company::class,'company_id');
-    }
+    protected $fillable = ['company_id','salary_range','position_name'];
 }

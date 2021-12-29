@@ -12,7 +12,7 @@
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
 
                         <div class="form-group">
-                            <label>Company Name<span class="text-danger"></span></label>
+                            <label>Client Name<span class="text-danger"></span></label>
                             <input type="text" value="{{ $company->name }}" name="name" class="form-control"/>
                         </div>
                         <div class="form-group">

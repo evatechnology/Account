@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Position')
+@section('title', 'AMS || Employees Position')
 @section('content')
 
 
@@ -62,9 +62,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Company Name</th>
                             <th>Position</th>
-                            <th>Salary</th>
+                            <th>Salary Range</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -76,9 +75,8 @@
                        @foreach ($position as $item)
                         <tr id="position-{{ $item->id }}">
                             <td>{{ ++$i }}</td>
-                            <td>{{ $item->companyname->name }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ number_format($item->salary,2) }} Tk</td>
+                            <td>{{ $item->position_name }}</td>
+                            <td>{{ number_format($item->salary_range,2) }} Tk</td>
                             <td>
                                 <a class="btn btn-outline-warning btn-sm" href="javascript:void(0);" onclick="editPosition({{ $item->id }})"><i class="fas fa-pencil-alt"></i></a>
                                 <a class="btn btn-outline-danger deletebtn btn-sm" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
@@ -110,23 +108,14 @@
                     <ul id="PositionForm_errorlist"></ul>
                     <form class="forms-sample" id="positionaddform" method="post">
                         @csrf
-                        <div class="form-group">
-                            <label>Company List</label>
-                            <select class="form-control" id="company_id" name="company_id">
-                                <option selected disabled>Please Select Company</option>
-                                @foreach (App\Models\Company::get() as $item )
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="form-group">
                             <label>Position Name<small class="text-danger">*</small></label>
-                            <input type="text" name="name" class="form-control" placeholder="Assistant Manager"/>
+                            <input type="text" name="position_name" class="form-control" placeholder="Assistant Manager"/>
                         </div>
                         <div class="form-group">
                             <label>Salary Scale<small class="text-danger">*</small></label>
-                            <input type="text" name="salary" class="form-control" placeholder="25000.00"/>
+                            <input type="text" name="salary_range" class="form-control" placeholder="25000.00"/>
                         </div>
 
 
@@ -159,23 +148,14 @@
                     <form class="forms-sample" id="positioneditform" method="post">
                         @csrf
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label>Company List</label>
-                            <select class="form-control" id="company_id1" name="company_id">
-                                <option selected disabled>Please Select Company</option>
-                                @foreach (App\Models\Company::get() as $item )
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="form-group">
                             <label>Position Name<small class="text-danger">*</small></label>
-                            <input type="text" id="name1" name="name" class="form-control" placeholder="Assistant Manager"/>
+                            <input type="text" id="position_name1" name="position_name1" class="form-control" placeholder="Assistant Manager"/>
                         </div>
                         <div class="form-group">
                             <label>Salary Scale<small class="text-danger">*</small></label>
-                            <input type="text" id="salary1" name="salary" class="form-control" placeholder="25000.00"/>
+                            <input type="text" id="salary_range1" name="salary_range1" class="form-control" placeholder="25000.00"/>
                         </div>
 
 
@@ -278,11 +258,10 @@
 
 
     function editPosition(id){
-        $.get("/admin/position/edit/"+id, function(bank){
-            $('#id').val(bank.id);
-            $('#company_id1').val(bank.company_id);
-            $('#name1').val(bank.name);
-            $('#salary1').val(bank.salary);
+        $.get("/admin/position/edit/"+id, function(position){
+            $('#id').val(position.id);
+            $('#position_name1').val(position.position_name);
+            $('#salary_range1').val(position.salary_range);
             // $('#balance').val(bank.balance);
             $('#PositionEditModal').modal("toggle");
         });
@@ -292,9 +271,9 @@
         e.preventDefault();
 
         let id = $('#id').val();
-        let company_id1 = $('#company_id1').val();
-        let name1 = $('#name1').val();
-        let salary1 = $('#salary1').val();
+        // let company_id1 = $('#company_id1').val();
+        let position_name1 = $('#position_name1').val();
+        let salary_range1 = $('#salary_range1').val();
         let _token = $('input[name=_token]').val();
 
         $.ajax({
@@ -302,16 +281,16 @@
             url: "/admin/position/update",
             data: {
                 id:id,
-                company_id:company_id1,
-                name:name1,
-                salary:salary1,
+                // company_id:company_id1,
+                position_name1:position_name1,
+                salary_range1:salary_range1,
                 _token:_token,
             },
             dataType: "json",
             success: function (response) {
-                $('#position-'+response.id + 'td:nth-child(1)').text(response.company_id);
-                $('#position-'+response.id + 'td:nth-child(2)').text(response.name);
-                $('#position-'+response.id + 'td:nth-child(3)').text(response.salary);
+                // $('#position-'+response.id + 'td:nth-child(1)').text(response.company_id);
+                $('#position-'+response.id + 'td:nth-child(1)').text(response.position_name1);
+                $('#position-'+response.id + 'td:nth-child(2)').text(response.salary_range1);
                 $('#PositionEditModal').modal("toggle");
                 Swal.fire({
                             position: 'top-end',

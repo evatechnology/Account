@@ -128,7 +128,7 @@ class CompanyBalanceController extends Controller
                         $companyBalance->company_id = $company->id;
                         $companyBalance->maincompany_id = $maincompany->id;
                         $companyBalance->amount = abs($request->amount[$i]);
-                        $companyBalance->account_head = $request->source[$i];
+                        $companyBalance->account_head = $request->account_head[$i];
                         $companyBalance->type = $request->type[$i];
                         $companyBalance->date = $request->date[$i];
                         // $documents=[];
