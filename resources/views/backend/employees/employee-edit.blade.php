@@ -13,7 +13,7 @@
 
                         <div class="form-group">
                             <label>Name<span class="text-danger">*</span></label>
-                            <input type="text" value="{{ $employees->name }}" name="name" class="form-control" placeholder="John doe"/>
+                            <input type="text" value="{{ $employees->full_name }}" name="full_name" class="form-control" placeholder="John doe"/>
                         </div>
                         <div class="form-group">
                             <label>Email<small class="text-danger">*</small></label>
@@ -21,11 +21,11 @@
                         </div>
                         <div class="form-group">
                             <label>Phone Number<small class="text-danger">*</small></label>
-                            <input type="text" value="{{ $employees->phone }}" name="phone" class="form-control" placeholder="Phone Number"/>
+                            <input type="text" value="{{ $employees->phone_1 }}" name="phone_1" class="form-control" placeholder="Phone Number"/>
                         </div>
                         <div class="form-group">
                             <label>Address<small class="text-danger">*</small></label>
-                            <input type="text" value="{{ $employees->address }}" name="address" class="form-control" placeholder="123, South Mugda New York, 1214"/>
+                            <input type="text" value="{{ $employees->address_present }}" name="address_present" class="form-control" placeholder="123, South Mugda New York, 1214"/>
                         </div>
                         <div class="form-group">
                             <label>Gender</label>
@@ -36,7 +36,7 @@
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>Company List</label>
                             <select class="form-control" id="sel1" value="{{ $employees->company_id }}" name="company_id">
                                 <option value="{{ $employees->company_id }}" selected>{{ $employees->companyname->name }}</option>
@@ -45,10 +45,19 @@
                                 @endforeach
 
                             </select>
+                        </div> --}}
+                        <div class="form-group">
+                            <label>Company List</label>
+                            <select class="form-control" id="sel1" value="{{ $employees->company_id }}" name="position_id">
+                                <option value="{{ $employees->position_id }}" selected>{{ $employees->position->position_name }}</option>
+                                @foreach (App\Models\Position::get() as $item )
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Position<small class="text-danger">*</small></label>
-                            <input type="text"value="{{ $employees->position}}" name="position" class="form-control" placeholder="Assistant Manager"/>
+                            <input type="text"value="{{ $employees->position}}" name="position" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Salary<small class="text-danger">*</small></label>
