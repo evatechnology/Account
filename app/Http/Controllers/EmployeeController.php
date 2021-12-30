@@ -161,33 +161,53 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),[
-            'name' =>'required|max:191',
-            'email' =>'required|email|max:191',
-            'phone' =>'required|min:11|max:191',
-            'address' =>'required|max:191',
-            'position' =>'required|max:191',
-            'salary' =>'required|max:191',
-            'image' =>'mimes:jpg,png',
-        ]);
+
         $employees = Employee::find($id);
-        $employees->name = $request->name;
+            $employees->full_name = $request->full_name;
+            $employees->phone_1 = $request->phone_1;
+            $employees->phone_2 = $request->phone_2;
             $employees->email = $request->email;
-            $employees->phone = $request->phone;
-            $employees->address = $request->address;
+            $employees->nid = $request->nid;
+            $employees->address_present = $request->address_present;
+            $employees->address_permanent = $request->address_permanent;
+            $employees->education = $request->education;
             $employees->gender = $request->gender;
-            $employees->position = $request->position;
+            $employees->position_id = $request->position_id;
             $employees->salary = $request->salary;
-            $employees->company_id = $request->company_id;
+            $employees->dob = $request->dob;
+            $employees->join_date = $request->join_date;
+            $employees->status = $request->status;
             if($request->hasFile('image')){
-                $destination = public_path().'/backend/image/employee/'.$employees->image;
+                $destination = public_path().'/backend/image/employee/image/'.$employees->image;
                 if(File::exists($destination)){
                     File::delete($destination);
                 }
                 $image = $request->file('image');
                 $image_name = time().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path().'/backend/image/employee/',$image_name);
+                $image->move(public_path().'/backend/image/employee/image/',$image_name);
                 $employees->image = $image_name;
+            }
+
+            if($request->hasFile('nid_copy')){
+                $destination = public_path().'/backend/image/employee/nid_copy/'.$employees->nid_copy;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $image = $request->file('nid_copy');
+                $image_name = time().'.'.$image->getClientOriginalExtension();
+                $image->move(public_path().'/backend/image/employee/nid_copy/',$image_name);
+                $employees->nid_copy = $image_name;
+            }
+
+            if($request->hasFile('cv')){
+                $destination = public_path().'/backend/image/employee/cv/'.$employees->cv;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $image = $request->file('cv');
+                $image_name = time().'.'.$image->getClientOriginalExtension();
+                $image->move(public_path().'/backend/image/employee/cv/',$image_name);
+                $employees->cv = $image_name;
             }
             $employees->update();
             $employees = Employee::all();

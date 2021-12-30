@@ -13,7 +13,7 @@ class Payroll extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class,'company_id');
+        return $this->belongsTo(ClientCompany::class,'company_id');
     }
     public function position()
     {

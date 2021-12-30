@@ -66,7 +66,9 @@ Route::get('admin/employees/edit/{id}','EmployeeController@edit')->name('employe
 Route::put('employees-update/{id}','EmployeeController@update')->name('employee.update');
 Route::get('admin/employees/details/{name}','EmployeeController@show')->name('employee.details');
 
-
+///////////____________________Attendence______________________//////////////
+Route::get('/admin/attendence','AttendanceController@index')->name('attendence');
+Route::post('/admin/attendence/add','AttendanceController@store');
 
 // Route::resource('companybalance', 'CompanyBalanceController');
 Route::get('/admin/companybalance','CompanyBalanceController@index')->name('company.balance');

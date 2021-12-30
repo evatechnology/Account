@@ -19,7 +19,7 @@
                         <th>Employee Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Company Name</th>
+                        {{-- <th>Company Name</th> --}}
                         <th>Position</th>
                         <th>Reason</th>
                         <th>Amount</th>
@@ -38,7 +38,7 @@
                             <td>{{ $item->employee->name }}</td>
                             <td>{{ $item->employee->email }}</td>
                             <td>{{ $item->employee->phone }}</td>
-                            <td>{{ $item->company->name }}</td>
+                            {{-- <td>{{ $item->company->name }}</td> --}}
                             <td>{{ $item->position->name }}</td>
                             <td>{{ $item->reason }}</td>
                             <td>{{ number_format($item->bonous,2) }}</td>
@@ -56,7 +56,7 @@
                         <th>Employee Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Company Name</th>
+                        {{-- <th>Company Name</th> --}}
                         <th>Position</th>
                         <th>Reason</th>
                         <th>Amount</th>

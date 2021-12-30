@@ -1,6 +1,58 @@
 @extends('backend.layout.master')
 @section('title','Employee')
 @section('content')
+
+<div class="card">
+    <h4 class="text-center mt-3 mb-3"><u>Filter</u></h4>
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Designation</label>
+                        <div class="col-sm-8">
+                          <div id="company"></div>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Status</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="type_filter">
+                                <option value="">All Type</option>
+                                <option value="Active">Active</option>
+                                <option value="Deactive">Deactive</option>
+                              </select>
+                        </div>
+                      </div>
+                </div>
+
+                {{-- <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-4 col-form-label text-dark">From</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="min" name="min" placeholder="yyyy-mm-dd">
+                        </div>
+                      </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-4 col-form-label text-dark">To</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="max" name="max" placeholder="yyyy-mm-dd">
+                        </div>
+                      </div>
+                </div> --}}
+
+            </div>
+
+            <div id="buttons"></div>
+        </div>
+    </div>
+</div>
+
 <div class="card">
     <h4 class="text-center mt-3 mb-3"><u>Employee List</u></h4>
     <div class="card-body">
@@ -35,8 +87,14 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone_1 }}</td>
                             <td>{{ $item->position->position_name }}</td>
-                            <td>{{ $item->salary }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td>{{ number_format($item->salary,2) }}</td>
+                            <td>
+                                @if ($item->status == 1)
+                                    <span class="text-success">Active</span>
+                                @else
+                                    <span class="text-danger">Deactive</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -92,8 +150,6 @@
                     <form class="forms-sample" id="employeeForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- <ul class="alert alert-warning d-none" id="save_errorList"></ul> --}}
-
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -277,7 +333,30 @@
     </script>
 
     <script>
-        var table = $('#example').DataTable();
+        // DataTable filter
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                initComplete: function() {
+                    var column = this.api().column(4);
+                    var select = $('<select class="form-control"><option value="">All Designation</option></select>')
+                        .appendTo($('#company').empty())
+                        .on('change', function() {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                        });
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>');
+                        });
+                }
+            });
+                $('#type_filter').on('change', function () {
+                table.columns(6).search( this.value ).draw();
+            });
+        });
+
+
         $('#employeeForm').on('submit', function(e) {
             e.preventDefault();
             $.ajaxSetup({
@@ -341,5 +420,9 @@
                 });
                 }
         });
+    </script>
+
+    <script>
+
     </script>
 @endsection

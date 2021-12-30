@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Company Balance Sheet')
+@section('title', 'AMS || Company Balance Sheet')
 @section('content')
 
 <div>
