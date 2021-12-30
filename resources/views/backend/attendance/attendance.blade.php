@@ -126,7 +126,6 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group row">
@@ -145,8 +144,9 @@
                                             </div>
                                           </div>
                                     </div>
+
+                                    <div class="col-sm-4"><button type="button" id="print" class="btn btn-light btn-block border">Print</button></div>
                                 </div>
-                        </div>
                     </div>
 
 
