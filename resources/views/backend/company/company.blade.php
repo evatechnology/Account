@@ -40,7 +40,7 @@
                             $profit = ($item->received_payment)-($item->spending);
                         @endphp
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td></td>
                             <td>{{ $item->name }}</td>
                             <td class="text-right">{{ number_format($item->work_order,2)}}</td>
                             <td class="text-right">{{ number_format($item->received_payment,2)}}</td>
@@ -234,6 +234,12 @@
 
     <script>
         var table = $('#example').DataTable({
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//debugger;
+			var index = iDisplayIndexFull + 1;
+			$("td:first", nRow).html(index);
+			return nRow;
+		}
         });
         $('#companyForm').on('submit', function(e) {
             e.preventDefault();

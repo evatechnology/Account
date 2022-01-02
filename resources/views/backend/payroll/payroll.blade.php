@@ -28,12 +28,9 @@
                 </thead>
 
                 <tbody>
-                    @php
-                        $i=0;
-                    @endphp
                     @foreach ($payroll as $item)
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td></td>
                             <td>{{ $item->date }}</td>
                             <td>{{ $item->employee->name }}</td>
                             <td>{{ $item->employee->email }}</td>
@@ -147,7 +144,14 @@
 
 
 <script>
-    var table = $('.payroll').DataTable();
+    var table = $('.payroll').DataTable({
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+    });
 
 </script>
 

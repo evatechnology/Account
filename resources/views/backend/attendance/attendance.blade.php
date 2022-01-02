@@ -144,9 +144,18 @@
                                             </div>
                                           </div>
                                     </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group row">
+                                            <label  class="col-sm-2 col-form-label text-dark">Export Data</label>
+                                            <div class="col-sm-10">
+                                                <div id='exp_buttons'></div>
+                                            </div>
+                                          </div>
 
-                                    <div class="col-sm-4"><button type="button" id="print" class="btn btn-light btn-block border">Print</button></div>
-                                </div>
+                                    </div>
+
+                                    {{-- <div class="col-sm-4"><button type="button" id="exp_buttons" class="btn btn-light btn-block border"></button></div>
+                                </div> --}}
                     </div>
 
 
@@ -169,7 +178,7 @@
                         <tbody>
                             @foreach ($attendance as $item )
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td></td>
                                     <td>{{ $item->employee->full_name }}</td>
                                     <td>{{ $item->mounth }}</td>
                                     <td>{{ $item->year }}</td>
@@ -250,6 +259,52 @@
            // DataTable filter
            $(document).ready(function() {
             var table = $('.example').DataTable({
+                // dom: 'Bfrtip',
+                // buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                buttons: [
+                    {
+                    extend: 'copy',
+                    text: '<i class="fa fa-files-o"></i> <u>C</u>opy',
+                    className: 'btn btn-sm ',
+                    key: {
+                        key: 'c',
+                        altKey: true
+                        }
+                    },
+                    {
+                    extend: 'csv',
+                    text: '<i class="fas fa-file-csv"></i> C<u>S</u>V',
+                    className: 'btn btn-sm ',
+                    key: {
+                        key: 's',
+                        altKey: true
+                        }
+                    },
+                    {
+                    extend: 'excel',
+                    text: '<i class="far fa-file-excel"></i> <u>E</u>xcel',
+                    className: 'btn btn-sm ',
+                    key: {
+                        key: 'e',
+                        altKey: true
+                        }
+                    },
+                    {
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i> <u>P</u>rint',
+                    className: 'btn btn-sm ',
+                    key: {
+                        key: 'p',
+                        altKey: true
+                        }
+                    }
+                ],
                 initComplete: function() {
                     let column = this.api().column(2);
                     let select = $('<select class="form-control"><option value="">All Month</option></select>')
@@ -278,6 +333,8 @@
                         });
                 }
             });
+
+            table.buttons().container().appendTo($('#exp_buttons'))
 
         });
 </script>

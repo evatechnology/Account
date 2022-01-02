@@ -18,6 +18,7 @@
     <link href="{{ asset('backend/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('backend/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('backend/custom/datatables/dataTables.dateTime.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('backend/custom/datatables/buttons.dataTables.min.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet">
 
     <link href="{{ asset('backend/vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
@@ -46,7 +47,7 @@
 
     {{-- <script src="{{ asset('backend/js/plugins-init/datatables.init.js') }}"></script> --}}
 
-    
+
 </head>
 
 <body>

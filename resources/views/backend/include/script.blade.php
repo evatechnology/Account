@@ -28,6 +28,10 @@
 <script src="{{ asset('backend/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script>
 
 <script src="{{ asset('backend/custom/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('backend/custom/datatables/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('backend/custom/datatables/jszip.min.js') }}"></script>
+<script src="{{ asset('backend/custom/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('backend/custom/datatables/buttons.print.min.js') }}"></script>
 <script src="{{ asset('backend/custom/datatables/sum().js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> --}}
 <script src="{{ asset('backend/custom/moment/moment.min.js') }}"></script>

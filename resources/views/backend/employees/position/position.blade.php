@@ -69,12 +69,9 @@
                     </thead>
 
                     <tbody>
-                        @php
-                            $i=0;
-                        @endphp
                        @foreach ($position as $item)
                         <tr id="position-{{ $item->id }}">
-                            <td>{{ ++$i }}</td>
+                            <td></td>
                             <td>{{ $item->position_name }}</td>
                             <td>{{ number_format($item->salary_range,2) }} Tk</td>
                             <td>
@@ -291,7 +288,7 @@
                 // $('#position-'+response.id + 'td:nth-child(1)').text(response.company_id);
                 $('#position-'+response.id + 'td:nth-child(1)').text(response.position_name1);
                 $('#position-'+response.id + 'td:nth-child(2)').text(response.salary_range1);
-                $('#PositionEditModal').modal("toggle");
+                $('#PositionEditModal').modal("hide");
                 Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -328,6 +325,12 @@
             );
 
         let table = $('#position').DataTable({
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			//debugger;
+                var index = iDisplayIndexFull + 1;
+                $("td:first", nRow).html(index);
+                return nRow;
+		    },
             initComplete: function() {
                     //Drop Down Account Number
                     var column = this.api().column(1);

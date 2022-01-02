@@ -77,12 +77,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        $i=0;
-                    @endphp
                     @foreach ($employees as $item )
                         <tr>
-                            <td>{{ ++$i }}</td>
+                            <td></td>
                             <td>{{ $item->full_name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->phone_1 }}</td>
@@ -296,39 +293,6 @@
                 ]
             });
         });
-        // when country dropdown changes
-        // $('#company_id').change(function() {
-
-        //     var companyID = $(this).val();
-
-        //     if (companyID) {
-        //         //console.log(companyID);
-        //         $.ajax({
-        //             type: "GET",
-        //             url: "/admin/employees/position/" + companyID,
-        //             success: function(res) {
-        //                 //console.log(res);
-        //                 if (res) {
-
-        //                     $("#position_id").empty();
-        //                     $("#position_id").append('<option>Select Position</option>');
-        //                     $.each(res, function(key, value) {
-        //                         $("#position_id").append('<option value="' + value.id + '">' + value.name +
-        //                             '</option>');
-        //                             //console.log(value);
-        //                     });
-
-        //                 } else {
-
-        //                     $("#position_id").empty();
-        //                 }
-        //             }
-        //         });
-        //     } else {
-
-        //         $("#position_id").empty();
-        //     }
-        // });
 
     </script>
 
@@ -336,6 +300,12 @@
         // DataTable filter
         $(document).ready(function() {
             var table = $('#example').DataTable({
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
                 initComplete: function() {
                     var column = this.api().column(4);
                     var select = $('<select class="form-control"><option value="">All Designation</option></select>')
