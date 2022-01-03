@@ -177,12 +177,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                        $i = 0;
-                                                    @endphp
+
                                                     @foreach ($companyBalance as $item)
                                                         <tr id="editcompanybalance{{ $item->id }}">
-                                                            <td>{{ ++$i }}</td>
+                                                            <td></td>
                                                             {{-- <td>{{ date('d-M-y', strtotime($item->date)) }}</td> --}}
                                                             <td>{{ $item->date}}</td>
 
@@ -437,6 +435,12 @@
 
            var table= $('#company_transection').DataTable({
                //Drop Down Filter1
+               "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
                 initComplete: function() {
                     var column = this.api().column(2);
                     var select = $('<select class="form-control"><option value="">All Company</option></select>')

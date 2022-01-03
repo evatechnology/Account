@@ -30,7 +30,11 @@ class CreateEmployeesTable extends Migration
 
             // $table->unsignedInteger('company_id');
             $table->unsignedInteger('position_id');
-            $table->string('salary')->nullable();
+            $table->double('salary',10,2)->default(0);
+            $table->double('house_rent',10,2)->default(0);
+            $table->double('medical',10,2)->default(0);
+            $table->double('yearly_increment',10,2)->default(0);
+            $table->double('advance',10,2)->default(0);
 
             //Document
             $table->string('image')->nullable();

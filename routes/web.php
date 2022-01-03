@@ -52,6 +52,7 @@ Route::resource('payroll', 'PayrollController');
 Route::get('/admin/payroll','PayrollController@index')->name('payroll');
 Route::get('/admin/payroll/position/{id}','PayrollController@getposition');
 Route::get('/admin/payroll/employee/{id}','PayrollController@getemployee');
+Route::get('/admin/payroll/salary/edit/{id}', 'PayrollController@salaryedit');
 Route::post('/admin/payroll','PayrollController@store');
 
 

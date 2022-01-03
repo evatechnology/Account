@@ -16,13 +16,13 @@ class CreatePayrollsTable extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->increments('id');
             // $table->unsignedInteger('company_id');
-            $table->unsignedInteger('position_id');
+            // $table->unsignedInteger('position_id');
             $table->unsignedInteger('employee_id');
-            $table->double('bonous',10,2)->nullable();
+            $table->double('amount',10,2)->nullable();
             $table->string('reason')->nullable();
             $table->date('date')->nullable();
             // $table->foreign('company_id')->references('id')->on('clientcompany')->onDelete('cascade');
-            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            // $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });

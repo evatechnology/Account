@@ -190,6 +190,12 @@ class PayrollController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function salaryedit($id)
+    {
+        $employee = Employee::find($id);
+        return response()->json($employee);
+    }
+
     public function edit($id)
     {
         //

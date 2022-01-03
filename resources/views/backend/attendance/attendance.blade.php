@@ -267,6 +267,14 @@
                     $("td:first", nRow).html(index);
                     return nRow;
                 },
+                columnDefs: [{
+                    targets: 0,
+                    render: function(data, type, row, meta) {
+                        // console.log(meta.row);
+                        // console.log(type == 'export' ? meta.row : data);
+                        return type == 'export' ? meta.row + 1 : data;
+                    }
+                }],
                 buttons: [
                     {
                     extend: 'copy',
@@ -275,7 +283,11 @@
                     key: {
                         key: 'c',
                         altKey: true
-                        }
+                        },
+                        exportOptions: {
+                        columns: [':not(.hidden-print)'],
+                        orthogonal: 'export'
+                        },
                     },
                     {
                     extend: 'csv',
@@ -284,7 +296,11 @@
                     key: {
                         key: 's',
                         altKey: true
-                        }
+                        },
+                        exportOptions: {
+                        columns: [':not(.hidden-print)'],
+                        orthogonal: 'export'
+                        },
                     },
                     {
                     extend: 'excel',
@@ -293,7 +309,11 @@
                     key: {
                         key: 'e',
                         altKey: true
-                        }
+                        },
+                        exportOptions: {
+                        columns: [':not(.hidden-print)'],
+                        orthogonal: 'export'
+                        },
                     },
                     {
                     extend: 'print',
@@ -302,8 +322,14 @@
                     key: {
                         key: 'p',
                         altKey: true
-                        }
+                        },
+                    exportOptions: {
+                        columns: [':not(.hidden-print)'],
+                        orthogonal: 'export'
+                        },
                     }
+
+
                 ],
                 initComplete: function() {
                     let column = this.api().column(2);
