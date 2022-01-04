@@ -38,7 +38,7 @@
                                 </tr>
                                 <tr>
                                     <td class="h6">Education:</td>
-                                    <td>{{ $employees->education}}</td>
+                                    <td>{!! $employees->education  !!}</td>
                                 </tr>
                                 <tr>
                                     <td class="h6">Date Of Birth:</td>
@@ -104,11 +104,11 @@
                 @endphp
                 <thead>
                     <tr>
-                        <td>No</td>
-                        <td>Date</td>
-                        <td>Position</td>
-                        <td>Reason</td>
-                        <td>Amount</td>
+                        <th>No</th>
+                        <th>Date</th>
+                        <th>Position</th>
+                        <th>Reason</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,7 +118,7 @@
                         <td>{{ $item->date }}</td>
                         <td>{{ $item->position->position_name }}</td>
                         <td>{{ $item->reason }}</td>
-                        <td>{{ $item->bonous }}</td>
+                        <td>{{ $item->amount }}</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -198,7 +198,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Education<small class="text-danger">*</small></label>
-                                    <input type="text" name="education" class="form-control summernote"/>
+                                    <textarea type="text" name="education" class="form-control summernote"/></textarea>
                                 </div>
                             </div>
 

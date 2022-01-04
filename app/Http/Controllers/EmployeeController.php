@@ -63,6 +63,7 @@ class EmployeeController extends Controller
             'full_name' =>'required|max:191',
             'email' =>'required|email|max:191',
             'phone_1' =>'required|min:11|max:191',
+            'education' =>'required',
 
             'gender' =>'required|max:191',
             'image' =>'required|mimes:jpg,png',
@@ -115,7 +116,8 @@ class EmployeeController extends Controller
 
                 $payroll = new Payroll;
                 $payroll->employee_id = $employees->id;
-                $payroll->bonous = $employees->salary;
+                // $payroll->position_id = $request->position_id;
+                $payroll->amount = $employees->salary;
                 $payroll->position_id = $employees->position_id;
                 $payroll->reason = "Basic Salary";
                 $payroll->date = Carbon::now();
@@ -135,7 +137,8 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employees = Employee::find($id);
-        $payroll = Payroll::find($id)->where('employee_id',$id)->get();
+        $payroll = Payroll::where('employee_id',$id)->get();
+        // $position = Position::find($id)->where('position_id',$id)->get();
        return view('backend.employees.employee-details', compact('employees','payroll'));
     }
 
@@ -172,8 +175,8 @@ class EmployeeController extends Controller
             $employees->address_permanent = $request->address_permanent;
             $employees->education = $request->education;
             $employees->gender = $request->gender;
-            $employees->position_id = $request->position_id;
-            $employees->salary = $request->salary;
+            // $employees->position_id = $request->position_id;
+            // $employees->salary = $request->salary;
             $employees->dob = $request->dob;
             $employees->join_date = $request->join_date;
             $employees->status = $request->status;

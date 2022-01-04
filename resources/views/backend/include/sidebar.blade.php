@@ -16,8 +16,15 @@
                         <li><a href="{{ route('payroll') }}"><i class="fas fa-file-invoice-dollar"></i>Payroll</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('attendence') }}" aria-expanded="false"><i class="fab fa-autoprefixer"></i></i><span class="nav-text">Attendance</span></a></li>
-                <li><a href="#" aria-expanded="false"><i class="fas fa-file-excel"></i><span class="nav-text">Salary Sheet</span></a></li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fas fa-file-excel"></i><span class="nav-text">Salary Sheet</span></a>
+                    <ul aria-expanded="false">
+                        <li><a href="#"><i class="fas fa-users"></i>All Salary Sheet</a></li>
+                        <li><a href="{{ route('salarysheet') }}"><i class="fas fa-sitemap"></i>Generate Salary Sheet</a></li>
+
+                    </ul>
+                </li>
+                {{-- <li><a href="{{ route('attendence') }}" aria-expanded="false"><i class="fab fa-autoprefixer"></i><span class="nav-text">Attendance</span></a></li> --}}
+                {{-- <li><a href="#" aria-expanded="false"><i class="fas fa-file-excel"></i><span class="nav-text">Salary Sheet</span></a></li> --}}
                 <li><a href="{{ route('bank') }}" aria-expanded="false"><i class="fas fa-university"></i><span class="nav-text">Bank</span></a></li>
                 {{-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Bank</span></a>
                     <ul aria-expanded="false">

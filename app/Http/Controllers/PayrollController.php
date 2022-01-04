@@ -196,6 +196,36 @@ class PayrollController extends Controller
         return response()->json($employee);
     }
 
+    public function salaryupdate(Request $request)
+    {
+        $employee = Employee::find($request->id);
+        $employee->position_id = $request->position_id;
+        // $employee->reason = $request->reason;
+        if($request->reason == "Promotion"){
+            $employee->salary += $request->yearly_increment;
+            $employee->yearly_increment +=  0;
+        }
+        elseif($request->reason == "Salary Increase"){
+            $employee->salary += $request->yearly_increment;
+            $employee->yearly_increment += 0;
+        }
+        elseif($request->reason == "Yearly Increment"){
+            // $employee->salary += $request->yearly_increment;
+            $employee->yearly_increment += $request->yearly_increment;
+        }
+        $payroll = new Payroll;
+        $payroll->employee_id = $employee->id;
+        $payroll->position_id = $request->position_id;;
+        $payroll->amount = $request->yearly_increment;
+        $payroll->reason = $request->reason;
+        $payroll->date = Carbon::now();
+
+        // $employee->yearly_increment = $request->yearly_increment;
+        $payroll->save();
+        $employee->save();
+        return response()->json(['success'=>'Data Add successfully.']);
+    }
+
     public function edit($id)
     {
         //

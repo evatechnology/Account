@@ -99,20 +99,21 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Position</label>
-                                <select class="form-control" id="sel1" name="position_id">
+                                <label>Position <small class="text-danger">(Can Change From Payroll)</small></label>
+                                <input type="text" value="{{ $employees->position->position_name }}" name="position_id" class="form-control border-info" readonly/>
+                                {{-- <select class="form-control" id="sel1" name="position_id" readonly>
                                     <option value="{{ $employees->position_id }}" selected>{{ $employees->position->position_name }}</option>
                                     @foreach (App\Models\Position::get() as $item )
                                         <option value="{{ $item->id }}">{{ $item->position_name }}</option>
                                     @endforeach
-                                </select>
+                                </select> --}}
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Salary<small class="text-danger">*</small></label>
-                                <input type="text" value="{{ $employees->salary}}" name="salary" class="form-control"/>
+                                <label>Salary<small class="text-danger">(Can Change From Payroll)</small></label>
+                                <input type="text" value="{{ $employees->salary}}" name="salary" class="form-control border-info" readonly/>
                             </div>
                         </div>
 
