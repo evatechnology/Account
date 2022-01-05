@@ -317,12 +317,13 @@
 
 
     $(document).on("change", ".amount", function(event1) {
-        var sum = 0;
-        $(".amount").each(function(){
-            amount2 = parseFloat($(this).val());
-            sum = (sum +  window.amount2);
-            $('.diff').html('<span class="h4">Total : </h4>' + sum);
-        });});
+            var sum = 0;
+            $(".amount").each(function(){
+                amount2 = parseFloat($(this).val());
+                sum = (sum +  window.amount2);
+                $('.diff').html('<span class="h4">Total : </h4>' + sum);
+            });
+    });
 
     $('#companybalanceForm').on('submit', function(e) {
                 e.preventDefault();

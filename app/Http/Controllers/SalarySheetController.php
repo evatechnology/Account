@@ -35,7 +35,23 @@ class SalarySheetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        for($i=0;$i<count($request->basic);$i++){
+            $salarySheet = new SalarySheet;
+            $salarySheet->mounth = $request->month;
+            $salarySheet->year = $request->year;
+            $salarySheet->employee_id = $request->employee_id[$i];
+            $salarySheet->position_id = $request->position_id[$i];
+            $salarySheet->basic = $request->basic[$i];
+            $salarySheet->yearly_increment = $request->yearly_increment[$i];
+            $salarySheet->working_day = $request->working_day[$i];
+            $salarySheet->present = $request->present[$i];
+            $salarySheet->absent = $request->absent[$i];
+            $salarySheet->leave = $request->leave[$i];
+            $salarySheet->advance = $request->advance[$i];
+
+            $salarySheet->save();
+        }
+        return response()->json(['success'=>'Data Add successfully.']);
     }
 
     /**
