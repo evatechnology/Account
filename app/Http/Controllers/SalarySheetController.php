@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SalarySheet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SalarySheetController extends Controller
@@ -37,18 +38,18 @@ class SalarySheetController extends Controller
     {
         for($i=0;$i<count($request->basic);$i++){
             $salarySheet = new SalarySheet;
-            $salarySheet->mounth = $request->month;
+            $salarySheet->month = $request->month;
             $salarySheet->year = $request->year;
+            $salarySheet->sheet_name = ($request->month)."-".($request->year).'('.Carbon::now()->format('d-m-Y').')';
             $salarySheet->employee_id = $request->employee_id[$i];
             $salarySheet->position_id = $request->position_id[$i];
             $salarySheet->basic = $request->basic[$i];
             $salarySheet->yearly_increment = $request->yearly_increment[$i];
             $salarySheet->working_day = $request->working_day[$i];
             $salarySheet->present = $request->present[$i];
-            $salarySheet->absent = $request->absent[$i];
+            $salarySheet->absent = $request->working_day[$i]- ($request->present[$i] + $request->leave[$i]);
             $salarySheet->leave = $request->leave[$i];
             $salarySheet->advance = $request->advance[$i];
-
             $salarySheet->save();
         }
         return response()->json(['success'=>'Data Add successfully.']);
@@ -60,9 +61,24 @@ class SalarySheetController extends Controller
      * @param  \App\Models\SalarySheet  $salarySheet
      * @return \Illuminate\Http\Response
      */
-    public function show(SalarySheet $salarySheet)
+    public function sheetlistview()
     {
-        //
+        $salarySheet = SalarySheet::select('sheet_name','month','year')
+                                    ->groupByRaw('sheet_name , month, year')
+                                    ->get();
+        return view('backend.salarysheet.salarysheet-listview',compact('salarySheet'));
+    }
+    public function show($sheet_name)
+    {
+        $salarySheet = SalarySheet::find($sheet_name);
+
+        $salarysheetname = SalarySheet::select('sheet_name','month','year')
+                                    ->where('sheet_name', $sheet_name)
+                                    ->groupByRaw('sheet_name , month, year')
+                                    ->get();
+
+        $monthly_salary_details = SalarySheet::where('sheet_name', $sheet_name)->get();
+        return view('backend.salarysheet.detailsview',compact('salarySheet','monthly_salary_details','salarysheetname'));
     }
 
     /**

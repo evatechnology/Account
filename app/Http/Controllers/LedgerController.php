@@ -63,6 +63,7 @@ class LedgerController extends Controller
                                 ->sum('amount');
 
         $previousdate = Carbon::createFromDate($request->input('from'))->subDays();
+        
         $data6 = BankTransaction::where('type','credit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])

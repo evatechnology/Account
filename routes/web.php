@@ -69,8 +69,8 @@ Route::put('employees-update/{id}','EmployeeController@update')->name('employee.
 Route::get('admin/employees/details/{name}','EmployeeController@show')->name('employee.details');
 
 ///////////____________________Attendence______________________//////////////
-// Route::get('/admin/attendence','AttendanceController@index')->name('attendence');
-// Route::post('/admin/attendence/add','AttendanceController@store');
+Route::get('/admin/attendence','AttendanceController@index')->name('attendence');
+Route::post('/admin/attendence/add','AttendanceController@store');
 
 // Route::resource('companybalance', 'CompanyBalanceController');
 Route::get('/admin/companybalance','CompanyBalanceController@index')->name('company.balance');
@@ -116,3 +116,6 @@ Route::post('/admin/rules/add', 'RulesController@store')->name('rules&policy');
 Route::delete('/admin/rules/delete/{id}','RulesController@destroy');
 
 Route::get('/admin/salarysheet','SalarySheetController@index')->name('salarysheet');
+Route::post('/admin/salaryshee/add','SalarySheetController@store');
+Route::get('/admin/salarysheet/list','SalarySheetController@sheetlistview')->name('salarysheet.list');
+Route::get('admin/salarysheet/details/{name}','SalarySheetController@show')->name('salarysheet.details');

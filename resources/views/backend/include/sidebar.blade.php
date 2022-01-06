@@ -18,7 +18,7 @@
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="fas fa-file-excel"></i><span class="nav-text">Salary Sheet</span></a>
                     <ul aria-expanded="false">
-                        <li><a href="#"><i class="fas fa-users"></i>All Salary Sheet</a></li>
+                        <li><a href="{{ route('salarysheet.list') }}"><i class="fas fa-users"></i>All Salary Sheet</a></li>
                         <li><a href="{{ route('salarysheet') }}"><i class="fas fa-sitemap"></i>Generate Salary Sheet</a></li>
 
                     </ul>
