@@ -93,7 +93,7 @@ Route::put('/admin/bank/update', 'BankController@update')->name('bank.update');
 Route::resource('bank/transaction', 'BankTransactionController');
 Route::get('/admin/bank/transaction','BankTransactionController@index')->name('bank.transaction');
 Route::get('/admin/bank/dropdown/{id}','BankTransactionController@bankaccount');
-Route::post('/admin/bank/transaction','BankTransactionController@store')->name('transction.add');
+Route::post('/admin/bank/transaction/add','BankTransactionController@store')->name('transction.add');
 Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@destroy');
 
 

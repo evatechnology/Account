@@ -2,264 +2,284 @@
 @section('title', 'Bank Transection List')
 @section('content')
 
-    <section>
-        <div id="accordion-ten" class="accordion accordion-header-shadow accordion-rounded">
-            <div class="accordion__item">
-                <div class="accordion__header collapsed accordion__header--primary" data-toggle="collapse"
-                    data-target="#header-shadow_collapseOne">
-                    <span class="accordion__header--icon"></span>
-                    <span class="accordion__header--text">Accordion Header One</span>
-                    <span class="accordion__header--indicator"></span>
-                </div>
-                <div id="header-shadow_collapseOne" class="collapse accordion__body" data-parent="#accordion-ten">
-                    <div class="accordion__body--text">
-                        <div class="row">
-                            @foreach ($bankTransaction as $company)
-                                <div class="col-sm-3">
-                                    <div class="card text-white shadow" id="company-balance-card">
-                                        <div class="card-body mb-0">
-                                            <h4 class="card-title text-white text-center">{{ $company->name }}</h5>
-                                                <br>
-                                                <h2 class="card-text text-center" style="color:#0CECDD">
-                                                    {{ $company->current_blance }}</p>
+<div>
+    <section class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Bank Transection</h4>
+
+                    <div class="default-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#home">New Transection</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#profile">Transection History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#message">Balance Summery</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                <div class="pt-4">
+                                    <form class="form-group" id="BankTransactionForm" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <table class="table table-borderless " id="table_field">
+                                            <thead>
+                                                <tr>
+                                                    <th>Bank Name</th>
+                                                    <th>Voucher Type</th>
+                                                    <th>Cheque/Receipt Number</th>
+                                                    <th>Account Head</th>
+                                                    <th>Date</th>
+                                                    <th>Amount</th>
+                                                    {{-- <th>Document (Optional)</th> --}}
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" id="account_number_" name="account_number[]">
+                                                                <option selected disabled>Choose One</option>
+                                                                @foreach ($bank as $item)
+                                                                    <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>
+                                                                @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" id="type" name="type[]">
+                                                            <option selected disabled>Choose One</option>
+                                                            <option value="Debit">Debit</option>
+                                                            <option value="Credit">Credit</option>
+                                                            <option value="Pending">Pending</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="ref[]" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="reason[]" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="date[]" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="amount[]" id="amount" class="form-control" required>
+                                                    </td>
+                                                    {{-- <td>
+                                                        <input type="file" name="document[]" id="document">
+                                                    </td> --}}
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm" style="background-color: #3a86ff;color:#FFF" id="add1"><i class="fas fa-plus"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="float-right">
+                                            <button type="submit" class="btn  btn-sm btn-primary mr-2">Submit</button>
+                                            <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancel</button>
                                         </div>
-                                        <div class="card-footer bg-transparent border-0 text-white">
-                                            <small>Last updateed {{ $company->updated_at->diffForHumans() }}</small>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="profile">
+                                <div class="pt-4">
+
+                                    <div class="card">
+                                        <h4 class="text-center mt-3 mb-3"><u>Filter</u></h4>
+                                        <div class="card-body">
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Account Number</label>
+                                                            <div class="col-sm-8">
+                                                            <div id="account_number"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Type</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id="type">
+                                                                    <option value="">All Type</option>
+                                                                    <option value="debit">Debit</option>
+                                                                    <option value="credit">Credit</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Source</label>
+                                                            <div class="col-sm-8">
+                                                                <div id="source"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">From</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="min" name="min" placeholder="mm/dd/yyyy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group row">
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">To</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="max" name="max" placeholder="mm/dd/yyyy">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <h4 class="text-center mt-3 mb-3"><u>Bank Transaction List</u></h4>
+                                        <div class="card-body">
+                                            <div class="float-right">
+                                                <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
+                                                    data-target="#BankTransactionAddModal">
+                                                    <i class="mdi mdi-plus-circle"></i>New Transection
+                                                </a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="BankTransaction_transection" class=" table display" style="min-width: 845px">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Bank Name</th>
+                                                            <th>Account Number</th>
+                                                            <th>Account Head</th>
+                                                            <th>Referance/Cheque No</th>
+                                                            <th>Date</th>
+                                                            <th>Voucher Type</th>
+                                                            <th>Amount</th>
+                                                            {{-- <th>Action</th> --}}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php
+                                                            $i = 0;
+                                                        @endphp
+                                                        @foreach ($bankTransaction as $item)
+                                                            <tr id="editcompanybalance{{ $item->id }}">
+                                                                <td>{{ ++$i }}</td>
+                                                                <td>{{ $item->bank->bank_name }}</td>
+                                                                <td>{{ $item->bank->account_number }}</td>
+                                                                <td>{{ $item->reason }}</td>
+                                                                <td>{{ $item->ref }}</td>
+                                                                <td>{{ $item->date }}</td>
+                                                                <td>
+                                                                    @if ($item->type == 'Credit')
+                                                                        <div class="font-weight-bold" style="color: #00AF91">Credit</div>
+                                                                    @elseif( $item->type == 'Debit')
+                                                                        <div class="font-weight-bold" style="color: #F05454">Debit</div>
+                                                                    @elseif( $item->type == 'Pending')
+                                                                        <div class="font-weight-bold text-info">Pending</div>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($item->type == 'Credit')
+                                                                        <div class="font-weight-bold" style="color: #00AF91">+{{ number_format($item->amount,2) }}</div>
+                                                                    @elseif( $item->type == 'Debit')
+                                                                        <div class="font-weight-bold" style="color: #F05454">-{{ number_format($item->amount,2) }}</div>
+                                                                    @elseif( $item->type == 'Pending')
+                                                                        <div class="font-weight-bold text-info">{{ number_format($item->amount,2) }}</div>
+                                                                    @endif
+                                                                </td>
+                                                                {{-- <td>
+                                                                    <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);"
+                                                                                data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i>
+                                                                    </a>
+                                                                </td> --}}
+                                                            </tr>
+
+                                                        @endforeach
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Bank Name</th>
+                                                            <th>Account Number</th>
+                                                            <th>Account Head</th>
+                                                            <th>Referance/Cheque No</th>
+                                                            <th>Date</th>
+                                                            <th>Voucher Type</th>
+                                                            <th>Amount</th>
+                                                            {{-- <th>Action</th> --}}
+                                                        </tr>
+                                                    </tfoot>
+
+
+                                                </table>
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+
+                            <div class="tab-pane fade" id="message">
+                                <div class="pt-4 row">
+                                    @foreach ($bank as $item)
+                                    <div class="col-sm-4">
+                                        <div class="card shadow-lg" id="bank-card">
+                                            <div class="card-body">
+                                                <h4 class="text-light text-center">{{ $item->bank_name }}</h4>
+                                                <hr class="text-light">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <h6 class="text-light text-center">Account Number</h6>
+                                                        <h5 class="text-light text-center">{{ $item->account_number }} </h5>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h6 class="text-light text-center">Current Balance</h6>
+                                                        <h4 class="text-light text-center">{{ $item->balance }}<small>&nbsp;tk</small></h4>
+                                                    </div>
+                                                </div>
+                                                <hr class="text-light">
+                                                <div class="row">
+                                                    <div class="col-sm-8"><small class="text-light">Last update {{ $item->updated_at->diffForHumans() }}</small></div>
+                                                    <div class="col-sm-4">
+                                                        <a type="button" class="btn btn-outline-warning btn-sm" href="javascript:void(0);" onclick="editBank({{ $item->id }})"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);" data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
-
-    <div class="card">
-        <h4 class="text-center mt-3 mb-3"><u>Filter</u></h4>
-        <div class="card-body">
-            <div>
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Account Number</label>
-                            <div class="col-sm-8">
-                              <div id="account_number"></div>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Type</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="type">
-                                    <option value="">All Type</option>
-                                    <option value="debit">Debit</option>
-                                    <option value="credit">Credit</option>
-                                  </select>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Source</label>
-                            <div class="col-sm-8">
-                                <div id="source"></div>
-                            </div>
-                          </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">From</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="min" name="min" placeholder="mm/dd/yyyy">
-                            </div>
-                          </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">To</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="max" name="max" placeholder="mm/dd/yyyy">
-                            </div>
-                          </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h4 class="text-center mt-3 mb-3"><u>Bank Transaction List</u></h4>
-        <div class="card-body">
-            <div class="float-right">
-                <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
-                    data-target="#BankTransactionAddModal">
-                    <i class="mdi mdi-plus-circle"></i>New Transection
-                </a>
-            </div>
-            <div class="table-responsive">
-                <table id="BankTransaction_transection" class=" table display" style="min-width: 845px">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Bank Name</th>
-                            <th>Account Number</th>
-                            <th>Account Head</th>
-                            <th>Referance/Cheque No</th>
-                            <th>Date</th>
-                            <th>Voucher Type</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $i = 0;
-                        @endphp
-                        @foreach ($bankTransaction as $item)
-                            <tr id="editcompanybalance{{ $item->id }}">
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $item->bank->bank_name }}</td>
-                                <td>{{ $item->bank->account_number }}</td>
-                                <td>{{ $item->reason }}</td>
-                                <td>{{ $item->ref }}</td>
-                                <td>{{ $item->date }}</td>
-                                <td>
-                                    @if ($item->type == 'credit')
-                                        <div class="font-weight-bold" style="color: #00AF91">Credit</div>
-                                    @elseif( $item->type == 'debit')
-                                        <div class="font-weight-bold" style="color: #F05454">Debit</div>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($item->type == 'credit')
-                                        <div class="font-weight-bold" style="color: #00AF91">+
-                                            {{ number_format($item->amount,2) }}</div>
-                                    @elseif( $item->type == 'debit')
-                                        <div class="font-weight-bold" style="color: #F05454">- {{ number_format($item->amount,2) }}</div>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a type="button" class="btn btn-outline-danger btn-sm deletebtn" href="javascript:void(0);"
-                                                data-id="{{ $item->id }}"><i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>
-
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Bank Name</th>
-                            <th>Account Number</th>
-                            <th>Account Head</th>
-                            <th>Referance/Cheque No</th>
-                            <th>Date</th>
-                            <th>Voucher Type</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-
-
-                </table>
-
-            </div>
-
-        </div>
-    </div>
-
-
-    {{-- Data add Model Start --}}
-    <div class="modal fade" id="BankTransactionAddModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="text-center">
-                        <h3 class="modal-title" id="exampleModalLabel">Bank Transaction</h3>
-                    </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ul id="BankTransactionForm_errorlist"></ul>
-                    <form class="forms-sample" id="BankTransactionForm" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <table class="table table-borderless " id="table_field">
-                            <thead>
-                                <tr>
-                                    <th>Bank Name</th>
-                                    <th>Voucher Type</th>
-                                    <th>Cheque/Receipt Number</th>
-                                    <th>Account Head</th>
-                                    <th>Date</th>
-                                    <th>Amount</th>
-                                    <th>Document (Optional)</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <select class="form-control" id="account_number" name="account_number[]">
-                                            <option selected disabled>Choose One</option>
-                                            @foreach (App\Models\Bank::get() as $item)
-                                                <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="type" name="type[]">
-                                            <option selected disabled>Choose One</option>
-                                            <option value="Debit">Debit</option>
-                                            <option value="Credit">Credit</option>
-                                            <option value="Pending">Pending</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="ref[]" class="form-control" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="reason[]" class="form-control" />
-                                    </td>
-                                    <td>
-                                        <input type="date" name="date[]" class="form-control" />
-                                    </td>
-                                    <td>
-                                        <input type="text" name="amount[]" id="amount" class="form-control" required>
-                                    </td>
-                                    <td>
-                                        <input type="file" name="document[]" id="document">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm" style="background-color: #3a86ff;color:#FFF" id="add1"><i class="fas fa-plus"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="float-right">
-                            <button type="submit" class="btn  btn-sm btn-primary mr-2">Submit</button>
-                            <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Data Add Modal End --}}
+</div>
 
 <script>
     $(document).ready(function() {
         var html1 = '<tr>'+
                     '    <td>'+
-                    '        <select class="form-control" id="account_number" name="account_number[]">'+
+                    '        <select class="form-control" id="account_number_" name="account_number[]">'+
                     '            <option selected disabled>Choose One</option>'+
                     '            @foreach (App\Models\Bank::get() as $item)'+
                     '                <option value="{{ $item->id }}">{{ $item->bank_name }} ===> {{ $item->account_number }}</option>'+
@@ -287,9 +307,6 @@
                     '        <input type="text" name="amount[]" id="amount" class="form-control" required>'+
                     '    </td>'+
                     '    <td>'+
-                    '        <input type="file" name="document[]" id="document">'+
-                    '    </td>'+
-                    '    <td>'+
                     '        <button name="remove" class="btn btn-danger btn-sm" id="remove"><i class="fas fa-eraser"></i> </button>'+
                     '    </td>'+
                     '</tr>';
@@ -306,6 +323,44 @@
 
 
     <script>
+            $('#BankTransactionForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var myformData = new FormData($('#BankTransactionForm')[0]);
+                $.ajax({
+                    type: "post",
+                    url: "/admin/bank/transaction/add",
+                    data: myformData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response);
+                        $("#BankTransactionForm").find('input').val('');
+                        // $('#companybalanceAddModal').modal('hide');
+                        Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    timer: 1800
+                });
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        alert("Data Not Save");
+                    }
+                });
+    });
+
+
         $('body').on('click', '.deletebtn', function() {
             var id = $(this).data("id");
             var token = $("meta[name='csrf-token']").attr("content");
@@ -420,32 +475,4 @@
 
     </script>
 
-<script>
-    // $(document).ready(function() {
-    //     $('#bank_id').on('change', function() {
-    //         var bankID = $(this).val();
-    //         if(bankID) {
-    //             $.ajax({
-    //                 url: '/admin/bank/dropdown/'+bankID,
-    //                 type: "GET",
-    //                 data : {"_token":"{{ csrf_token() }}"},
-    //                 success:function(data) {
-    //                     //console.log(data);
-    //                   if(data){
-    //                     $('#account_number').empty();
-    //                     $('#account_number').append('<option value="" selected disabled>-- Select Account Number --</option>');
-    //                     $.each(data, function(key, value){
-    //                     $('select[name="account_number"]').append('<option value="'+ key.account_number +'">' + value.account_number+ '</option>');
-    //                 });
-    //               }else{
-    //                 $('#account_number').empty();
-    //               }
-    //               }
-    //             });
-    //         }else{
-    //           $('#account_number').empty();
-    //         }
-    //     });
-    // });
-</script>
 @endsection

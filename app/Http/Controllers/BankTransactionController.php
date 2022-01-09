@@ -22,7 +22,8 @@ class BankTransactionController extends Controller
     public function index()
     {
         $bankTransaction = BankTransaction::orderBy('id', 'desc')->get();
-        return view('backend.bank-transection.bank_transection',compact('bankTransaction'));
+        $bank = Bank::get();
+        return view('backend.bank-transection.bank_transection',compact('bankTransaction','bank'));
     }
 
     /**
@@ -120,7 +121,6 @@ public function store(Request $request){
                 'amount' => 'required|max:191',
                 'type' => 'required|max:191',
                 'date' => 'max:191',
-                'tempbalance' => 'max:191',
             ]);
 
     for($i=0;$i<count($request->type);$i++){
@@ -128,7 +128,7 @@ public function store(Request $request){
         if(!$bank){
             return back();
         }
-        $bankTransaction=new BankTransaction;
+        $bankTransaction = new BankTransaction;
         $bankTransaction->account_number = $bank->id;
         $bankTransaction->ref = $request->ref[$i];
         // $bankTransaction->transection_id = $request->transection_id[$i];
@@ -136,14 +136,26 @@ public function store(Request $request){
         $bankTransaction->amount = $request->amount[$i];
         $bankTransaction->type = $request->type[$i];
         $bankTransaction->date = $request->date[$i];
+        if($request->type[$i]=='Credit'){
+            $bank->balance += abs($request->amount[$i]);
+            $bank->update();
+            $bankTransaction->save();
 
-        if($document = $request->hasFile('document')){
-            $document = $request->file('document');
-            $document_name = time().'.'.$document->getClientOriginalExtension();
-            $document->move(public_path().'/backend/image/banktransection/',$document_name);
-            $bankTransaction->document = $document_name;
+        }
+        else if($request->type[$i]=='Debit'){
+            $bank->balance -= abs($request->amount[$i]);
+            $bank->update();
+            $bankTransaction->save();
+
+        }
+        else if($request->type[$i]=='Pending'){
+            $bank->balance += 0;
+            $bank->update();
+            $bankTransaction->save();
+
         }
 
+        return response()->json(['success'=>'Data Add successfully.']);
     }
 }
     /**

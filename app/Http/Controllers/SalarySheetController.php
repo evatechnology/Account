@@ -78,6 +78,7 @@ class SalarySheetController extends Controller
                                     ->get();
 
         $monthly_salary_details = SalarySheet::where('sheet_name', $sheet_name)->get();
+        // $monthly_salary_details = SalarySheet::where('sheet_name', $sheet_name)->get();
         return view('backend.salarysheet.detailsview',compact('salarySheet','monthly_salary_details','salarysheetname'));
     }
 
