@@ -108,10 +108,11 @@
                                                         <div class="form-group row">
                                                             <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Type</label>
                                                             <div class="col-sm-8">
-                                                                <select class="form-control" id="type">
+                                                                <select class="form-control" id="type__">
                                                                     <option value="">All Type</option>
-                                                                    <option value="debit">Debit</option>
-                                                                    <option value="credit">Credit</option>
+                                                                    <option value="Debit">Debit</option>
+                                                                    <option value="Credit">Credit</option>
+                                                                    <option value="Pending">Pending</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -464,7 +465,7 @@
 
             });
             //Drop Down Filter3 Pre-Define Value
-            $('#type').on('change', function () {
+            $('#type__').on('change', function () {
                 table.columns(6).search( this.value ).draw();
             });
             //Date Filter
