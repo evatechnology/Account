@@ -9,15 +9,15 @@
             <div class="card">
                 <div class="card-body">
                     <form action="/admin/company/ledger/details">
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1" class="text-dark">Company Name</label>
+                        {{-- <div class="form-group">
+                            <label for="exampleFormControlSelect1" class="text-dark">Client</label>
                             <select class="form-control border border-primary" name="company_id" id="company_id">
                                     <option selected disabled>Choose Account number</option>
                                 @foreach (App\Models\CompanyBalance::select('company_id')->groupBy('company_id')->get() as $item)
                                     <option value="{{ $item->company_id }}">{{ $item->company->name }}</option>
                                 @endforeach
                             </select>
-                          </div>
+                          </div> --}}
 
                           <div class="form-group ">
                             <label for="datepicker" class="text-dark">From Date</label>

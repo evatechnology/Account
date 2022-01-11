@@ -5,8 +5,8 @@ Account management software is an important tool for businesses that manage sale
 1. Company Details
 2. Employee Details
 3. Bank Details
-4. Company transection History
-5. Bank Transection History
+4. Company transaction History
+5. Bank Transaction History
 6. Bank Statement 
 7. Company Statement
 8. Genarel Ledger

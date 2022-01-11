@@ -42,6 +42,7 @@ class LedgerController extends Controller
                                 ->groupBy('account_number')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get();
 
         $data1 = $request->input('from');
@@ -49,30 +50,35 @@ class LedgerController extends Controller
 
         $data3 = BankTransaction::where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get();
         $data4 = BankTransaction::where('type','credit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
         $data5 = BankTransaction::where('type','debit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
         $previousdate = Carbon::createFromDate($request->input('from'))->subDays();
-        
+
         $data6 = BankTransaction::where('type','credit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
         $data7 = BankTransaction::where('type','debit')
                                 ->where('account_number','like', '%'. $request->input('account_number').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])
+                                ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
@@ -83,29 +89,29 @@ class LedgerController extends Controller
     }
     public function genarate_company_ledger(Request $request)
     {
-        $data = CompanyBalance::select('company_id')
-                                ->groupBy('company_id')
-                                ->where('company_id','like', '%'. $request->input('company_id').'%')
-                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
-                                ->orderBy('date')
-                                ->get();
+        // $data = CompanyBalance::select('company_id')
+        //                         ->groupBy('company_id')
+        //                         // ->where('company_id','like', '%'. $request->input('company_id').'%')
+        //                         ->whereBetween('date',[$request->input('from'),$request->input('to')])
+        //                         ->orderBy('date')
+        //                         ->get();
 
         $data1 = $request->input('from');
         $data2 = $request->input('to');
 
-        $data3 = CompanyBalance::where('company_id','like', '%'. $request->input('company_id').'%')
-                                ->whereBetween('date',[$request->input('from'),$request->input('to')])
+        $data3 = CompanyBalance::whereBetween('date',[$request->input('from'),$request->input('to')])
+                                // where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->orderBy('date')
                                 ->get();
         $data4 = CompanyBalance::where('type','Income')
-                                ->where('company_id','like', '%'. $request->input('company_id').'%')
+                                // ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->orderBy('date')
                                 ->get()
                                 ->sum('amount');
 
         $data5 = CompanyBalance::where('type','Expense')
-                                ->where('company_id','like', '%'. $request->input('company_id').'%')
+                                // ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',[$request->input('from'),$request->input('to')])
                                 ->orderBy('date')
                                 ->get()
@@ -113,13 +119,13 @@ class LedgerController extends Controller
 
         $previousdate = Carbon::createFromDate($request->input('from'))->subDays();
         $data6 = CompanyBalance::where('type','Income')
-                                ->where('company_id','like', '%'. $request->input('company_id').'%')
+                                // ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])
                                 ->get()
                                 ->sum('amount');
 
         $data7 = CompanyBalance::where('type','Expense')
-                                ->where('company_id','like', '%'. $request->input('company_id').'%')
+                                // ->where('company_id','like', '%'. $request->input('company_id').'%')
                                 ->whereBetween('date',['2000-01-01',$previousdate])
                                 ->orderBy('date')
                                 ->get()
@@ -128,7 +134,8 @@ class LedgerController extends Controller
         $data8 = $data6 - $data7;
 
 
-        return view('backend.ledger.company-ledger-details',compact('data','data1','data2','data3','data4','data5','data8'));
+        // return view('backend.ledger.company-ledger-details',compact('data','data1','data2','data3','data4','data5','data8'));
+        return view('backend.ledger.company-ledger-details',compact('data1','data2','data3','data4','data5','data8'));
     }
 
     /**

@@ -9,15 +9,15 @@
         <div class="card">
 
             <div class="card-body">
-                <h4 class="card-title text-center">Company Transection</h4>
+                <h4 class="card-title text-center">Company Transaction</h4>
                 <!-- Nav tabs -->
                 <div class="default-tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">New Transection</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home">New Transaction</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile">Transection History</a>
+                            <a class="nav-link" data-toggle="tab" href="#profile">Transaction History</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#message">Balance Summery</a>
@@ -52,6 +52,7 @@
                                                 <td>
                                                     <select class="form-control" id="company_id" name="company_id[]" required>
                                                         <option selected disabled>Choose One</option>
+                                                        <option value="0">Main Office</option>
                                                         @foreach (App\Models\ClientCompany::get() as $item)
                                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                         @endforeach
@@ -161,7 +162,7 @@
                                 </div>
 
                                 <div class="card">
-                                    <h4 class="text-center mt-3 mb-3"><u>Company Transection History</u></h4>
+                                    <h4 class="text-center mt-3 mb-3"><u>Company Transaction History</u></h4>
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table id="company_transection" class=" table display" style="min-width: 845px">
@@ -184,7 +185,14 @@
                                                             {{-- <td>{{ date('d-M-y', strtotime($item->date)) }}</td> --}}
                                                             <td>{{ $item->date}}</td>
 
-                                                            <td>{{ $item->company->name }}</td>
+                                                            <td>
+                                                                @if ($item->company_id == 0)
+                                                                    Main Company
+                                                                @else
+                                                                    {{ $item->company->name }}
+
+                                                                @endif
+                                                            </td>
                                                             <td>{{ $item->account_head }}</td>
                                                             <td>
                                                                 @if ($item->type == 'Income')
@@ -268,6 +276,7 @@
                 '    <td>\n'+
                 '        <select class="form-control" id="company_id" name="company_id[]"required>\n'+
                 '            <option selected disabled>Choose One</option>\n'+
+                '            <option value="0">Main Office</option>\n'+
                 '            @foreach (App\Models\ClientCompany::get() as $item)\n'+
                 '                <option value="{{ $item->id }}">{{ $item->name }}</option>\n'+
                 '            @endforeach\n'+

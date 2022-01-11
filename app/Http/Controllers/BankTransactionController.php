@@ -169,6 +169,45 @@ public function store(Request $request){
         //
     }
 
+    public function payable(){
+        return view('backend.payable.payable');
+    }
+
+    public function bank_transaction_edit($id)
+    {
+        $bankTransaction = BankTransaction::find($id);
+        return response()->json($bankTransaction);
+    }
+    public function bank_transaction_update(Request $request)
+    {
+        $bank = Bank::find($request->account_number);
+        if(!$bank){
+            return back();
+        }
+        $bankTransaction = BankTransaction::find($request->id);
+        $bankTransaction->account_number = $request->account_number;
+        $bankTransaction->type = $request->type;
+        if($request->type=='Credit'){
+            $bank->balance += abs($request->amount);
+            $bank->update();
+            $bankTransaction->update();
+
+        }
+        else if($request->type=='Debit'){
+            $bank->balance -= abs($request->amount);
+            $bank->update();
+            $bankTransaction->update();
+
+        }
+        // else if($request->type[$i]=='Pending'){
+        //     $bank->balance += 0;
+        //     $bank->update();
+        //     $bankTransaction->save();
+
+        // }
+        return response()->json($bank);
+        return response()->json($bankTransaction);
+    }
     /**
      * Show the form for editing the specified resource.
      *

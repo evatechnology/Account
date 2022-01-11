@@ -1,5 +1,5 @@
 @extends('backend.layout.master')
-@section('title', 'Bank Transection List')
+@section('title', 'AMS || Bank Transaction')
 @section('content')
 
 <div>
@@ -7,15 +7,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">Bank Transection</h4>
+                    <h4 class="card-title text-center">Bank Transaction</h4>
 
                     <div class="default-tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#home">New Transection</a>
+                                <a class="nav-link active" data-toggle="tab" href="#home">New Transaction</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#profile">Transection History</a>
+                                <a class="nav-link" data-toggle="tab" href="#profile">Transaction History</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#message">Balance Summery</a>
@@ -119,7 +119,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group row">
-                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Source</label>
+                                                            <label for="staticEmail" class="col-sm-4 col-form-label text-dark">Account Head</label>
                                                             <div class="col-sm-8">
                                                                 <div id="source"></div>
                                                             </div>
@@ -154,7 +154,7 @@
                                             <div class="float-right">
                                                 <a type="button" href="#" class="btn   btn-outline-success mb-5 btn-sm" data-toggle="modal"
                                                     data-target="#BankTransactionAddModal">
-                                                    <i class="mdi mdi-plus-circle"></i>New Transection
+                                                    <i class="mdi mdi-plus-circle"></i>New Transaction
                                                 </a>
                                             </div>
                                             <div class="table-responsive">
@@ -414,10 +414,7 @@
                     var max = maxDate.val();
                     var date = new Date( data[5] );
                     if (
-                        ( min === null && max === null ) ||
-                        ( min === null && date <= max ) ||
-                        ( min <= date   && max === null ) ||
-                        ( min <= date   && date <= max )
+                        ( min === null && max === null ) || ( min === null && max >= date ) || ( min <= date   && max === null ) || ( min <= date   && max >= date )
                     ) {
                         return true;
                     }

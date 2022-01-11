@@ -1,15 +1,16 @@
 @extends('backend.layout.master')
-@section('title','Bank Statement')
+@section('title','AMS || Ledger')
 @section('content')
 
 <section>
     <div class="card">
         <div class="card-body">
             <br>
-            @foreach ($data as $data )
-            <h3 class="text-center"> Company Name: {{ $data->company->name }}</h3>
+            {{-- @foreach ($data as $data ) --}}
+            {{-- <h3 class="text-center"> Company Name: {{ $data->company->name }}</h3> --}}
+            <h3 class="text-center"> OSL-KNS GROUP</h3>
             {{-- <h3 class="text-center">Account Number: {{ $data->bank->account_number }}</h3> --}}
-            @endforeach
+            {{-- @endforeach --}}
             <h3 class="text-center"> Statement Period:&nbsp;&nbsp;<samp class="text-primary">{{ $data1 }}&nbsp;/&nbsp;{{ $data2 }}</samp></h3>
             <p class="text-center text-dark">Check Date: <samp id="date">
                     <script>
@@ -60,7 +61,18 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $data3->date }}</td>
-                            <td>{{ $data3->account_head}}</td>
+                            <td>
+                                @if ($data3->company_id == 0)
+                                    {{ $data3->account_head}} For Main Company
+                                @else
+                                    @if ($data3->type == 'Income')
+                                        {{ $data3->account_head}} from ({{ $data3->company->name }})
+                                    @elseif ($data3->type == 'Expense')
+                                        {{ $data3->account_head}} For ({{ $data3->company->name }})
+                                    @endif
+
+                                @endif
+                            </td>
                             <td class="text-right font-weight-bold">
                                 @if ($data3->type == 'Income')
                                     <p class="text-success">

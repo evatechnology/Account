@@ -112,31 +112,32 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @foreach ($t_history as $t_item)
-                                <tr>
-                                    <td>{{ ++$i }}</td>
-                                    <td>{{ $t_item->date}}</td>
-                                    <td>{{ $t_item->account_head}}</td>
-                                    <td class="text-right font-weight-bold">
-                                        @if ($t_item->type == 'Income')
-                                            <p class="text-success">
-                                                {{ number_format($t_item-> amount,2)}}
-                                            </p>
-                                        @else
-                                            0.00
-                                        @endif
-                                    </td>
-                                    <td class="text-right font-weight-bold">
-                                        @if ($t_item->type == 'Expense')
-                                            <p style="color: #FF0075">
-                                                {{ number_format($t_item-> amount,2)}}
-                                            </p>
-                                        @else
-                                            0.00
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    @foreach (App\Models\CompanyBalance::where('company_id',$company->id)->orderBy('date')->get() as $t_item)
+                                    <tr>
+                                        <td>{{ ++$i }}</td>
+                                        <td>{{ $t_item->date}}</td>
+                                        <td>{{ $t_item->account_head}}</td>
+                                        <td class="text-right font-weight-bold">
+                                            @if ($t_item->type == 'Income')
+                                                <p class="text-success">
+                                                    {{ number_format($t_item-> amount,2)}}
+                                                </p>
+                                            @else
+                                                0.00
+                                            @endif
+                                        </td>
+                                        <td class="text-right font-weight-bold">
+                                            @if ($t_item->type == 'Expense')
+                                                <p style="color: #FF0075">
+                                                    {{ number_format($t_item-> amount,2)}}
+                                                </p>
+                                            @else
+                                                0.00
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                         </tbody>
                     </table>
                 </div>

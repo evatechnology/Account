@@ -95,7 +95,9 @@ Route::get('/admin/bank/transaction','BankTransactionController@index')->name('b
 Route::get('/admin/bank/dropdown/{id}','BankTransactionController@bankaccount');
 Route::post('/admin/bank/transaction/add','BankTransactionController@store')->name('transction.add');
 Route::delete('/admin/bank/transaction/delete/{id}','BankTransactionController@destroy');
-
+Route::get('/admin/payable','BankTransactionController@payable')->name('payable');
+Route::get('/admin/bank/transaction/edit/{id}', 'BankTransactionController@bank_transaction_edit');
+Route::put('/admin/bank/transaction/update', 'BankTransactionController@bank_transaction_update');
 
 Route::resource('ledger', 'LedgerController');
 Route::get('/admin/bank/ledger','LedgerController@index1')->name('ledger');

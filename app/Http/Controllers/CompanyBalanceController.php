@@ -120,63 +120,56 @@ class CompanyBalanceController extends Controller
                 // $maincompany = MainCompany::select('id')->get();
                 for($i=0;$i<count($request->type);$i++){
                     $company = ClientCompany::find($request->company_id[$i]);
-                        if(!$company ){
-                            return back();
+                        if($request->company_id[$i] == 0 ){
+                            $maincompany = MainCompany::find($request->maincompany_id[$i]);
+                            $companyBalance = new CompanyBalance;
+                            $companyBalance->company_id = 0;
+                            $companyBalance->maincompany_id = $maincompany->id;
+                            $companyBalance->amount = abs($request->amount[$i]);
+                            $companyBalance->account_head = $request->account_head[$i];
+                            $companyBalance->type = $request->type[$i];
+                            $companyBalance->date = $request->date[$i];
+                            if($request->type[$i]=='Income'){
+                                // $company->received_payment += abs($request->amount[$i]);
+                                $maincompany->balance += abs($request->amount[$i]);
+                                // $company->update();
+                                $companyBalance->save();
+                                $maincompany->save();
+                            }
+                            else if($request->type[$i]=='Expense'){
+                                // $company->spending += abs($request->amount[$i]);
+                                $maincompany->balance -= abs($request->amount[$i]);
+                                // $company->save();
+                                $companyBalance->save();
+                                $maincompany->save();
+                            }
+                            // return back();
                         }
-                        $maincompany = MainCompany::find($request->maincompany_id[$i]);
-                        $companyBalance = new CompanyBalance;
-                        $companyBalance->company_id = $company->id;
-                        $companyBalance->maincompany_id = $maincompany->id;
-                        $companyBalance->amount = abs($request->amount[$i]);
-                        $companyBalance->account_head = $request->account_head[$i];
-                        $companyBalance->type = $request->type[$i];
-                        $companyBalance->date = $request->date[$i];
-                        // $documents=[];
-                        // if($document = $request->hasFile('document1')){
-                        //     $document = $request->file('document1');
-                        //     $document_npame = time().'.'.$document->getClientOriginalExtension();
-                        //     $document->move(public_path().'/backend/image/companybalance/',$document_name);
-                        //     $documents[] = $document_name;
-                        //     $companyBalance->document = json_encode($documents[$i]);
-                        // }
+                        else{
+                            $maincompany = MainCompany::find($request->maincompany_id[$i]);
+                            $companyBalance = new CompanyBalance;
+                            $companyBalance->company_id = $company->id;
+                            $companyBalance->maincompany_id = $maincompany->id;
+                            $companyBalance->amount = abs($request->amount[$i]);
+                            $companyBalance->account_head = $request->account_head[$i];
+                            $companyBalance->type = $request->type[$i];
+                            $companyBalance->date = $request->date[$i];
 
-                        // $documents=[];
-                        // if($request->hasFile('document1')){
-                        //         $documents = $request->file('document1') ;
-                        //         $document_name = time().rand(1,100).'.'.$documents->extension();
-                        //         $documents->move(public_path().'/backend/image/companybalance/',$document_name);
-                        //         $documents = $document_name;
-                        //         $companyBalance->document = $document_name;
-
-
-                        // }
-
-                        // $companyBalance->document = json_encode($documents[$i]);
-                        if($request->type[$i]=='Income'){
-                            // $company->temp_balance =$request->balance;
-                            $company->received_payment += abs($request->amount[$i]);
-                            // $companyBalance->temp_balance = $company->current_blance;
-                            $maincompany->balance += abs($request->amount[$i]);
-                            $company->update();
-                            $companyBalance->save();
-                             $maincompany->save();
-
-                            // return redirect()->back()->with('success', 'Created successfully!');
-
+                            if($request->type[$i]=='Income'){
+                                $company->received_payment += abs($request->amount[$i]);
+                                $maincompany->balance += abs($request->amount[$i]);
+                                $company->update();
+                                $companyBalance->save();
+                                $maincompany->save();
+                            }
+                            else if($request->type[$i]=='Expense'){
+                                $company->spending += abs($request->amount[$i]);
+                                $maincompany->balance -= abs($request->amount[$i]);
+                                $company->save();
+                                $companyBalance->save();
+                                $maincompany->save();
+                            }
                         }
-                        if($request->type[$i]=='Expense'){
-                            $company->spending += abs($request->amount[$i]);
-                            // $companyBalance->temp_balance = $company->current_blance;
-                            $maincompany->balance -= abs($request->amount[$i]);
-                            $company->save();
-                            $companyBalance->save();
-                            $maincompany->save();
-                            // return redirect()->back()->with('success', 'Created successfully!');
-
-                        }
-
-
-
                 }
                 return response()->json(['success'=>'Data Add successfully.']);
     }
